@@ -1,0 +1,1 @@
+# ovirt-dashboard-ui-plugin
