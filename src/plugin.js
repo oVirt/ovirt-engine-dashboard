@@ -1,7 +1,7 @@
 const api = parent.pluginApi('dashboard')
 
 api.register({
-  UiInit: () => {
+  UiInit () {
     api.addMainTab('Dashboard', 'dashboard-main', 'plugin/dashboard/main_tab.html')
     api.revealPlace('dashboard-main')
   }
