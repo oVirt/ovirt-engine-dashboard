@@ -1,7 +1,9 @@
 var webpack = require('webpack')
 var path = require('path')
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const isDev = process.env.BUILD_DEV || false
+const isProd = process.env.NODE_ENV === 'production'
+const isDev = !isProd
 
 var config = module.exports = {
   entry: {
@@ -41,15 +43,22 @@ var config = module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new webpack.DefinePlugin({
-      '__DEV__': JSON.stringify(JSON.parse(isDev))
+      '__DEV__': JSON.stringify(isDev)
     })
   ]
 }
 
-if (!isDev) {
+if (isProd) {
+  // emit source map for each generated chunk
   config.devtool = 'source-map'
   config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true

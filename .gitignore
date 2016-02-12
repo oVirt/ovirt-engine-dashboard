@@ -8,9 +8,7 @@ node_modules/
 npm-debug.log*
 
 # Distribution files
-dist/dashboard-resources/**/*
-!dist/dashboard-resources/plugin.html
-!dist/dashboard-resources/main_tab.html
+dist/
 
 # IDE files
 .idea/

@@ -1,3 +1,6 @@
+require('file?name=../[name].[ext]!../static/dashboard.json')
+require('file?name=[name].[ext]!../static/html/plugin.html')
+
 const api = parent.pluginApi('dashboard')
 
 api.register({
