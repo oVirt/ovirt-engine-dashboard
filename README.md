@@ -28,4 +28,4 @@ ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard-resources dashboard-reso
 
 ## Access plugin via WebAdmin UI
 
-Open `https://engine.example.com:8443/ovirt-engine/webadmin/WebAdmin.html` in your browser, there should be a **Dashboard** main tab present in WebAdmin UI.
+Open `https://engine.example.com:8443/ovirt-engine/webadmin/WebAdmin.html` and look for **Dashboard** main tab.
