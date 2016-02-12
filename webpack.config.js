@@ -1,6 +1,7 @@
 var webpack = require('webpack')
 var path = require('path')
-var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
@@ -44,6 +45,13 @@ var config = module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
+    new CopyWebpackPlugin([
+      { from: 'static/css/rcue.min.css' },
+      { from: 'static/css/rcue-additions.min.css' },
+      { from: 'static/css/angular-patternfly.css' },
+      { from: 'static/css/angular-app.css' },
+      { from: 'static/fonts' }
+    ]),
     new webpack.DefinePlugin({
       '__DEV__': JSON.stringify(isDev)
     })

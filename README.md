@@ -26,6 +26,8 @@ ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard.json dashboard.json
 ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard-resources dashboard-resources
 ```
 
-## Access plugin via WebAdmin UI
+## Access plugin via oVirt UI
 
-Open `https://engine.example.com:8443/ovirt-engine/webadmin/WebAdmin.html` and look for **Dashboard** main tab.
+Open WebAdmin at `https://engine:8443/ovirt-engine/webadmin/WebAdmin.html` and look for **Dashboard** main tab.
+
+Alternatively, access plugin HTML pages directly via `https://engine:8443/ovirt-engine/webadmin/plugin/dashboard/<page>` (replace `<page>` with HTML file from `static/html` directory).
