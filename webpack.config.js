@@ -46,10 +46,9 @@ var config = module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new CopyWebpackPlugin([
-      { from: 'static/css/rcue.min.css' },
-      { from: 'static/css/rcue-additions.min.css' },
-      { from: 'static/css/angular-patternfly.css' },
-      { from: 'static/css/angular-app.css' },
+      { from: 'static/dashboard.json', to: '../' },
+      { from: 'static/html' },
+      { from: 'static/css' },
       { from: 'static/fonts' }
     ]),
     new webpack.DefinePlugin({
