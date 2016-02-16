@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-Install [Node.js](https://nodejs.org/) v4 (LTS). [nvm](https://github.com/creationix/nvm) is a nice tool to manage multiple Node.js versions.
+Install [Node.js](https://nodejs.org/) v4 (LTS). [nvm](https://github.com/creationix/nvm) can be used to manage multiple Node.js versions.
 
 ## Plugin setup
 
@@ -28,6 +28,14 @@ ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard-resources dashboard-reso
 
 ## Access plugin via oVirt UI
 
-Open WebAdmin at `https://engine:8443/ovirt-engine/webadmin/WebAdmin.html` and look for **Dashboard** main tab.
+Open WebAdmin and look for **Dashboard** main tab:
 
-Alternatively, access plugin HTML pages directly via `https://engine:8443/ovirt-engine/webadmin/plugin/dashboard/<page>` (replace `<page>` with HTML file from `static/html` directory).
+```
+https://engine:8443/ovirt-engine/webadmin/WebAdmin.html
+```
+
+Alternatively, use following URL to access plugin resources directly:
+
+```
+https://engine:8443/ovirt-engine/webadmin/plugin/dashboard/<file>
+```
