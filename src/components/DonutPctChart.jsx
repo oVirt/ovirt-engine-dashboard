@@ -1,5 +1,6 @@
 import React from 'react'
 import c3 from 'c3'
+import d3 from 'd3'
 import { getDefaultDonutConfig } from '../patternfly_defaults'
 
 // Angular reference:
@@ -35,41 +36,13 @@ class DonutPctChart extends React.Component {
   }
 
   _generateChart ({ unit, used, total, threshold, centerLabel }) {
-    const available = total - used
-
-    // TODO unused for now
-    function getCenterLabelText () {
-      switch (centerLabel) {
-        case 'used':
-          return {
-            bigText: `${used}`,
-            smText: `${unit} Used`
-          }
-        case 'available':
-          return {
-            bigText: `${available}`,
-            smText: `${unit} Available`
-          }
-        case 'percent':
-          return {
-            bigText: `${Math.round(used / total * 100.0)} %`,
-            smText: `of ${total} ${unit}`
-          }
-        case 'none':
-          return {
-            bigText: '',
-            smText: ''
-          }
-      }
-    }
-
     const config = Object.assign({}, getDefaultDonutConfig(), {
       bindto: this._chartContainer,
       data: {
         type: 'donut',
         columns: [
           ['used', used],
-          ['available', available]
+          ['available', total - used]
         ],
         names: {
           used: 'Used',
@@ -93,6 +66,7 @@ class DonutPctChart extends React.Component {
     })
 
     this._chart = c3.generate(config)
+    this._setDonutChartCenterLabel({ unit, used, total, centerLabel })
   }
 
   _updateChart (props) {
@@ -123,6 +97,27 @@ class DonutPctChart extends React.Component {
     return [color].concat(defaultPattern.slice(1))
   }
 
+  _setDonutChartCenterLabel ({ unit, used, total, centerLabel }) {
+    let bigText = ''
+    let smallText = ''
+
+    if (centerLabel === 'used') {
+      bigText =  `${used}`
+      smallText = `${unit} Used`
+    } else if (centerLabel === 'available') {
+      bigText = `${total - used}`
+      smallText = `${unit} Available`
+    } else if (centerLabel === 'percent') {
+      bigText = `${Math.round(used / total * 100.0)} %`
+      smallText = `of ${total} ${unit}`
+    }
+
+    const donutChartTitle = d3.select(this._chartContainer).select('text.c3-chart-arcs-title')
+    donutChartTitle.selectAll('*').remove()
+    donutChartTitle.insert('tspan').text(bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0)
+    donutChartTitle.insert('tspan').text(smallText).classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0)
+  }
+
 }
 
 DonutPctChart.propTypes = {
@@ -134,7 +129,7 @@ DonutPctChart.propTypes = {
     warning: React.PropTypes.number,
     error: React.PropTypes.number
   }),
-  centerLabel: React.PropTypes.oneOf(['used', 'available', 'percent', 'none'])
+  centerLabel: React.PropTypes.oneOf(['used', 'available', 'percent'])
 }
 
 DonutPctChart.defaultProps = {
