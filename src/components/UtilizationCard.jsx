@@ -20,7 +20,7 @@ function UtilizationCard ({ title, unit, used, total }) {
       </div>
 
       {/* percentage chart */}
-      <DonutPctChart used={used} total={total} />
+      <DonutPctChart unit={unit} used={used} total={total} />
 
     </div>
   )
