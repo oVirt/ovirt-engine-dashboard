@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+const {string, number} = PropTypes
 import DonutPctChart from './DonutPctChart'
 
 function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
@@ -27,10 +28,10 @@ function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
 }
 
 UtilizationCard.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  unit: React.PropTypes.string.isRequired,
-  used: React.PropTypes.number.isRequired,
-  total: React.PropTypes.number.isRequired,
+  title: string.isRequired,
+  unit: string.isRequired,
+  used: number.isRequired,
+  total: number.isRequired,
   donutCenterLabel: DonutPctChart.propTypes.centerLabel.isRequired
 }
 

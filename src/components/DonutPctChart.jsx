@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+const {string, number, bool, shape, oneOf} = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
 import { getDefaultDonutConfig } from '../patternfly_defaults'
@@ -121,15 +122,15 @@ class DonutPctChart extends React.Component {
 }
 
 DonutPctChart.propTypes = {
-  unit: React.PropTypes.string.isRequired,
-  used: React.PropTypes.number.isRequired,
-  total: React.PropTypes.number.isRequired,
-  threshold: React.PropTypes.shape({
-    enabled: React.PropTypes.bool,
-    warning: React.PropTypes.number,
-    error: React.PropTypes.number
+  unit: string.isRequired,
+  used: number.isRequired,
+  total: number.isRequired,
+  threshold: shape({
+    enabled: bool,
+    warning: number,
+    error: number
   }),
-  centerLabel: React.PropTypes.oneOf(['used', 'available', 'percent'])
+  centerLabel: oneOf(['used', 'available', 'percent'])
 }
 
 DonutPctChart.defaultProps = {

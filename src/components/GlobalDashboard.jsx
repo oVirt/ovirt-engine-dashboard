@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+const {number, shape, objectOf} = PropTypes
 import StatusCard from './StatusCard'
 import UtilizationCard from './UtilizationCard'
 
@@ -70,18 +71,18 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
 }
 
 GlobalDashboard.propTypes = {
-  data: React.PropTypes.shape({
-    inventory: React.PropTypes.objectOf(
-      React.PropTypes.shape({
-        count: React.PropTypes.number,
-        errors: React.PropTypes.number,
-        warnings: React.PropTypes.number
+  data: shape({
+    inventory: objectOf(
+      shape({
+        count: number,
+        errors: number,
+        warnings: number
       })
     ),
-    utilization: React.PropTypes.objectOf(
-      React.PropTypes.shape({
-        used: React.PropTypes.number,
-        total: React.PropTypes.number
+    utilization: objectOf(
+      shape({
+        used: number,
+        total: number
       })
     )
   })

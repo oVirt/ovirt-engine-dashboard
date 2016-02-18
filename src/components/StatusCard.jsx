@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+const {string, number} = PropTypes
 
 function StatusCard ({ iconClass, title, count, errors, warnings }) {
   return (
@@ -37,11 +38,11 @@ function StatusCard ({ iconClass, title, count, errors, warnings }) {
 }
 
 StatusCard.propTypes = {
-  iconClass: React.PropTypes.string.isRequired,
-  title: React.PropTypes.string.isRequired,
-  count: React.PropTypes.number.isRequired,
-  errors: React.PropTypes.number.isRequired,
-  warnings: React.PropTypes.number.isRequired
+  iconClass: string.isRequired,
+  title: string.isRequired,
+  count: number.isRequired,
+  errors: number.isRequired,
+  warnings: number.isRequired
 }
 
 export default StatusCard
