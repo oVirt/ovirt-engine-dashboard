@@ -1,7 +1,7 @@
 import React from 'react'
 import DonutPctChart from './DonutPctChart'
 
-function UtilizationCard ({ title, unit, used, total }) {
+function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
   return (
     <div className="utilization-chart-pf">
 
@@ -20,7 +20,7 @@ function UtilizationCard ({ title, unit, used, total }) {
       </div>
 
       {/* percentage chart */}
-      <DonutPctChart unit={unit} used={used} total={total} />
+      <DonutPctChart unit={unit} used={used} total={total} centerLabel={donutCenterLabel} />
 
     </div>
   )
@@ -30,7 +30,8 @@ UtilizationCard.propTypes = {
   title: React.PropTypes.string.isRequired,
   unit: React.PropTypes.string.isRequired,
   used: React.PropTypes.number.isRequired,
-  total: React.PropTypes.number.isRequired
+  total: React.PropTypes.number.isRequired,
+  donutCenterLabel: DonutPctChart.propTypes.centerLabel.isRequired
 }
 
 export default UtilizationCard

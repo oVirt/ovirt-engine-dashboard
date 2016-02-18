@@ -44,19 +44,19 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
             <div className="card-pf-body">
               <div className="row">
                 <div className="col-xs-12 col-sm-6 col-md-3">
-                  <UtilizationCard title="CPU" unit="Cores"
+                  <UtilizationCard title="CPU" unit="Cores" donutCenterLabel="used"
                                    used={utilization.cpu.used} total={utilization.cpu.total} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-3">
-                  <UtilizationCard title="Memory" unit="GB"
+                  <UtilizationCard title="Memory" unit="GB" donutCenterLabel="used"
                                    used={utilization.memory.used} total={utilization.memory.total} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-3">
-                  <UtilizationCard title="Network" unit="Gbps"
+                  <UtilizationCard title="Network" unit="Gbps" donutCenterLabel="available"
                                    used={utilization.network.used} total={utilization.network.total} />
                 </div>
                 <div className="col-xs-12 col-sm-6 col-md-3">
-                  <UtilizationCard title="Storage" unit="TB"
+                  <UtilizationCard title="Storage" unit="TB" donutCenterLabel="percent"
                                    used={utilization.storage.used} total={utilization.storage.total} />
                 </div>
               </div>
