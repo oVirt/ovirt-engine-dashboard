@@ -12,6 +12,8 @@ Run `npm i` to install dependencies.
 
 Use `npm run dev` to build plugin for development and watch & recompile files on change.
 
+Use `npm t` to run tests and lint the code.
+
 Use `npm run build` to build plugin for production.
 
 ## oVirt setup
