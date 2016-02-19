@@ -1,3 +1,5 @@
+/*global parent */
+
 const api = parent.pluginApi('dashboard')
 
 api.register({

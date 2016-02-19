@@ -30,8 +30,8 @@ class DonutPctChart extends React.Component {
 
   render () {
     return (
-      <div className="donut-chart-pf">
-        <div ref={(e) => this._chartContainer = e}></div>
+      <div className='donut-chart-pf'>
+        <div ref={(e) => { this._chartContainer = e }}></div>
       </div>
     )
   }
@@ -103,7 +103,7 @@ class DonutPctChart extends React.Component {
     let smallText = ''
 
     if (centerLabel === 'used') {
-      bigText =  `${used}`
+      bigText = `${used}`
       smallText = `${unit} Used`
     } else if (centerLabel === 'available') {
       bigText = `${total - used}`
