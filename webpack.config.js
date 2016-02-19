@@ -38,7 +38,7 @@ var config = module.exports = {
   },
   resolve: {
     alias: {
-      // to prevent multiple reacts loaded from various dependencies
+      // prevent multiple reacts loaded from various dependencies
       'react': path.join(__dirname, 'node_modules', 'react')
     },
     extensions: ['', '.js', '.jsx']
@@ -51,6 +51,10 @@ var config = module.exports = {
       { from: 'static/css' },
       { from: 'static/fonts' }
     ]),
+    new webpack.ProvidePlugin({
+      // Bootstrap's JavaScript implicitly requires jQuery global
+      jQuery: 'jquery'
+    }),
     new webpack.DefinePlugin({
       '__DEV__': JSON.stringify(isDev)
     })

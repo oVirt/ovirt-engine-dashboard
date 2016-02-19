@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react'
-const {string, number} = PropTypes
+import React, { PropTypes } from 'react'
+const { string, number } = PropTypes
 import DonutPctChart from './DonutPctChart'
 
 function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
@@ -21,7 +21,11 @@ function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
       </div>
 
       {/* percentage chart */}
-      <DonutPctChart unit={unit} used={used} total={total} centerLabel={donutCenterLabel} />
+      <DonutPctChart
+        unit={unit}
+        used={used}
+        total={total}
+        centerLabel={donutCenterLabel} />
 
     </div>
   )

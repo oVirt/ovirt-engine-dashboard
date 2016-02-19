@@ -1,4 +1,4 @@
-/*global parent */
+/* global parent */
 
 const api = parent.pluginApi('dashboard')
 

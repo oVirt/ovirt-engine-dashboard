@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react'
-const {string, number} = PropTypes
+import React, { PropTypes } from 'react'
+const { string, number } = PropTypes
 
 function StatusCard ({ iconClass, title, count, errors, warnings }) {
   return (

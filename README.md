@@ -6,19 +6,27 @@
 
 Install [Node.js](https://nodejs.org/) v4 (LTS). [nvm](https://github.com/creationix/nvm) can be used to manage multiple Node.js versions.
 
+Use `node -v` to check the Node.js version.
+
 ## Plugin setup
 
-Run `npm i` to install dependencies.
-
-Use `npm run dev` to build plugin for development and watch & recompile files on change.
+Run `npm i` to install dependencies. This might take a while.
 
 Use `npm t` to run tests and lint the code.
+
+Use `npm run dev` to build plugin for development and watch & recompile files on change.
 
 Use `npm run build` to build plugin for production.
 
 ## oVirt setup
 
-Install and configure oVirt as described in [this wiki](http://www.ovirt.org/Quick_Start_Guide).
+Install latest [oVirt](http://www.ovirt.org/) Engine (nightly snapshot release):
+
+```
+dnf install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
+dnf install ovirt-engine
+engine-setup
+```
 
 Symlink plugin files to `ui-plugins` directory:
 
@@ -30,14 +38,14 @@ ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard-resources dashboard-reso
 
 ## Access plugin via oVirt UI
 
-Open WebAdmin and look for **Dashboard** main tab:
+Open WebAdmin in your browser, you should land on **Dashboard** main tab:
 
 ```
 https://engine:8443/ovirt-engine/webadmin/WebAdmin.html
 ```
 
-Alternatively, use following URL to access plugin resources directly:
+Alternatively, access specific plugin resources via Engine, for example:
 
 ```
-https://engine:8443/ovirt-engine/webadmin/plugin/dashboard/<file>
+https://engine:8443/ovirt-engine/webadmin/plugin/dashboard/main_tab.html
 ```

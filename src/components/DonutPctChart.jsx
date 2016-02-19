@@ -1,12 +1,14 @@
-import React, {PropTypes} from 'react'
-const {string, number, bool, shape, oneOf} = PropTypes
+import React, { PropTypes } from 'react'
+const { string, number, bool, shape, oneOf } = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
-import { getDefaultDonutConfig } from '../patternfly_defaults'
+import { getDefaultDonutConfig } from '../compat/patternfly_defaults'
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart-directive.js
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart.html
+
+// TODO(vs) center label is jumpy when hovering its arcs, double-check Angular reference impl.
 
 class DonutPctChart extends React.Component {
 
@@ -36,7 +38,7 @@ class DonutPctChart extends React.Component {
     )
   }
 
-  _generateChart ({ unit, used, total, threshold, centerLabel }) {
+  _generateChart ({ unit, used, total, thresholds, centerLabel }) {
     const config = Object.assign({}, getDefaultDonutConfig(), {
       bindto: this._chartContainer,
       data: {
@@ -55,7 +57,7 @@ class DonutPctChart extends React.Component {
         order: null
       },
       color: {
-        pattern: this._getDonutChartColorPattern({ used, total, threshold })
+        pattern: this._getDonutChartColorPattern({ used, total, thresholds })
       },
       tooltip: {
         contents (data) {
@@ -79,18 +81,18 @@ class DonutPctChart extends React.Component {
     this._chart.destroy()
   }
 
-  _getDonutChartColorPattern ({ used, total, threshold }) {
+  _getDonutChartColorPattern ({ used, total, thresholds }) {
     const defaultPattern = getDefaultDonutConfig().color.pattern
-    if (!threshold.enabled) {
+    if (!thresholds.enabled) {
       return defaultPattern
     }
 
     const percentUsed = used / total * 100.0
     let color = '#3F9C35'
 
-    if (percentUsed >= threshold.error) {
+    if (percentUsed >= thresholds.error) {
       color = '#CC0000'
-    } else if (percentUsed >= threshold.warning) {
+    } else if (percentUsed >= thresholds.warning) {
       color = '#EC7A08'
     }
 
@@ -113,10 +115,10 @@ class DonutPctChart extends React.Component {
       smallText = `of ${total} ${unit}`
     }
 
-    const donutChartTitle = d3.select(this._chartContainer).select('text.c3-chart-arcs-title')
-    donutChartTitle.selectAll('*').remove()
-    donutChartTitle.insert('tspan').text(bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0)
-    donutChartTitle.insert('tspan').text(smallText).classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0)
+    const chartTitle = d3.select(this._chartContainer).select('text.c3-chart-arcs-title')
+    chartTitle.selectAll('*').remove()
+    chartTitle.insert('tspan').text(bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0)
+    chartTitle.insert('tspan').text(smallText).classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0)
   }
 
 }
@@ -125,7 +127,7 @@ DonutPctChart.propTypes = {
   unit: string.isRequired,
   used: number.isRequired,
   total: number.isRequired,
-  threshold: shape({
+  thresholds: shape({
     enabled: bool,
     warning: number,
     error: number
@@ -134,7 +136,7 @@ DonutPctChart.propTypes = {
 }
 
 DonutPctChart.defaultProps = {
-  threshold: {
+  thresholds: {
     enabled: true,
     warning: 60,
     error: 90
