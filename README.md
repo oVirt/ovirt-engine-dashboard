@@ -20,7 +20,7 @@ Use `npm run build` to build plugin for production.
 
 ## oVirt setup
 
-Install latest [oVirt](http://www.ovirt.org/) Engine (nightly snapshot release):
+Install latest Engine (nightly snapshot release):
 
 ```
 dnf install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
