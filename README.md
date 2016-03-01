@@ -1,6 +1,6 @@
 # oVirt Dashboard UI plugin
 
-[oVirt](http://www.ovirt.org/) [UI plugin](http://www.ovirt.org/Features/UIPlugins) that gives overview of the environment and its specific objects.
+[oVirt](http://www.ovirt.org/) [UI plugin](http://www.ovirt.org/develop/release-management/features/ux/uiplugins/) that gives overview of the environment and its specific objects.
 
 ## Prerequisites
 
