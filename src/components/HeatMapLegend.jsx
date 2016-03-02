@@ -14,7 +14,7 @@ function HeatMapLegend ({ colors, labels }) {
       <ul className='heatmap-legend-container' style={{paddingLeft: 0}}>
         {reversedColors.map((color, index) => (
           <li key={index} className='heatmap-pf-legend-items'>
-            <span className='color-box' style={{backgroundColor: color}}></span>
+            <span className='color-box' style={{backgroundColor: color}} />
             <span className='legend-text'>{reversedLabels[index]}</span>
           </li>
         ))}

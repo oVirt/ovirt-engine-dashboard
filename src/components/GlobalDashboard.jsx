@@ -57,15 +57,6 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
             warnings={inventory.vm.warnings} />
         </div>
 
-        <div className='col-xs-6 col-sm-6 col-md-2'>
-          <StatusCard
-            iconClass='pficon pficon-service'
-            title='Networks'
-            count={inventory.network.count}
-            errors={inventory.network.errors}
-            warnings={inventory.network.warnings} />
-        </div>
-
       </div>
 
       {/* utilization cards */}
@@ -91,18 +82,9 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                   <UtilizationCard
                     title='Memory'
                     unit='GB'
-                    donutCenterLabel='used'
+                    donutCenterLabel='available'
                     used={utilization.memory.used}
                     total={utilization.memory.total} />
-                </div>
-
-                <div className='col-xs-12 col-sm-6 col-md-3'>
-                  <UtilizationCard
-                    title='Network'
-                    unit='Gbps'
-                    donutCenterLabel='available'
-                    used={utilization.network.used}
-                    total={utilization.network.total} />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
@@ -144,13 +126,6 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                       <HeatMap
                         height={150}
                         data={utilization.memory.nodes} />
-                    </div>
-
-                    <div className='col-xs-6 col-sm-6 col-md-3 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>Network</span>
-                      <HeatMap
-                        height={150}
-                        data={utilization.network.nodes} />
                     </div>
 
                     <div className='col-xs-6 col-sm-6 col-md-3 container-heatmap-tile'>

@@ -69,7 +69,7 @@ class HeatMap extends React.Component {
       animation: false,
       container: 'body',
       title: function () {
-        return data[$(this).attr('data-index')].tooltip
+        return data[$(this).attr('data-index')].name
       }
     })
   }
@@ -108,11 +108,11 @@ HeatMap.propTypes = {
   height: number.isRequired,
   data: arrayOf(shape({
     value: number, // from range <0, 1>
-    tooltip: string
+    name: string
   })).isRequired,
   thresholds: shape({
     domain: arrayOf(number), // threshold scale domain
-    colors: arrayOf(string)  // threshold scale range
+    colors: arrayOf(string)  // threshold scale color range
   })
 }
 
