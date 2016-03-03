@@ -6,32 +6,28 @@
 
 Install [Node.js](https://nodejs.org/) v4 (LTS). [nvm](https://github.com/creationix/nvm) can be used to manage multiple Node.js versions.
 
-Use `node -v` to check the Node.js version.
+Use `node -v` to check the current Node.js version.
 
-## Plugin setup
+## Project setup
 
 Run `npm i` to install dependencies. This might take a while.
 
-Use `npm t` to run tests and lint the code.
+Use `npm t` to lint code and run tests.
 
-Use `npm run dev` to build plugin for development and watch & recompile files on change.
+Use `npm run dev` to build for development and watch & recompile files on change.
 
-Use `npm run build` to build plugin for production.
+Use `npm run build` to build for production.
 
 ## oVirt setup
 
-Install latest Engine (nightly snapshot release):
+1. Clone `ovirt-engine` and setup its [development environment](https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master)
+2. Apply [Alexander's patch](https://gerrit.ovirt.org/#/c/54058/) that adds `DashboardDataServlet`
+3. Build Engine from source via `make install-dev`
+4. Run `engine-setup` to configure the product
+5. Symlink plugin files to `ui-plugins` directory as following:
 
 ```
-dnf install http://resources.ovirt.org/pub/yum-repo/ovirt-release-master.rpm
-dnf install ovirt-engine
-engine-setup
-```
-
-Symlink plugin files to `ui-plugins` directory:
-
-```
-cd /usr/share/ovirt-engine/ui-plugins
+cd ${PREFIX}/share/ovirt-engine/ui-plugins
 ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard.json dashboard.json
 ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard-resources dashboard-resources
 ```
