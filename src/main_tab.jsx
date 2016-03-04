@@ -12,12 +12,10 @@ const loadingPlaceholder = (
 )
 
 render(
-  (
-    <DashboardDataProvider
-      url={ENGINE_DATA_URL}
-      loading={loadingPlaceholder}>
-      <GlobalDashboard />
-    </DashboardDataProvider>
-  ),
+  <DashboardDataProvider
+    url={ENGINE_DATA_URL}
+    loading={loadingPlaceholder}>
+    <GlobalDashboard />
+  </DashboardDataProvider>,
   document.getElementById('app')
 )

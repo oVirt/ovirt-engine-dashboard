@@ -48,8 +48,8 @@ class DonutPctChart extends React.Component {
           ['available', total - used]
         ],
         names: {
-          used: 'Used',
-          available: 'Available'
+          used: `${unit} Used`,
+          available: `${unit} Available`
         },
         groups: [
           ['used', 'available']
@@ -60,10 +60,10 @@ class DonutPctChart extends React.Component {
         pattern: this._getDonutChartColorPattern({ used, total, thresholds })
       },
       tooltip: {
-        contents (data) {
-          const percentUsed = Math.round(data[0].ratio * 100)
-          const tooltipText = `${percentUsed} % ${unit} ${data[0].name}`
-          return `<span class="donut-tooltip-pf" style="white-space: nowrap;">${tooltipText}</span>`
+        contents (d) {
+          const percentUsed = Math.round(d[0].ratio * 100)
+          const tooltipText = `${percentUsed} % ${d[0].name}`
+          return `<span class='donut-tooltip-pf' style='white-space: nowrap;'>${tooltipText}</span>`
         }
       }
     })
@@ -87,7 +87,7 @@ class DonutPctChart extends React.Component {
       return defaultPattern
     }
 
-    const percentUsed = used / total * 100.0
+    const percentUsed = used / total * 100
     let color = '#3F9C35'
 
     if (percentUsed >= thresholds.error) {
@@ -111,7 +111,7 @@ class DonutPctChart extends React.Component {
       bigText = `${total - used}`
       smallText = `${unit} Available`
     } else if (centerLabel === 'percent') {
-      bigText = `${Math.round(used / total * 100.0)} %`
+      bigText = `${Math.round(used / total * 100)} %`
       smallText = `of ${total} ${unit}`
     }
 

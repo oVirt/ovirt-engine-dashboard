@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 const { number, shape, objectOf } = PropTypes
-import StatusCard from './StatusCard'
+import AggregateStatusCard from './AggregateStatusCard'
 import UtilizationCard from './UtilizationCard'
 import HeatMap from './HeatMap'
 import HeatMapLegend from './HeatMapLegend'
@@ -13,7 +13,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
       <div className='row row-tile-pf'>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <StatusCard
+          <AggregateStatusCard
             iconClass='fa fa-globe'
             title='Data Centers'
             count={inventory.dc.count}
@@ -22,7 +22,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <StatusCard
+          <AggregateStatusCard
             iconClass='fa fa-cubes'
             title='Clusters'
             count={inventory.cluster.count}
@@ -31,7 +31,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <StatusCard
+          <AggregateStatusCard
             iconClass='fa fa-desktop'
             title='Hosts'
             count={inventory.host.count}
@@ -40,7 +40,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <StatusCard
+          <AggregateStatusCard
             iconClass='fa fa-database'
             title='Storage Domains'
             count={inventory.storage.count}
@@ -49,7 +49,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <StatusCard
+          <AggregateStatusCard
             iconClass='fa fa-laptop'
             title='VMs'
             count={inventory.vm.count}
@@ -74,8 +74,10 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     title='CPU'
                     unit='Cores'
                     donutCenterLabel='used'
-                    used={utilization.cpu.used}
-                    total={utilization.cpu.total} />
+                    sparklineTooltipType='percent'
+                    used={utilization.cpu.usedAverage}
+                    total={100}
+                    history={utilization.cpu.history} />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
@@ -83,8 +85,10 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     title='Memory'
                     unit='GB'
                     donutCenterLabel='available'
-                    used={utilization.memory.used}
-                    total={utilization.memory.total} />
+                    sparklineTooltipType='valuePerDay'
+                    used={utilization.memory.usedAverage}
+                    total={100}
+                    history={utilization.memory.history} />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
@@ -92,8 +96,10 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     title='Storage'
                     unit='TB'
                     donutCenterLabel='percent'
-                    used={utilization.storage.used}
-                    total={utilization.storage.total} />
+                    sparklineTooltipType='usagePerDay'
+                    used={utilization.storage.usedAverage}
+                    total={100}
+                    history={utilization.storage.history} />
                 </div>
 
               </div>

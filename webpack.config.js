@@ -1,18 +1,20 @@
-var webpack = require('webpack')
-var path = require('path')
-var CleanWebpackPlugin = require('clean-webpack-plugin')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
+'use strict'
+
+const webpack = require('webpack')
+const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
 
-var config = module.exports = {
+const config = module.exports = {
   entry: {
     plugin: './src/plugin.js',
     main_tab: './src/main_tab.jsx'
   },
   output: {
-    path: __dirname + '/dist/dashboard-resources',
+    path: `${__dirname}/dist/dashboard-resources`,
     publicPath: '/',
     filename: '[name].js'
   },
@@ -20,7 +22,7 @@ var config = module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'react-hot!babel'
+      loader: 'babel'
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'

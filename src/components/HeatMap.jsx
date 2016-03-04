@@ -7,6 +7,8 @@ import d3 from 'd3'
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap.directive.js
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap.html
 
+// TODO(vs) make sure the data gets sorted before rendering
+
 class HeatMap extends React.Component {
 
   constructor (props) {

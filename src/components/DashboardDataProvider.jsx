@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 const { string, element } = PropTypes
 import $ from 'jquery'
-import GlobalDashboard from './GlobalDashboard'
 
 class DashboardDataProvider extends React.Component {
 
@@ -22,11 +21,11 @@ class DashboardDataProvider extends React.Component {
     })
 
     request.done((data) => {
-      this.setState({ data })
+      this.setState({ data: this._transformData({ data }) })
     })
 
     request.fail(() => {
-      console.error(`Request failed with status code ${request.statusCode()}`)
+      console.error('Request failed', request)
     })
   }
 
@@ -40,13 +39,28 @@ class DashboardDataProvider extends React.Component {
     }
 
     const child = React.Children.only(this.props.children)
+    return React.cloneElement(child, { data: this.state.data })
+  }
 
-    if (child.type === GlobalDashboard) {
-      return React.cloneElement(child, { data: this.state.data })
-    }
+  _transformData ({ data }) {
+    // no need to deep clone the data, just modify the object itself
+    const newData = data
 
-    __DEV__ && console.error('Unsupported child type', child)
-    return false
+    ;['cpu', 'memory', 'storage'].forEach((category) => {
+      const utilizationData = newData.utilization[category]
+
+      utilizationData.history.forEach((obj) => {
+        // SparklineChart works with Date objects on X axis
+        obj.date = new Date(obj.date)
+      })
+
+      utilizationData.nodes.forEach((obj) => {
+        // HeatMap data values should be in range <0, 1>
+        obj.value = obj.value / 100
+      })
+    })
+
+    return newData
   }
 
 }

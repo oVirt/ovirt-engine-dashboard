@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 const { string, number } = PropTypes
 import DonutPctChart from './DonutPctChart'
+import SparklineChart from './SparklineChart'
 
-function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
+function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel, sparklineTooltipType }) {
   return (
     <div className='utilization-chart-pf'>
 
@@ -27,6 +28,13 @@ function UtilizationCard ({ title, unit, used, total, donutCenterLabel }) {
         total={total}
         centerLabel={donutCenterLabel} />
 
+      {/* sparkline chart */}
+      <SparklineChart
+        unit={unit}
+        data={history}
+        total={total}
+        tooltipType={sparklineTooltipType} />
+
     </div>
   )
 }
@@ -36,7 +44,9 @@ UtilizationCard.propTypes = {
   unit: string.isRequired,
   used: number.isRequired,
   total: number.isRequired,
-  donutCenterLabel: DonutPctChart.propTypes.centerLabel.isRequired
+  history: SparklineChart.propTypes.data, // implicit isRequired
+  donutCenterLabel: DonutPctChart.propTypes.centerLabel.isRequired,
+  sparklineTooltipType: SparklineChart.propTypes.tooltipType.isRequired
 }
 
 export default UtilizationCard

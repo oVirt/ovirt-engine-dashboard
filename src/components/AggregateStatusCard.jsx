@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, number } = PropTypes
 
-function StatusCard ({ iconClass, title, count, errors, warnings }) {
+function AggregateStatusCard ({ iconClass, title, count, errors, warnings }) {
   return (
     <div className='card-pf card-pf-aggregate-status card-pf-accented'>
 
@@ -37,7 +37,7 @@ function StatusCard ({ iconClass, title, count, errors, warnings }) {
   )
 }
 
-StatusCard.propTypes = {
+AggregateStatusCard.propTypes = {
   iconClass: string.isRequired,
   title: string.isRequired,
   count: number.isRequired,
@@ -45,4 +45,4 @@ StatusCard.propTypes = {
   warnings: number.isRequired
 }
 
-export default StatusCard
+export default AggregateStatusCard
