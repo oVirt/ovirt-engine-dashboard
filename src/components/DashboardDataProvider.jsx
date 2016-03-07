@@ -58,6 +58,11 @@ class DashboardDataProvider extends React.Component {
         // HeatMap data values should be in range <0, 1>
         obj.value = obj.value / 100
       })
+
+      // sort HeatMap data
+      utilizationData.nodes.sort((a, b) => {
+        return b.value - a.value
+      })
     })
 
     return newData
