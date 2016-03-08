@@ -1,7 +1,3 @@
-/* global parent */
-
-// TODO(vs) use "browser" env. setting in .eslintrc
-
 const api = parent.pluginApi('dashboard')
 
 api.register({
