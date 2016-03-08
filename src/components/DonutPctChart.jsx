@@ -3,6 +3,7 @@ const { string, number, bool, shape, oneOf } = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
 import { getDefaultDonutConfig } from '../compat/patternfly_defaults'
+import { formatNumber1D } from '../utils'
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart-directive.js
@@ -105,14 +106,14 @@ class DonutPctChart extends React.Component {
     let smallText = ''
 
     if (centerLabel === 'used') {
-      bigText = `${used}`
+      bigText = `${formatNumber1D(used)}`
       smallText = `${unit} Used`
     } else if (centerLabel === 'available') {
-      bigText = `${total - used}`
+      bigText = `${formatNumber1D(total - used)}`
       smallText = `${unit} Available`
     } else if (centerLabel === 'percent') {
       bigText = `${Math.round(used / total * 100)} %`
-      smallText = `of ${total} ${unit}`
+      smallText = `of ${formatNumber1D(total)} ${unit}`
     }
 
     const chartTitle = d3.select(this._chartContainer).select('text.c3-chart-arcs-title')

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 const { string, number } = PropTypes
+import { formatNumber1D } from '../utils'
 import DonutPctChart from './DonutPctChart'
 import SparklineChart from './SparklineChart'
 
@@ -13,11 +14,11 @@ function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel,
       {/* utilization summary */}
       <div className='current-values'>
         <h1 className='available-count pull-left'>
-          <span>{total - used}</span>
+          <span>{formatNumber1D(total - used)}</span>
         </h1>
         <div className='available-text pull-left'>
           <div><span>Available</span></div>
-          <div><span>of {total} {unit}</span></div>
+          <div><span>of {formatNumber1D(total)} {unit}</span></div>
         </div>
       </div>
 

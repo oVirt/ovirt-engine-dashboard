@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 const { string, number, bool, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'
 import { getDefaultSparklineConfig } from '../compat/patternfly_defaults'
+import { formatNumber1D } from '../utils'
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/sparkline/sparkline-chart.directive.js
@@ -89,16 +90,12 @@ class SparklineChart extends React.Component {
           } catch (e) {
             console.warn('Error while computing tooltip position', e)
           }
+        },
+        contents: (d) => {
+          return this._getSparklineChartTooltipHTML({ d, total, tooltipType })
         }
       }
     })
-
-    // default tooltip provided via getDefaultSparklineConfig
-    if (tooltipType !== 'default') {
-      config.tooltip.contents = (d) => {
-        return this._getSparklineChartTooltipHTML({ d, total, tooltipType })
-      }
-    }
 
     this._chart = c3.generate(config)
   }
@@ -126,13 +123,15 @@ class SparklineChart extends React.Component {
         )
       case 'valuePerDay':
         return getTooltipTableHTML(
-          `<tr><td class='value'>${d[0].x.toLocaleDateString()}</td><td class='value text-nowrap'>${d[0].value} ${d[0].name}</td></tr>`
+          `<tr><td class='value'>${d[0].x.toLocaleDateString()}</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
         )
       case 'usagePerDay':
         return getTooltipTableHTML(
           `<tr><th colspan='2'>${d[0].x.toLocaleDateString()}</th></tr>` +
-          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${d[0].value} ${d[0].name}</td></tr>`
+          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
         )
+      default:
+        return `<span class='c3-tooltip-sparkline'>${formatNumber1D(d[0].value)} ${d[0].name}</span>`
     }
   }
 

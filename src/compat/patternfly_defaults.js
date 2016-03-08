@@ -1,7 +1,5 @@
 // utility methods adapted from angular-patternfly.js
 
-// TODO(vs) these should be taken out of 'patternfly.charts' Angular module
-
 export function getDefaultDonutConfig () {
   return {
     donut: {
@@ -18,9 +16,6 @@ export function getDefaultDonutConfig () {
     },
     color: {
       pattern: ['#0088CE', '#D1D1D1']
-    },
-    tooltip: {
-      show: false
     }
   }
 }
@@ -32,14 +27,6 @@ export function getDefaultSparklineConfig () {
     },
     size: {
       height: 60
-    },
-    axis: {
-      x: {
-        show: false
-      },
-      y: {
-        show: false
-      }
     },
     color: {
       pattern: ['#0088CE', '#00659C', '#3F9C35', '#EC7A08', '#CC0000']
@@ -53,11 +40,6 @@ export function getDefaultSparklineConfig () {
         expand: {
           r: 4
         }
-      }
-    },
-    tooltip: {
-      contents (d) {
-        return `<span class='c3-tooltip-sparkline'>${d[0].value} ${d[0].name}</span>`
       }
     }
   }
