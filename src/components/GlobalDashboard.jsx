@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 const { number, shape, objectOf } = PropTypes
-import AggregateStatusCard from './AggregateStatusCard'
+import StatusCard from './StatusCard'
 import UtilizationCard from './UtilizationCard'
 import HeatMap from './HeatMap'
 import HeatMapLegend from './HeatMapLegend'
@@ -13,7 +13,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
       <div className='row row-tile-pf'>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <AggregateStatusCard
+          <StatusCard
             iconClass='fa fa-globe'
             title='Data Centers'
             count={inventory.dc.count}
@@ -22,7 +22,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <AggregateStatusCard
+          <StatusCard
             iconClass='fa fa-cubes'
             title='Clusters'
             count={inventory.cluster.count}
@@ -31,7 +31,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <AggregateStatusCard
+          <StatusCard
             iconClass='fa fa-desktop'
             title='Hosts'
             count={inventory.host.count}
@@ -40,7 +40,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <AggregateStatusCard
+          <StatusCard
             iconClass='fa fa-database'
             title='Storage Domains'
             count={inventory.storage.count}
@@ -49,7 +49,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
-          <AggregateStatusCard
+          <StatusCard
             iconClass='fa fa-laptop'
             title='VMs'
             count={inventory.vm.count}

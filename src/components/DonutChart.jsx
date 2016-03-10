@@ -11,7 +11,7 @@ import { formatNumber1D } from '../utils'
 
 // TODO(vs) center label is jumpy when hovering its arcs, double-check Angular reference impl.
 
-class DonutPctChart extends React.Component {
+class DonutChart extends React.Component {
 
   constructor (props) {
     super(props)
@@ -124,7 +124,7 @@ class DonutPctChart extends React.Component {
 
 }
 
-DonutPctChart.propTypes = {
+DonutChart.propTypes = {
   unit: string.isRequired,
   used: number.isRequired,
   total: number.isRequired,
@@ -136,7 +136,7 @@ DonutPctChart.propTypes = {
   centerLabel: oneOf(['used', 'available', 'percent'])
 }
 
-DonutPctChart.defaultProps = {
+DonutChart.defaultProps = {
   thresholds: {
     enabled: true,
     warning: 60,
@@ -145,4 +145,4 @@ DonutPctChart.defaultProps = {
   centerLabel: 'used'
 }
 
-export default DonutPctChart
+export default DonutChart

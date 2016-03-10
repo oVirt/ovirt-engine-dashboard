@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, number } = PropTypes
 import { formatNumber1D } from '../utils'
-import DonutPctChart from './DonutPctChart'
+import DonutChart from './DonutChart'
 import SparklineChart from './SparklineChart'
 
 function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel, sparklineTooltipType }) {
@@ -23,7 +23,7 @@ function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel,
       </div>
 
       {/* percentage chart */}
-      <DonutPctChart
+      <DonutChart
         unit={unit}
         used={used}
         total={total}
@@ -46,7 +46,7 @@ UtilizationCard.propTypes = {
   used: number.isRequired,
   total: number.isRequired,
   history: SparklineChart.propTypes.data, // implicit isRequired
-  donutCenterLabel: DonutPctChart.propTypes.centerLabel.isRequired,
+  donutCenterLabel: DonutChart.propTypes.centerLabel.isRequired,
   sparklineTooltipType: SparklineChart.propTypes.tooltipType.isRequired
 }
 
