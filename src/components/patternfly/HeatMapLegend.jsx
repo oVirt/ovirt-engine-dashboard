@@ -6,6 +6,8 @@ import HeatMap from './HeatMap'
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap-legend.directive.js
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap-legend.html
 
+// TODO(vs) this should be an integral part of HeatMap component
+
 function HeatMapLegend ({ colors, labels }) {
   const reversedColors = colors.slice().reverse()
   const reversedLabels = labels.slice().reverse()

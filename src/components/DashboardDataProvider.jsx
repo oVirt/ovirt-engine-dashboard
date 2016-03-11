@@ -63,6 +63,10 @@ class DashboardDataProvider extends React.Component {
       utilizationData.nodes.sort((a, b) => {
         return b.value - a.value
       })
+
+      // compute derived data
+      utilizationData.overcommit = (utilizationData.virtualUsed / utilizationData.physicalTotal) * 100
+      utilizationData.allocated = (utilizationData.virtualTotal / utilizationData.physicalTotal) * 100
     })
 
     return newData

@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
-const { string, number, bool, shape, arrayOf, oneOf, instanceOf } = PropTypes
+const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'
-import { getDefaultSparklineConfig } from '../compat/patternfly_defaults'
-import { formatNumber1D } from '../utils'
+import { getDefaultSparklineConfig } from '../../patternfly_defaults'
+import { addFormatNumberProp, addFormatDateProp } from '../../utils/component_utils'
+import { formatNumber1D, formatDateTime } from '../../utils/format_utils'
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/sparkline/sparkline-chart.directive.js
@@ -30,13 +31,12 @@ class SparklineChart extends React.Component {
 
   render () {
     return (
-      <div className='sparkline-chart'>
-        <div ref={(e) => { this._chartContainer = e }}></div>
+      <div className='sparkline-chart' style={this.props.containerStyle} ref={(e) => { this._chartContainer = e }}>
       </div>
     )
   }
 
-  _generateChart ({ unit, data, total, showXAxis, showYAxis, tooltipType }) {
+  _generateChart ({ data, total, unit, showXAxis, showYAxis, tooltipType, formatNumber, formatDate }) {
     const config = Object.assign({}, getDefaultSparklineConfig(), {
       bindto: this._chartContainer,
       data: {
@@ -92,7 +92,7 @@ class SparklineChart extends React.Component {
           }
         },
         contents: (d) => {
-          return this._getSparklineChartTooltipHTML({ d, total, tooltipType })
+          return this._getSparklineChartTooltipHTML({ d, total, tooltipType, formatNumber, formatDate })
         }
       }
     })
@@ -109,7 +109,7 @@ class SparklineChart extends React.Component {
     this._chart.destroy()
   }
 
-  _getSparklineChartTooltipHTML ({ d, total, tooltipType }) {
+  _getSparklineChartTooltipHTML ({ d, total, tooltipType, formatNumber, formatDate }) {
     const percentUsed = Math.round(d[0].value / total * 100)
 
     function getTooltipTableHTML (tipRows) {
@@ -121,38 +121,43 @@ class SparklineChart extends React.Component {
         return getTooltipTableHTML(
           `<tr><td class='name'>${percentUsed}%</td></tr>`
         )
-      case 'valuePerDay':
+      case 'valuePerDate':
         return getTooltipTableHTML(
-          `<tr><td class='value'>${d[0].x.toLocaleDateString()}</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><td class='value'>${formatDate(d[0].x)}</td><td class='value text-nowrap'>${formatNumber(d[0].value)} ${d[0].name}</td></tr>`
         )
-      case 'usagePerDay':
+      case 'usagePerDate':
         return getTooltipTableHTML(
-          `<tr><th colspan='2'>${d[0].x.toLocaleDateString()}</th></tr>` +
-          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><th colspan='2'>${formatDate(d[0].x)}</th></tr>` +
+          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${formatNumber(d[0].value)} ${d[0].name}</td></tr>`
         )
       default:
-        return `<span class='c3-tooltip-sparkline'>${formatNumber1D(d[0].value)} ${d[0].name}</span>`
+        return `<span class='c3-tooltip-sparkline'>${formatNumber(d[0].value)} ${d[0].name}</span>`
     }
   }
 
 }
 
 SparklineChart.propTypes = {
-  unit: string.isRequired,
   data: arrayOf(shape({
     value: number,
     date: instanceOf(Date)
   })).isRequired,
   total: number.isRequired,
+  unit: string.isRequired,
   showXAxis: bool,
   showYAxis: bool,
-  tooltipType: oneOf(['default', 'percent', 'valuePerDay', 'usagePerDay'])
+  tooltipType: oneOf(['default', 'percent', 'valuePerDate', 'usagePerDate']),
+  containerStyle: object
 }
 
 SparklineChart.defaultProps = {
   showXAxis: false,
   showYAxis: false,
-  tooltipType: 'default'
+  tooltipType: 'default',
+  containerStyle: {}
 }
+
+addFormatNumberProp(SparklineChart, formatNumber1D)
+addFormatDateProp(SparklineChart, formatDateTime)
 
 export default SparklineChart

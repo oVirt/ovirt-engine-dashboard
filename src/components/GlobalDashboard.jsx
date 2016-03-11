@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 const { number, shape, objectOf } = PropTypes
 import StatusCard from './StatusCard'
 import UtilizationCard from './UtilizationCard'
-import HeatMap from './HeatMap'
-import HeatMapLegend from './HeatMapLegend'
+import HeatMap from './patternfly/HeatMap'
+import HeatMapLegend from './patternfly/HeatMapLegend'
 
 function GlobalDashboard ({ data: { inventory, utilization } }) {
   return (
@@ -72,34 +72,39 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                 <div className='col-xs-12 col-sm-6 col-md-3'>
                   <UtilizationCard
                     title='CPU'
-                    unit='Cores'
-                    donutCenterLabel='used'
-                    sparklineTooltipType='percent'
+                    overcommit={utilization.cpu.overcommit}
+                    allocated={utilization.cpu.allocated}
                     used={utilization.cpu.usedAverage}
                     total={100}
-                    history={utilization.cpu.history} />
+                    history={utilization.cpu.history}
+                    donutCenterLabel='percentWithoutUnit'
+                    sparklineTooltipType='percent' />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
                   <UtilizationCard
                     title='Memory'
-                    unit='GB'
-                    donutCenterLabel='available'
-                    sparklineTooltipType='valuePerDay'
+                    overcommit={utilization.memory.overcommit}
+                    allocated={utilization.memory.allocated}
                     used={utilization.memory.usedAverage}
                     total={100}
-                    history={utilization.memory.history} />
+                    history={utilization.memory.history}
+                    unit='GB'
+                    donutCenterLabel='used'
+                    sparklineTooltipType='valuePerDate' />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
                   <UtilizationCard
                     title='Storage'
-                    unit='TB'
-                    donutCenterLabel='percent'
-                    sparklineTooltipType='usagePerDay'
+                    overcommit={utilization.storage.overcommit}
+                    allocated={utilization.storage.allocated}
                     used={utilization.storage.usedAverage}
                     total={100}
-                    history={utilization.storage.history} />
+                    history={utilization.storage.history}
+                    unit='TB'
+                    donutCenterLabel='used'
+                    sparklineTooltipType='valuePerDate' />
                 </div>
 
               </div>
@@ -114,7 +119,7 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
           <div className='heatmap-card'>
             <div className='card-pf'>
               <div className='card-pf-heading'>
-                <h2 className='card-pf-title'>Node Utilization</h2>
+                <h2 className='card-pf-title'>Cluster Utilization</h2>
               </div>
               <div className='card-pf-body'>
                 <div className='row'>
@@ -123,22 +128,19 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     <div className='col-xs-6 col-sm-6 col-md-3 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>CPU</span>
                       <HeatMap
-                        height={150}
-                        data={utilization.cpu.nodes} />
+                        data={utilization.cpu.blocks} />
                     </div>
 
                     <div className='col-xs-6 col-sm-6 col-md-3 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Memory</span>
                       <HeatMap
-                        height={150}
-                        data={utilization.memory.nodes} />
+                        data={utilization.memory.blocks} />
                     </div>
 
                     <div className='col-xs-6 col-sm-6 col-md-3 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Storage</span>
                       <HeatMap
-                        height={150}
-                        data={utilization.storage.nodes} />
+                        data={utilization.storage.blocks} />
                     </div>
 
                     <div className='col-xs-16 col-sm-8 col-md-8'>

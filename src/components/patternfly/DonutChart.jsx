@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
-const { string, number, bool, shape, oneOf } = PropTypes
+const { string, number, bool, object, shape, oneOf } = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
-import { getDefaultDonutConfig } from '../compat/patternfly_defaults'
-import { formatNumber1D } from '../utils'
+import { getDefaultDonutConfig } from '../../patternfly_defaults'
+import { addFormatNumberProp } from '../../utils/component_utils'
+import { formatNumber1D } from '../../utils/format_utils'
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart-directive.js
@@ -33,13 +34,12 @@ class DonutChart extends React.Component {
 
   render () {
     return (
-      <div className='donut-chart-pf'>
-        <div ref={(e) => { this._chartContainer = e }}></div>
+      <div className='donut-chart-pf' style={this.props.containerStyle} ref={(e) => { this._chartContainer = e }}>
       </div>
     )
   }
 
-  _generateChart ({ unit, used, total, thresholds, centerLabel }) {
+  _generateChart ({ used, total, unit, thresholds, centerLabel, formatNumber }) {
     const config = Object.assign({}, getDefaultDonutConfig(), {
       bindto: this._chartContainer,
       data: {
@@ -70,7 +70,7 @@ class DonutChart extends React.Component {
     })
 
     this._chart = c3.generate(config)
-    this._setDonutChartCenterLabel({ unit, used, total, centerLabel })
+    this._setDonutChartCenterLabel({ unit, used, total, centerLabel, formatNumber })
   }
 
   _updateChart (props) {
@@ -101,19 +101,22 @@ class DonutChart extends React.Component {
     return [color].concat(defaultPattern.slice(1))
   }
 
-  _setDonutChartCenterLabel ({ unit, used, total, centerLabel }) {
+  _setDonutChartCenterLabel ({ unit, used, total, centerLabel, formatNumber }) {
     let bigText = ''
     let smallText = ''
 
     if (centerLabel === 'used') {
-      bigText = `${formatNumber1D(used)}`
+      bigText = `${formatNumber(used)}`
       smallText = `${unit} Used`
     } else if (centerLabel === 'available') {
-      bigText = `${formatNumber1D(total - used)}`
+      bigText = `${formatNumber(total - used)}`
       smallText = `${unit} Available`
-    } else if (centerLabel === 'percent') {
+    } else if (centerLabel === 'percentWithUnit') {
       bigText = `${Math.round(used / total * 100)} %`
-      smallText = `of ${formatNumber1D(total)} ${unit}`
+      smallText = `of ${formatNumber(total)} ${unit}`
+    } else if (centerLabel === 'percentWithoutUnit') {
+      bigText = `${Math.round(used / total * 100)} %`
+      smallText = 'Used'
     }
 
     const chartTitle = d3.select(this._chartContainer).select('text.c3-chart-arcs-title')
@@ -125,15 +128,16 @@ class DonutChart extends React.Component {
 }
 
 DonutChart.propTypes = {
-  unit: string.isRequired,
   used: number.isRequired,
   total: number.isRequired,
+  unit: string.isRequired,
   thresholds: shape({
     enabled: bool,
     warning: number,
     error: number
   }),
-  centerLabel: oneOf(['used', 'available', 'percent'])
+  centerLabel: oneOf(['used', 'available', 'percentWithUnit', 'percentWithoutUnit']),
+  containerStyle: object
 }
 
 DonutChart.defaultProps = {
@@ -142,7 +146,10 @@ DonutChart.defaultProps = {
     warning: 60,
     error: 90
   },
-  centerLabel: 'used'
+  centerLabel: 'used',
+  containerStyle: {}
 }
+
+addFormatNumberProp(DonutChart, formatNumber1D)
 
 export default DonutChart

@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react'
 const { string, number } = PropTypes
-import { formatNumber1D } from '../utils'
-import DonutChart from './DonutChart'
-import SparklineChart from './SparklineChart'
+import { formatNumber0D } from '../utils/format_utils'
+import DonutChart from './patternfly/DonutChart'
+import SparklineChart from './patternfly/SparklineChart'
 
-function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel, sparklineTooltipType }) {
+function UtilizationCard ({ title, overcommit, allocated, used, total, history, unit, donutCenterLabel, sparklineTooltipType }) {
+  const lastHistoryObj = history[history.length - 1] || {}
+  const lastHistoryValue = lastHistoryObj.value || 0
   return (
     <div className='utilization-chart-pf'>
 
@@ -13,28 +15,28 @@ function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel,
 
       {/* utilization summary */}
       <div className='current-values'>
-        <h1 className='available-count pull-left'>
-          <span>{formatNumber1D(total - used)}</span>
-        </h1>
-        <div className='available-text pull-left'>
-          <div><span>Available</span></div>
-          <div><span>of {formatNumber1D(total)} {unit}</span></div>
+        <div className='available-text'>
+          Over commit: {formatNumber0D(overcommit)}% (allocated {formatNumber0D(allocated)}%)
         </div>
       </div>
 
       {/* percentage chart */}
       <DonutChart
-        unit={unit}
         used={used}
         total={total}
+        unit={unit}
         centerLabel={donutCenterLabel} />
 
-      {/* sparkline chart */}
+      {/* sparkline chart with percentage label */}
       <SparklineChart
-        unit={unit}
         data={history}
         total={total}
-        tooltipType={sparklineTooltipType} />
+        unit={unit}
+        tooltipType={sparklineTooltipType}
+        containerStyle={{width: 360}} />
+      <h1 style={{display: 'inline-block', float: 'right', width: 65 }}>
+        <span>{formatNumber0D(lastHistoryValue)}%</span>
+      </h1>
 
     </div>
   )
@@ -42,12 +44,20 @@ function UtilizationCard ({ title, unit, used, total, history, donutCenterLabel,
 
 UtilizationCard.propTypes = {
   title: string.isRequired,
-  unit: string.isRequired,
+  overcommit: number.isRequired,
+  allocated: number.isRequired,
   used: number.isRequired,
   total: number.isRequired,
   history: SparklineChart.propTypes.data, // implicit isRequired
-  donutCenterLabel: DonutChart.propTypes.centerLabel.isRequired,
-  sparklineTooltipType: SparklineChart.propTypes.tooltipType.isRequired
+  unit: string,
+  donutCenterLabel: DonutChart.propTypes.centerLabel,
+  sparklineTooltipType: SparklineChart.propTypes.tooltipType
+}
+
+UtilizationCard.defaultProps = {
+  unit: '',
+  donutCenterLabel: DonutChart.defaultProps.centerLabel,
+  sparklineTooltipType: SparklineChart.defaultProps.tooltipType
 }
 
 export default UtilizationCard

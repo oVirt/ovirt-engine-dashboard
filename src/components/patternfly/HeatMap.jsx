@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-const { string, number, shape, arrayOf } = PropTypes
+const { string, number, object, shape, arrayOf } = PropTypes
 import $ from 'jquery'
 import d3 from 'd3'
 
@@ -23,18 +23,24 @@ class HeatMap extends React.Component {
   }
 
   render () {
-    const containerStyle = { height: this.props.height }
     return (
-      <div className='heatmap-container' style={containerStyle} ref={(e) => { this._heatMapContainer = e }}>
+      <div className='heatmap-container' style={this.props.containerStyle} ref={(e) => { this._heatMapContainer = e }}>
         <svg className='pf-heatmap-svg' />
       </div>
     )
   }
 
-  _generateHeatMap ({ data, thresholds }) {
+  _generateHeatMap ({ data, thresholds, maxBlockSize }) {
     const containerWidth = this._heatMapContainer.clientWidth
     const containerHeight = this._heatMapContainer.clientHeight
-    const blockSize = this._determineBlockSize({ containerWidth, containerHeight, numberOfBlocks: data.length })
+
+    const blockSize = this._determineBlockSize({
+      containerWidth,
+      containerHeight,
+      numberOfBlocks: data.length,
+      maxBlockSize
+    })
+
     const numberOfRows = (blockSize === 0) ? 0 : Math.floor(containerHeight / blockSize)
     const color = d3.scale.threshold().domain(thresholds.domain).range(thresholds.colors)
     const blockPadding = 1
@@ -78,7 +84,7 @@ class HeatMap extends React.Component {
     this._generateHeatMap(props)
   }
 
-  _determineBlockSize ({ containerWidth, containerHeight, numberOfBlocks }) {
+  _determineBlockSize ({ containerWidth, containerHeight, numberOfBlocks, maxBlockSize }) {
     const x = containerWidth
     const y = containerHeight
     const n = numberOfBlocks
@@ -99,13 +105,15 @@ class HeatMap extends React.Component {
       sy = y / py
     }
 
+    sx = Math.min(sx, maxBlockSize)
+    sy = Math.min(sy, maxBlockSize)
+
     return Math.max(sx, sy)
   }
 
 }
 
 HeatMap.propTypes = {
-  height: number.isRequired,
   data: arrayOf(shape({
     value: number, // from range <0, 1>
     name: string
@@ -113,13 +121,19 @@ HeatMap.propTypes = {
   thresholds: shape({
     domain: arrayOf(number), // threshold scale domain
     colors: arrayOf(string)  // threshold scale color range
-  })
+  }),
+  maxBlockSize: number,
+  containerStyle: object
 }
 
 HeatMap.defaultProps = {
   thresholds: {
     domain: [0.7, 0.8, 0.9],
     colors: ['#D4F0FA', '#F9D67A', '#EC7A08', '#CE0000']
+  },
+  maxBlockSize: 80,
+  containerStyle: {
+    height: 150
   }
 }
 
