@@ -74,8 +74,8 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     title='CPU'
                     overcommit={utilization.cpu.overcommit}
                     allocated={utilization.cpu.allocated}
-                    used={utilization.cpu.usedAverage}
-                    total={100}
+                    used={utilization.cpu.used}
+                    total={utilization.cpu.total}
                     history={utilization.cpu.history}
                     donutCenterLabel='percentWithoutUnit'
                     sparklineTooltipType='percent' />
@@ -86,8 +86,8 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     title='Memory'
                     overcommit={utilization.memory.overcommit}
                     allocated={utilization.memory.allocated}
-                    used={utilization.memory.usedAverage}
-                    total={100}
+                    used={utilization.memory.used}
+                    total={utilization.memory.total}
                     history={utilization.memory.history}
                     unit='GB'
                     donutCenterLabel='used'
@@ -99,8 +99,8 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                     title='Storage'
                     overcommit={utilization.storage.overcommit}
                     allocated={utilization.storage.allocated}
-                    used={utilization.storage.usedAverage}
-                    total={100}
+                    used={utilization.storage.used}
+                    total={utilization.storage.total}
                     history={utilization.storage.history}
                     unit='TB'
                     donutCenterLabel='used'

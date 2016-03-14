@@ -67,6 +67,18 @@ class DashboardDataProvider extends React.Component {
       // compute derived data
       utilizationData.overcommit = (utilizationData.virtualUsed / utilizationData.physicalTotal) * 100
       utilizationData.allocated = (utilizationData.virtualTotal / utilizationData.physicalTotal) * 100
+
+      if (category === 'memory' || category === 'storage') {
+        utilizationData.used = (utilizationData.usedAverage * utilizationData.physicalTotal) / 100
+        utilizationData.total = utilizationData.physicalTotal
+
+        utilizationData.history.forEach((obj) => {
+          obj.value = (obj.value * utilizationData.physicalTotal) / 100
+        })
+      } else {
+        utilizationData.used = utilizationData.usedAverage
+        utilizationData.total = 100
+      }
     })
 
     return newData
