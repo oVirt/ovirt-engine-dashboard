@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-const { number, shape, objectOf } = PropTypes
+const { shape } = PropTypes
 import StatusCard from './StatusCard'
 import UtilizationCard from './UtilizationCard'
 import HeatMap from './patternfly/HeatMap'
@@ -16,45 +16,35 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
           <StatusCard
             iconClass='fa fa-globe'
             title='Data Centers'
-            count={inventory.dc.count}
-            errors={inventory.dc.errors}
-            warnings={inventory.dc.warnings} />
+            data={inventory.dc} />
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
           <StatusCard
             iconClass='fa fa-cubes'
             title='Clusters'
-            count={inventory.cluster.count}
-            errors={inventory.cluster.errors}
-            warnings={inventory.cluster.warnings} />
+            data={inventory.cluster} />
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
           <StatusCard
             iconClass='fa fa-desktop'
             title='Hosts'
-            count={inventory.host.count}
-            errors={inventory.host.errors}
-            warnings={inventory.host.warnings} />
+            data={inventory.host} />
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
           <StatusCard
             iconClass='fa fa-database'
             title='Storage Domains'
-            count={inventory.storage.count}
-            errors={inventory.storage.errors}
-            warnings={inventory.storage.warnings} />
+            data={inventory.storage} />
         </div>
 
         <div className='col-xs-6 col-sm-6 col-md-2'>
           <StatusCard
             iconClass='fa fa-laptop'
             title='VMs'
-            count={inventory.vm.count}
-            errors={inventory.vm.errors}
-            warnings={inventory.vm.warnings} />
+            data={inventory.vm} />
         </div>
 
       </div>
@@ -72,39 +62,28 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
                 <div className='col-xs-12 col-sm-6 col-md-3'>
                   <UtilizationCard
                     title='CPU'
-                    overcommit={utilization.cpu.overcommit}
-                    allocated={utilization.cpu.allocated}
-                    used={utilization.cpu.used}
-                    total={utilization.cpu.total}
-                    history={utilization.cpu.history}
-                    donutCenterLabel='percentWithoutUnit'
-                    sparklineTooltipType='percent' />
+                    unit=''
+                    donutCenterLabel='percentUsed'
+                    sparklineTooltipType='percent'
+                    data={utilization.cpu} />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
                   <UtilizationCard
                     title='Memory'
-                    overcommit={utilization.memory.overcommit}
-                    allocated={utilization.memory.allocated}
-                    used={utilization.memory.used}
-                    total={utilization.memory.total}
-                    history={utilization.memory.history}
                     unit='GB'
                     donutCenterLabel='used'
-                    sparklineTooltipType='valuePerDate' />
+                    sparklineTooltipType='valuePerDate'
+                    data={utilization.memory} />
                 </div>
 
                 <div className='col-xs-12 col-sm-6 col-md-3'>
                   <UtilizationCard
                     title='Storage'
-                    overcommit={utilization.storage.overcommit}
-                    allocated={utilization.storage.allocated}
-                    used={utilization.storage.used}
-                    total={utilization.storage.total}
-                    history={utilization.storage.history}
                     unit='TB'
                     donutCenterLabel='used'
-                    sparklineTooltipType='valuePerDate' />
+                    sparklineTooltipType='valuePerDate'
+                    data={utilization.storage} />
                 </div>
 
               </div>
@@ -159,19 +138,27 @@ function GlobalDashboard ({ data: { inventory, utilization } }) {
   )
 }
 
-GlobalDashboard.propTypes = {
-  data: shape({
-    inventory: objectOf(shape({
-      count: number,
-      errors: number,
-      warnings: number
-    })).isRequired,
-    utilization: objectOf(shape({
-      used: number,
-      total: number,
-      nodes: HeatMap.propTypes.data
-    })).isRequired
+const utilizationItemDataShape = Object.assign({}, UtilizationCard.dataShape, {
+  blocks: HeatMap.propTypes.data
+})
+
+const dataShape = {
+  inventory: shape({
+    dc: shape(StatusCard.dataShape),
+    cluster: shape(StatusCard.dataShape),
+    host: shape(StatusCard.dataShape),
+    storage: shape(StatusCard.dataShape),
+    vm: shape(StatusCard.dataShape)
+  }),
+  utilization: shape({
+    cpu: shape(utilizationItemDataShape),
+    memory: shape(utilizationItemDataShape),
+    storage: shape(utilizationItemDataShape)
   })
+}
+
+GlobalDashboard.propTypes = {
+  data: shape(dataShape).isRequired
 }
 
 export default GlobalDashboard

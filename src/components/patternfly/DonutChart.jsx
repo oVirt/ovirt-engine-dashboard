@@ -70,7 +70,7 @@ class DonutChart extends React.Component {
     })
 
     this._chart = c3.generate(config)
-    this._setDonutChartCenterLabel({ unit, used, total, centerLabel, formatNumber })
+    this._setDonutChartCenterLabel({ used, total, unit, centerLabel, formatNumber })
   }
 
   _updateChart (props) {
@@ -101,7 +101,7 @@ class DonutChart extends React.Component {
     return [color].concat(defaultPattern.slice(1))
   }
 
-  _setDonutChartCenterLabel ({ unit, used, total, centerLabel, formatNumber }) {
+  _setDonutChartCenterLabel ({ used, total, unit, centerLabel, formatNumber }) {
     let bigText = ''
     let smallText = ''
 
@@ -111,10 +111,10 @@ class DonutChart extends React.Component {
     } else if (centerLabel === 'available') {
       bigText = `${formatNumber(total - used)}`
       smallText = `${unit} Available`
-    } else if (centerLabel === 'percentWithUnit') {
+    } else if (centerLabel === 'percentOfUnit') {
       bigText = `${Math.round(used / total * 100)} %`
       smallText = `of ${formatNumber(total)} ${unit}`
-    } else if (centerLabel === 'percentWithoutUnit') {
+    } else if (centerLabel === 'percentUsed') {
       bigText = `${Math.round(used / total * 100)} %`
       smallText = 'Used'
     }
@@ -136,7 +136,7 @@ DonutChart.propTypes = {
     warning: number,
     error: number
   }),
-  centerLabel: oneOf(['used', 'available', 'percentWithUnit', 'percentWithoutUnit']),
+  centerLabel: oneOf(['used', 'available', 'percentOfUnit', 'percentUsed']),
   containerStyle: object
 }
 

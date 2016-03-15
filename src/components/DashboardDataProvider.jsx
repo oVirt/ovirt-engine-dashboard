@@ -72,6 +72,7 @@ class DashboardDataProvider extends React.Component {
         utilizationData.used = (utilizationData.usedAverage * utilizationData.physicalTotal) / 100
         utilizationData.total = utilizationData.physicalTotal
 
+        // transform percentage based history data to physical units
         utilizationData.history.forEach((obj) => {
           obj.value = (obj.value * utilizationData.physicalTotal) / 100
         })

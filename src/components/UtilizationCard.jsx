@@ -1,12 +1,10 @@
 import React, { PropTypes } from 'react'
-const { string, number } = PropTypes
+const { string, number, shape } = PropTypes
 import { formatNumber0D } from '../utils/format_utils'
 import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 
-function UtilizationCard ({ title, overcommit, allocated, used, total, history, unit, donutCenterLabel, sparklineTooltipType }) {
-  const lastHistoryObj = history[history.length - 1] || {}
-  const lastHistoryValue = lastHistoryObj.value || 0
+function UtilizationCard ({ data: { overcommit, allocated, used, total, history }, title, unit, donutCenterLabel, sparklineTooltipType }) {
   return (
     <div className='utilization-chart-pf'>
 
@@ -27,35 +25,34 @@ function UtilizationCard ({ title, overcommit, allocated, used, total, history, 
         unit={unit}
         centerLabel={donutCenterLabel} />
 
-      {/* sparkline chart with percentage label */}
+      {/* sparkline chart */}
       <SparklineChart
         data={history}
         total={total}
         unit={unit}
-        tooltipType={sparklineTooltipType}
-        containerStyle={{width: 360}} />
-      <h1 style={{display: 'inline-block', float: 'right', width: 65 }}>
-        <span>{formatNumber0D(lastHistoryValue)}%</span>
-      </h1>
+        tooltipType={sparklineTooltipType} />
 
     </div>
   )
 }
 
+const dataShape = UtilizationCard.dataShape = {
+  overcommit: number,
+  allocated: number,
+  used: number,
+  total: number,
+  history: SparklineChart.propTypes.data
+}
+
 UtilizationCard.propTypes = {
+  data: shape(dataShape).isRequired,
   title: string.isRequired,
-  overcommit: number.isRequired,
-  allocated: number.isRequired,
-  used: number.isRequired,
-  total: number.isRequired,
-  history: SparklineChart.propTypes.data, // implicit isRequired
-  unit: string,
+  unit: string.isRequired,
   donutCenterLabel: DonutChart.propTypes.centerLabel,
   sparklineTooltipType: SparklineChart.propTypes.tooltipType
 }
 
 UtilizationCard.defaultProps = {
-  unit: '',
   donutCenterLabel: DonutChart.defaultProps.centerLabel,
   sparklineTooltipType: SparklineChart.defaultProps.tooltipType
 }
