@@ -1,1 +1,2 @@
-export const ENGINE_DATA_URL = 'http://127.0.0.1:8080/ovirt-engine/webadmin/dashboard_data'
+export const PLUGIN_NAME = 'dashboard'
+export const PLUGIN_API = window.parent.pluginApi(PLUGIN_NAME)

@@ -7,12 +7,9 @@ import d3 from 'd3'
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap.directive.js
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap.html
 
-class HeatMap extends React.Component {
+// TODO(vs) sync with latest Angular impl.
 
-  constructor (props) {
-    super(props)
-    this._heatMapContainer = null
-  }
+class HeatMap extends React.Component {
 
   componentDidMount () {
     this._generateHeatMap(this.props)
@@ -30,7 +27,7 @@ class HeatMap extends React.Component {
     )
   }
 
-  _generateHeatMap ({ data, thresholds, maxBlockSize }) {
+  _generateHeatMap ({ data, thresholds, maxBlockSize, blockPadding }) {
     const containerWidth = this._heatMapContainer.clientWidth
     const containerHeight = this._heatMapContainer.clientHeight
 
@@ -43,7 +40,6 @@ class HeatMap extends React.Component {
 
     const numberOfRows = (blockSize === 0) ? 0 : Math.floor(containerHeight / blockSize)
     const color = d3.scale.threshold().domain(thresholds.domain).range(thresholds.colors)
-    const blockPadding = 1
 
     function highlightBlock (block, active) {
       block.style('fill-opacity', active ? 1 : 0.4)
@@ -74,7 +70,7 @@ class HeatMap extends React.Component {
     $('rect[data-role=heat-map-block]', this._heatMapContainer).tooltip({
       animation: false,
       container: 'body',
-      title: function () {
+      title () {
         return data[$(this).attr('data-index')].name
       }
     })
@@ -123,6 +119,7 @@ HeatMap.propTypes = {
     colors: arrayOf(string)  // threshold scale color range
   }),
   maxBlockSize: number,
+  blockPadding: number,
   containerStyle: object
 }
 
@@ -131,9 +128,10 @@ HeatMap.defaultProps = {
     domain: [0.7, 0.8, 0.9],
     colors: ['#D4F0FA', '#F9D67A', '#EC7A08', '#CE0000']
   },
-  maxBlockSize: 80,
+  maxBlockSize: 50,
+  blockPadding: 1,
   containerStyle: {
-    height: 150
+    height: 100
   }
 }
 

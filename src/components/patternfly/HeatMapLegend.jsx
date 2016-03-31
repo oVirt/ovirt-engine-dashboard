@@ -7,15 +7,17 @@ import HeatMap from './HeatMap'
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap-legend.html
 
 // TODO(vs) this should be an integral part of HeatMap component
+// TODO(vs) sync with latest Angular impl.
 
 function HeatMapLegend ({ colors, labels }) {
   const reversedColors = colors.slice().reverse()
   const reversedLabels = labels.slice().reverse()
+
   return (
     <div className='heatmap-legend heatmap-legend-container'>
       <ul className='heatmap-legend-container' style={{paddingLeft: 0}}>
         {reversedColors.map((color, index) => (
-          <li key={index} className='heatmap-pf-legend-items'>
+          <li key={color} className='heatmap-pf-legend-items'>
             <span className='color-box' style={{backgroundColor: color}} />
             <span className='legend-text'>{reversedLabels[index]}</span>
           </li>

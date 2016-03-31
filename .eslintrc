@@ -5,7 +5,9 @@
   },
   "rules": {
     "react/jsx-no-bind": [1, {
-      "ignoreRefs": true
-    }]
+      "ignoreRefs": true,
+      "allowArrowFunctions": true
+    }],
+    "react/no-string-refs": [1]
   }
 }

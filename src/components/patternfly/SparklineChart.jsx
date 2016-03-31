@@ -2,20 +2,19 @@ import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'
 import { getDefaultSparklineConfig } from '../../patternfly_defaults'
-import { addFormatNumberProp, addFormatDateProp } from '../../utils/component_utils'
-import { formatNumber1D, formatDateTime } from '../../utils/format_utils'
+import { addFormatNumberProp, addFormatDateProp } from '../../utils/react'
+import { formatNumber1D, formatDateTime } from '../../utils/formatting'
+
+// PatternFly reference:
+//  https://www.patternfly.org/patterns/sparkline/
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/sparkline/sparkline-chart.directive.js
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/sparkline/sparkline-chart.html
 
-class SparklineChart extends React.Component {
+// TODO(vs) sync with latest Angular impl.
 
-  constructor (props) {
-    super(props)
-    this._chart = null
-    this._chartContainer = null
-  }
+class SparklineChart extends React.Component {
 
   componentDidMount () {
     this._generateChart(this.props)

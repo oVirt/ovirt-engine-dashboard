@@ -1,5 +1,4 @@
 // TODO(vs) use Intl.NumberFormat and Intl.DateTimeFormat (ECMA-402 standard)
-// If we need to support IE <= 10, use polyfill https://github.com/andyearnshaw/Intl.js
 
 export function formatNumber (num, digits) {
   return Number(num.toFixed(digits))

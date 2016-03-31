@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react'
-const { string, number, bool, object, shape, oneOf } = PropTypes
+const { string, number, bool, object, shape, oneOf, func } = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
 import { getDefaultDonutConfig } from '../../patternfly_defaults'
-import { addFormatNumberProp } from '../../utils/component_utils'
-import { formatNumber1D } from '../../utils/format_utils'
+import { addFormatNumberProp } from '../../utils/react'
+import { formatNumber1D } from '../../utils/formatting'
+
+// PatternFly reference:
+//  https://www.patternfly.org/patterns/donut-chart/
 
 // Angular reference:
 //  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart-directive.js
@@ -12,13 +15,9 @@ import { formatNumber1D } from '../../utils/format_utils'
 
 // TODO(vs) center label is jumpy when hovering its arcs, double-check Angular reference impl.
 
-class DonutChart extends React.Component {
+// TODO(vs) sync with latest Angular impl.
 
-  constructor (props) {
-    super(props)
-    this._chart = null
-    this._chartContainer = null
-  }
+class DonutChart extends React.Component {
 
   componentDidMount () {
     this._generateChart(this.props)
@@ -39,7 +38,7 @@ class DonutChart extends React.Component {
     )
   }
 
-  _generateChart ({ used, total, unit, thresholds, centerLabel, formatNumber }) {
+  _generateChart ({ used, total, unit, thresholds, centerLabel, onDataClick, formatNumber }) {
     const config = Object.assign({}, getDefaultDonutConfig(), {
       bindto: this._chartContainer,
       data: {
@@ -55,7 +54,8 @@ class DonutChart extends React.Component {
         groups: [
           ['used', 'available']
         ],
-        order: null
+        order: null,
+        onclick: onDataClick
       },
       color: {
         pattern: this._getDonutChartColorPattern({ used, total, thresholds })
@@ -111,10 +111,7 @@ class DonutChart extends React.Component {
     } else if (centerLabel === 'available') {
       bigText = `${formatNumber(total - used)}`
       smallText = `${unit} Available`
-    } else if (centerLabel === 'percentOfUnit') {
-      bigText = `${Math.round(used / total * 100)} %`
-      smallText = `of ${formatNumber(total)} ${unit}`
-    } else if (centerLabel === 'percentUsed') {
+    } else if (centerLabel === 'percent') {
       bigText = `${Math.round(used / total * 100)} %`
       smallText = 'Used'
     }
@@ -136,8 +133,9 @@ DonutChart.propTypes = {
     warning: number,
     error: number
   }),
-  centerLabel: oneOf(['used', 'available', 'percentOfUnit', 'percentUsed']),
-  containerStyle: object
+  centerLabel: oneOf(['used', 'available', 'percent']),
+  containerStyle: object,
+  onDataClick: func // (d, element) => void
 }
 
 DonutChart.defaultProps = {
@@ -147,7 +145,8 @@ DonutChart.defaultProps = {
     error: 90
   },
   centerLabel: 'used',
-  containerStyle: {}
+  containerStyle: {},
+  onDataClick () {}
 }
 
 addFormatNumberProp(DonutChart, formatNumber1D)

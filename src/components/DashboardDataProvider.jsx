@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
-const { string, element } = PropTypes
+const { element } = PropTypes
 import $ from 'jquery'
+import { PLUGIN_API as api } from '../constants'
 
 class DashboardDataProvider extends React.Component {
 
@@ -12,16 +13,19 @@ class DashboardDataProvider extends React.Component {
   componentDidMount () {
     const request = this._jqXHR = $.ajax({
       method: 'GET',
-      url: this.props.url,
+      url: `${api.engineBaseUrl()}webadmin/dashboard_data`,
       dataType: 'json',
       headers: {
         'Accept': 'application/json',
-        'Prefer': 'fake_data'
+        'Prefer': 'fake_data' // TODO(vs) send 'error' occasionally
       }
     })
 
     request.done((data) => {
-      this.setState({ data: this._transformData({ data }) })
+      this.setState({
+        data: this._transformData({ data }),
+        lastUpdated: new Date()
+      })
     })
 
     request.fail(() => {
@@ -39,7 +43,11 @@ class DashboardDataProvider extends React.Component {
     }
 
     const child = React.Children.only(this.props.children)
-    return React.cloneElement(child, { data: this.state.data })
+
+    return React.cloneElement(child, {
+      data: this.state.data,
+      lastUpdated: this.state.lastUpdated
+    })
   }
 
   _transformData ({ data }) {
@@ -47,39 +55,23 @@ class DashboardDataProvider extends React.Component {
     const newData = data
 
     ;['cpu', 'memory', 'storage'].forEach((category) => {
-      const utilizationData = newData.utilization[category]
+      const globalUtilizationData = newData.globalUtilization[category]
+      const clusterUtilizationData = newData.clusterUtilization[category]
 
-      utilizationData.history.forEach((obj) => {
-        // SparklineChart works with Date objects on X axis
+      globalUtilizationData.history.forEach((obj) => {
+        // sparkline chart works with Date objects on X axis
         obj.date = new Date(obj.date)
       })
 
-      utilizationData.blocks.forEach((obj) => {
-        // HeatMap data values should be in range <0, 1>
+      clusterUtilizationData.blocks.forEach((obj) => {
+        // heat map component expects values in range <0, 1>
         obj.value = obj.value / 100
       })
 
-      // sort HeatMap data
-      utilizationData.blocks.sort((a, b) => {
+      // sort heat map data
+      clusterUtilizationData.blocks.sort((a, b) => {
         return b.value - a.value
       })
-
-      // compute derived data
-      utilizationData.overcommit = (utilizationData.virtualUsed / utilizationData.physicalTotal) * 100
-      utilizationData.allocated = (utilizationData.virtualTotal / utilizationData.physicalTotal) * 100
-
-      if (category === 'memory' || category === 'storage') {
-        utilizationData.used = (utilizationData.usedAverage * utilizationData.physicalTotal) / 100
-        utilizationData.total = utilizationData.physicalTotal
-
-        // transform percentage based history data to physical units
-        utilizationData.history.forEach((obj) => {
-          obj.value = (obj.value * utilizationData.physicalTotal) / 100
-        })
-      } else {
-        utilizationData.used = utilizationData.usedAverage
-        utilizationData.total = 100
-      }
     })
 
     return newData
@@ -89,7 +81,6 @@ class DashboardDataProvider extends React.Component {
 
 DashboardDataProvider.propTypes = {
   children: element.isRequired,
-  url: string.isRequired,
   loading: element.isRequired
 }
 
