@@ -5,6 +5,7 @@ import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 import ModalDialog from './bootstrap/ModalDialog'
 import ObjectUtilizationList from './ObjectUtilizationList'
+import UtilizationBarChart from './patternfly/UtilizationBarChart'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/utilization-trend-card/
@@ -99,7 +100,8 @@ class UtilizationTrendCard extends React.Component {
           </div>
           <ObjectUtilizationList
             data={overUtilization.vms}
-            emptyListText='There are currently no overutilized virtual machines' />
+            emptyListText='There are currently no overutilized virtual machines'
+            thresholds={Object.assign({}, UtilizationBarChart.defaultProps.thresholds, { warning: 75 })} />
 
         </ModalDialog>
 

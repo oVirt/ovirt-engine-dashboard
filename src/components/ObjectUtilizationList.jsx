@@ -16,7 +16,7 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
 
   return (
     <div className='overutilized-container'>
-      <div className='overutilized-section'>
+      <div className='overutilized-section' style={{ overflow: 'visible' }}>
         {sortedData.map((item) => (
           <div key={item.name} className='row'>
             <div className='col-md-2 text-right'>
@@ -35,10 +35,12 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
                 footerLabelFormat='percent' />
             </div>
             <div className='col-md-1'>
-              <span className={classNames('pficon', {
-                'pficon-trend-up': item.trend === 'up',
-                'pficon-trend-down': item.trend === 'down'
-              })} />
+              {item.trend !== 'same' &&
+                <span className={classNames('pficon', {
+                  'pficon-trend-up': item.trend === 'up',
+                  'pficon-trend-down': item.trend === 'down'
+                })}/>
+              }
             </div>
           </div>
         ))}
@@ -50,7 +52,7 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
 const dataItemShape = ObjectUtilizationList.dataItemShape = {
   name: string,
   value: number,
-  trend: oneOf(['up', 'down'])
+  trend: oneOf(['up', 'down', 'same'])
 }
 
 ObjectUtilizationList.propTypes = {

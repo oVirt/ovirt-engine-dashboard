@@ -30,6 +30,7 @@ function UtilizationBarChart ({
     titleLabelWidth, footerLabelWidth
   }) {
   const percentUsed = used / total * 100
+  const percentAvailable = 100 - percentUsed
   const useDefaultFooter = !footer
 
   const progressThresholdClass = thresholds.enabled && classNames({
@@ -47,7 +48,7 @@ function UtilizationBarChart ({
           <div className='progress progress-label-top-right'>
 
             {/* used progress */}
-            <Tooltip text={`${percentUsed}% Used`}>
+            <Tooltip text={`${formatNumber0D(percentUsed)}% Used`}>
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
                 {useDefaultFooter && footerLabelFormat === 'actual' &&
                   <span>
@@ -64,7 +65,7 @@ function UtilizationBarChart ({
             </Tooltip>
 
             {/* available progress */}
-            <Tooltip text={`${100 - percentUsed}% Available`}>
+            <Tooltip text={`${formatNumber0D(percentAvailable)}% Available`}>
               <div className='progress-bar progress-bar-remaining' style={{ width: `${100 - percentUsed}%` }} role='progressbar'>
               </div>
             </Tooltip>
@@ -80,7 +81,7 @@ function UtilizationBarChart ({
           <div className='progress'>
 
             {/* used progress */}
-            <Tooltip text={`${percentUsed}% Used`}>
+            <Tooltip text={`${formatNumber0D(percentUsed)}% Used`}>
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
                 {useDefaultFooter && footerLabelFormat === 'actual' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
@@ -97,7 +98,7 @@ function UtilizationBarChart ({
             </Tooltip>
 
             {/* available progress */}
-            <Tooltip text={`${100 - percentUsed}% Available`}>
+            <Tooltip text={`${formatNumber0D(percentAvailable)}% Available`}>
               <div className='progress-bar progress-bar-remaining' style={{ width: `${100 - percentUsed}%` }} role='progressbar'>
               </div>
             </Tooltip>
