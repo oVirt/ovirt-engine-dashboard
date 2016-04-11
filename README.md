@@ -20,11 +20,11 @@ Use `npm run build` to build for production.
 
 ## oVirt setup
 
-1. Clone `ovirt-engine` and setup its [development environment](https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master)
-2. Apply [Alexander's patch](https://gerrit.ovirt.org/#/c/54058/) that adds `DashboardDataServlet`
-3. Build Engine from source via `make install-dev`
-4. Run `engine-setup` to configure the product
-5. Symlink plugin files to `ui-plugins` directory as following:
+1. clone `ovirt-engine` and setup its [development environment](https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master)
+2. apply [Alexander's patch](https://gerrit.ovirt.org/#/c/54058/) that adds `DashboardDataServlet`
+3. build Engine from source via `make install-dev`
+4. run `engine-setup` to configure the product
+5. symlink plugin files to `ui-plugins` directory as following:
 
 ```
 cd ${PREFIX}/share/ovirt-engine/ui-plugins
@@ -34,14 +34,8 @@ ln -s /path/to/ovirt-dashboard-ui-plugin/dist/dashboard-resources dashboard-reso
 
 ## Access plugin via oVirt UI
 
-Open WebAdmin in your browser, you should land on **Dashboard** main tab:
+Open WebAdmin in your browser, you should land on **Dashboard** main tab automatically:
 
 ```
 https://engine:8443/ovirt-engine/webadmin/WebAdmin.html
-```
-
-Alternatively, access specific plugin resources via Engine, for example:
-
-```
-https://engine:8443/ovirt-engine/webadmin/plugin/dashboard/main_tab.html
 ```
