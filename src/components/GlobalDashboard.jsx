@@ -6,7 +6,7 @@ import UtilizationTrendCard from './UtilizationTrendCard'
 import HeatMap from './patternfly/HeatMap'
 import HeatMapLegend from './patternfly/HeatMapLegend'
 
-function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtilization }, lastUpdated }) {
+function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated }) {
   const heatMapThresholds = Object.assign({}, HeatMap.defaultProps.thresholds, {
     domain: [0.65, 0.75, 0.9]
   })
@@ -86,11 +86,12 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                   <UtilizationTrendCard
                     data={globalUtilization.cpu}
                     title='CPU'
-                    unit='Cores'
+                    unit=''
                     utilizationDialogTitle='Top Utilized Resources (CPU)'
                     showValueAsPercentage
                     donutCenterLabel='percent'
-                    sparklineTooltipType='usagePerDate' />
+                    sparklineTooltipType='percentPerDate'
+                    utilizationBarFooterLabelFormat='percent' />
                 </div>
 
                 <div className='col-xs-12 col-sm-4 col-md-4'>
@@ -100,7 +101,8 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                     unit='GB'
                     utilizationDialogTitle='Top Utilized Resources (Memory)'
                     donutCenterLabel='used'
-                    sparklineTooltipType='valuePerDate' />
+                    sparklineTooltipType='valuePerDate'
+                    utilizationBarFooterLabelFormat='actual' />
                 </div>
 
                 <div className='col-xs-12 col-sm-4 col-md-4'>
@@ -110,7 +112,8 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                     unit='TB'
                     utilizationDialogTitle='Top Utilized Resources (Storage)'
                     donutCenterLabel='used'
-                    sparklineTooltipType='valuePerDate' />
+                    sparklineTooltipType='valuePerDate'
+                    utilizationBarFooterLabelFormat='actual' />
                 </div>
 
               </div>
@@ -121,7 +124,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
 
       {/* heat maps */}
       <div className='row row-tile-pf row-tile-pf-last'>
-        <div className='col-md-12'>
+        <div className='col-md-8'>
           <div className='heatmap-card'>
             <div className='card-pf'>
               <div className='card-pf-heading'>
@@ -131,28 +134,48 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                 <div className='row'>
                   <div className='col-xs-12 col-sm-12 col-md-12 card-heatmap-body'>
 
-                    <div className='col-xs-12 col-sm-4 col-md-4 container-heatmap-tile'>
+                    <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>CPU</span>
                       <HeatMap
-                        data={clusterUtilization.cpu.blocks}
+                        data={heatMapData.cpu}
                         thresholds={heatMapThresholds} />
                     </div>
 
-                    <div className='col-xs-12 col-sm-4 col-md-4 container-heatmap-tile'>
+                    <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Memory</span>
                       <HeatMap
-                        data={clusterUtilization.memory.blocks}
+                        data={heatMapData.memory}
                         thresholds={heatMapThresholds} />
                     </div>
 
-                    <div className='col-xs-12 col-sm-4 col-md-4 container-heatmap-tile'>
+                    <div className='col-xs-12 col-sm-12 col-md-12'>
+                      <HeatMapLegend labels={heatMapLegendLabels} />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='col-md-4'>
+          <div className='heatmap-card'>
+            <div className='card-pf'>
+              <div className='card-pf-heading'>
+                <h2 className='card-pf-title'>Storage Utilization</h2>
+              </div>
+              <div className='card-pf-body'>
+                <div className='row'>
+                  <div className='col-xs-12 col-sm-12 col-md-12 card-heatmap-body'>
+
+                    <div className='col-xs-12 col-sm-12 col-md-12 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Storage</span>
                       <HeatMap
-                        data={clusterUtilization.storage.blocks}
+                        data={heatMapData.storage}
                         thresholds={heatMapThresholds} />
                     </div>
 
-                    <div className='col-xs-16 col-sm-8 col-md-8'>
+                    <div className='col-xs-12 col-sm-12 col-md-12'>
                       <HeatMapLegend labels={heatMapLegendLabels} />
                     </div>
 
@@ -166,10 +189,6 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
 
     </div>
   )
-}
-
-const clusterUtilizationItemDataShape = {
-  blocks: HeatMap.propTypes.data
 }
 
 const dataShape = {
@@ -186,10 +205,10 @@ const dataShape = {
     memory: shape(UtilizationTrendCard.dataShape),
     storage: shape(UtilizationTrendCard.dataShape)
   }),
-  clusterUtilization: shape({
-    cpu: shape(clusterUtilizationItemDataShape),
-    memory: shape(clusterUtilizationItemDataShape),
-    storage: shape(clusterUtilizationItemDataShape)
+  heatMapData: shape({
+    cpu: HeatMap.propTypes.data,
+    memory: HeatMap.propTypes.data,
+    storage: HeatMap.propTypes.data
   })
 }
 

@@ -3,7 +3,7 @@ const { string, number, shape, oneOf, arrayOf, func } = PropTypes
 import classNames from 'classnames'
 import UtilizationBarChart from './patternfly/UtilizationBarChart'
 
-function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameClick }) {
+function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utilizationBarFooterLabelFormat, onObjectNameClick }) {
   if (data.length === 0) {
     return (
       <div className='no-overutilized'>{emptyListText}</div>
@@ -29,10 +29,10 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
               <UtilizationBarChart
                 used={item.used}
                 total={item.total}
-                unit=''
+                unit={unit}
                 thresholds={thresholds}
                 layout='inline'
-                footerLabelFormat='percent' />
+                footerLabelFormat={utilizationBarFooterLabelFormat} />
             </div>
             <div className='col-md-1'>
               {item.trend !== 'same' &&
@@ -58,13 +58,16 @@ const dataItemShape = ObjectUtilizationList.dataItemShape = {
 
 ObjectUtilizationList.propTypes = {
   data: arrayOf(shape(dataItemShape)).isRequired,
+  unit: string.isRequired,
   emptyListText: string.isRequired,
   thresholds: UtilizationBarChart.propTypes.thresholds,
+  utilizationBarFooterLabelFormat: UtilizationBarChart.propTypes.footerLabelFormat,
   onObjectNameClick: func // (objectName:string) => void
 }
 
 ObjectUtilizationList.defaultProps = {
   thresholds: UtilizationBarChart.defaultProps.thresholds,
+  utilizationBarFooterLabelFormat: UtilizationBarChart.defaultProps.footerLabelFormat,
   onObjectNameClick () {}
 }
 

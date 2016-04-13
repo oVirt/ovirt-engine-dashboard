@@ -67,20 +67,20 @@ class DashboardDataProvider extends React.Component {
 
     ;['cpu', 'memory', 'storage'].forEach((category) => {
       const globalUtilizationData = newData.globalUtilization[category]
-      const clusterUtilizationData = newData.clusterUtilization[category]
+      const heatMapData = newData.heatMapData[category]
 
       globalUtilizationData.history.forEach((obj) => {
         // sparkline chart works with Date objects on X axis
         obj.date = new Date(obj.date)
       })
 
-      clusterUtilizationData.blocks.forEach((obj) => {
+      heatMapData.forEach((obj) => {
         // heat map component expects values in range <0, 1>
         obj.value = obj.value / 100
       })
 
       // sort heat map data
-      clusterUtilizationData.blocks.sort((a, b) => {
+      heatMapData.sort((a, b) => {
         return b.value - a.value
       })
     })

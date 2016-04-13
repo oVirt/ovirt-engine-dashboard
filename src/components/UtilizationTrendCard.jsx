@@ -5,6 +5,7 @@ import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 import ModalDialog from './bootstrap/ModalDialog'
 import ObjectUtilizationList from './ObjectUtilizationList'
+import ObjectUtilizationListTitle from './ObjectUtilizationListTitle'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/utilization-trend-card/
@@ -35,7 +36,7 @@ class UtilizationTrendCard extends React.Component {
     const {
       data: { used, total, overcommit, allocated, history, utilization },
       title, unit, utilizationDialogTitle, showValueAsPercentage,
-      donutCenterLabel, sparklineTooltipType
+      donutCenterLabel, sparklineTooltipType, utilizationBarFooterLabelFormat
     } = this.props
 
     const available = total - used
@@ -86,27 +87,41 @@ class UtilizationTrendCard extends React.Component {
           modalContainerClass='overutilization-dialog'
           ref={(e) => { this._utilizationDialog = e }}>
 
-          {/* hosts */}
-          <div className='row row-tile-pf'>
-            <div className='col-md-12'>
-              <div>Hosts ({utilization.hosts.length})</div>
+          {utilization.hosts &&
+            <div>
+              <ObjectUtilizationListTitle text={`Hosts (${utilization.hosts.length})`} />
+              <ObjectUtilizationList
+                data={utilization.hosts}
+                unit={unit}
+                emptyListText='There are currently no utilized hosts'
+                thresholds={thresholds}
+                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat} />
             </div>
-          </div>
-          <ObjectUtilizationList
-            data={utilization.hosts}
-            emptyListText='There are currently no utilized hosts'
-            thresholds={thresholds} />
+          }
 
-          {/* virtual machines */}
-          <div className='row row-tile-pf'>
-            <div className='col-md-12'>
-              <div>Virtual Machines ({utilization.vms.length})</div>
+          {utilization.storage &&
+            <div>
+              <ObjectUtilizationListTitle text={`Storage Domains (${utilization.storage.length})`} />
+              <ObjectUtilizationList
+                data={utilization.storage}
+                unit={unit}
+                emptyListText='There are currently no utilized storage domains'
+                thresholds={thresholds}
+                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat} />
             </div>
-          </div>
-          <ObjectUtilizationList
-            data={utilization.vms}
-            emptyListText='There are currently no utilized virtual machines'
-            thresholds={thresholds} />
+          }
+
+          {utilization.vms &&
+            <div>
+              <ObjectUtilizationListTitle text={`Virtual Machines (${utilization.vms.length})`} />
+              <ObjectUtilizationList
+                data={utilization.vms}
+                unit={unit}
+                emptyListText='There are currently no utilized virtual machines'
+                thresholds={thresholds}
+                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat} />
+            </div>
+          }
 
         </ModalDialog>
 
@@ -123,8 +138,9 @@ const dataShape = UtilizationTrendCard.dataShape = {
   allocated: number,
   history: SparklineChart.propTypes.data,
   utilization: shape({
-    vms: arrayOf(shape(ObjectUtilizationList.dataItemShape)),
-    hosts: arrayOf(shape(ObjectUtilizationList.dataItemShape))
+    hosts: arrayOf(shape(ObjectUtilizationList.dataItemShape)),
+    storage: arrayOf(shape(ObjectUtilizationList.dataItemShape)),
+    vms: arrayOf(shape(ObjectUtilizationList.dataItemShape))
   })
 }
 
@@ -135,13 +151,15 @@ UtilizationTrendCard.propTypes = {
   utilizationDialogTitle: string.isRequired,
   showValueAsPercentage: bool,
   donutCenterLabel: DonutChart.propTypes.centerLabel,
-  sparklineTooltipType: SparklineChart.propTypes.tooltipType
+  sparklineTooltipType: SparklineChart.propTypes.tooltipType,
+  utilizationBarFooterLabelFormat: ObjectUtilizationList.propTypes.utilizationBarFooterLabelFormat
 }
 
 UtilizationTrendCard.defaultProps = {
   showValueAsPercentage: false,
   donutCenterLabel: DonutChart.defaultProps.centerLabel,
-  sparklineTooltipType: SparklineChart.defaultProps.tooltipType
+  sparklineTooltipType: SparklineChart.defaultProps.tooltipType,
+  utilizationBarFooterLabelFormat: ObjectUtilizationList.defaultProps.utilizationBarFooterLabelFormat
 }
 
 export default UtilizationTrendCard

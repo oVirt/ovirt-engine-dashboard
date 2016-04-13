@@ -116,6 +116,11 @@ class SparklineChart extends React.Component {
         return getTooltipTableHTML(
           `<tr><td class='name'>${percentUsed}%</td></tr>`
         )
+      // TODO(vs) this isn't supported in angular-patternfly, replace with custom tooltip function
+      case 'percentPerDate':
+        return getTooltipTableHTML(
+          `<tr><td class='value'>${formatDate(d[0].x)}</td><td class='value text-nowrap'>${percentUsed}%</td></tr>`
+        )
       case 'valuePerDate':
         return getTooltipTableHTML(
           `<tr><td class='value'>${formatDate(d[0].x)}</td><td class='value text-nowrap'>${formatNumber(d[0].value)} ${d[0].name}</td></tr>`
@@ -141,7 +146,7 @@ SparklineChart.propTypes = {
   unit: string.isRequired,
   showXAxis: bool,
   showYAxis: bool,
-  tooltipType: oneOf(['default', 'percent', 'valuePerDate', 'usagePerDate']),
+  tooltipType: oneOf(['default', 'percent', 'percentPerDate', 'valuePerDate', 'usagePerDate']),
   containerStyle: object
 }
 
