@@ -16,7 +16,7 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
 
   return (
     <div className='overutilized-container'>
-      <div className='overutilized-section' style={{ overflow: 'visible' }}>
+      <div className='overutilized-section'>
         {sortedData.map((item) => (
           <div key={item.name} className='row'>
             <div className='col-md-2 text-right'>
