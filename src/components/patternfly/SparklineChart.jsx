@@ -41,12 +41,8 @@ class SparklineChart extends React.Component {
       data: {
         type: 'area',
         columns: [
-          ['date'].concat(data.map((obj) => {
-            return obj.date
-          })),
-          ['used'].concat(data.map((obj) => {
-            return obj.value
-          }))
+          ['date'].concat(data.map((obj) => obj.date)),
+          ['used'].concat(data.map((obj) => obj.value))
         ],
         names: {
           date: 'Date',

@@ -7,6 +7,12 @@ import HeatMap from './patternfly/HeatMap'
 import HeatMapLegend from './patternfly/HeatMapLegend'
 
 function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtilization }, lastUpdated }) {
+  const heatMapThresholds = Object.assign({}, HeatMap.defaultProps.thresholds, {
+    domain: [0.65, 0.75, 0.9]
+  })
+
+  const heatMapLegendLabels = ['< 65%', '65-75%', '75-90%', '> 90%']
+
   return (
     <div className='container-fluid container-tiles-pf containers-dashboard'>
 
@@ -81,10 +87,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                     data={globalUtilization.cpu}
                     title='CPU'
                     unit='Cores'
-                    overUtilizationDialogTitle='Overutilized Resources (CPU)'
+                    utilizationDialogTitle='Top Utilized Resources (CPU)'
                     showValueAsPercentage
                     donutCenterLabel='percent'
-                    sparklineTooltipType='percent' />
+                    sparklineTooltipType='usagePerDate' />
                 </div>
 
                 <div className='col-xs-12 col-sm-4 col-md-4'>
@@ -92,7 +98,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                     data={globalUtilization.memory}
                     title='Memory'
                     unit='GB'
-                    overUtilizationDialogTitle='Overutilized Resources (Memory)'
+                    utilizationDialogTitle='Top Utilized Resources (Memory)'
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate' />
                 </div>
@@ -102,7 +108,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
                     data={globalUtilization.storage}
                     title='Storage'
                     unit='TB'
-                    overUtilizationDialogTitle='Overutilized Resources (Storage)'
+                    utilizationDialogTitle='Top Utilized Resources (Storage)'
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate' />
                 </div>
@@ -127,21 +133,27 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, clusterUtiliza
 
                     <div className='col-xs-12 col-sm-4 col-md-4 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>CPU</span>
-                      <HeatMap data={clusterUtilization.cpu.blocks} />
+                      <HeatMap
+                        data={clusterUtilization.cpu.blocks}
+                        thresholds={heatMapThresholds} />
                     </div>
 
                     <div className='col-xs-12 col-sm-4 col-md-4 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Memory</span>
-                      <HeatMap data={clusterUtilization.memory.blocks} />
+                      <HeatMap
+                        data={clusterUtilization.memory.blocks}
+                        thresholds={heatMapThresholds} />
                     </div>
 
                     <div className='col-xs-12 col-sm-4 col-md-4 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Storage</span>
-                      <HeatMap data={clusterUtilization.storage.blocks} />
+                      <HeatMap
+                        data={clusterUtilization.storage.blocks}
+                        thresholds={heatMapThresholds} />
                     </div>
 
                     <div className='col-xs-16 col-sm-8 col-md-8'>
-                      <HeatMapLegend />
+                      <HeatMapLegend labels={heatMapLegendLabels} />
                     </div>
 
                   </div>

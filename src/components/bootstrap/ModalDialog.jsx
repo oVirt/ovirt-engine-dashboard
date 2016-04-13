@@ -6,7 +6,7 @@ class ModalDialog extends React.Component {
 
   render () {
     return (
-      <div className='modal fade overutilization-dialog' role='dialog' ref={(e) => { this._modalContainer = e }}>
+      <div className={`modal fade ${this.props.modalContainerClass}`} role='dialog' ref={(e) => { this._modalContainer = e }}>
         <div className='modal-dialog'>
           <div className='modal-content'>
 
@@ -35,7 +35,12 @@ class ModalDialog extends React.Component {
 
 ModalDialog.propTypes = {
   children: node,
-  title: string.isRequired
+  title: string.isRequired,
+  modalContainerClass: string
+}
+
+ModalDialog.defaultProps = {
+  modalContainerClass: ''
 }
 
 export default ModalDialog

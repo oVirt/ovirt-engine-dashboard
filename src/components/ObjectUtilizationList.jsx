@@ -11,7 +11,7 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
   }
 
   const sortedData = data.slice().sort((a, b) => {
-    return b.value - a.value
+    return (b.used / b.total) - (a.used / a.total)
   })
 
   return (
@@ -27,8 +27,8 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
             </div>
             <div className='col-md-9'>
               <UtilizationBarChart
-                used={item.value}
-                total={100}
+                used={item.used}
+                total={item.total}
                 unit=''
                 thresholds={thresholds}
                 layout='inline'
@@ -51,7 +51,8 @@ function ObjectUtilizationList ({ data, emptyListText, thresholds, onObjectNameC
 
 const dataItemShape = ObjectUtilizationList.dataItemShape = {
   name: string,
-  value: number,
+  used: number,
+  total: number,
   trend: oneOf(['up', 'down', 'same'])
 }
 

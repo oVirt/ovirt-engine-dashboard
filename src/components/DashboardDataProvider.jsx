@@ -54,6 +54,17 @@ class DashboardDataProvider extends React.Component {
     // no need to deep clone the data, just modify the object itself
     const newData = data
 
+    const inventoryStatusOrder = ['alert', 'error', 'warning', 'down', 'up']
+
+    ;['dc', 'cluster', 'host', 'storage', 'vm', 'event'].forEach((category) => {
+      const inventoryData = newData.inventory[category]
+
+      // sort object statuses
+      inventoryData.statuses.sort((a, b) => {
+        return inventoryStatusOrder.indexOf(a.type) - inventoryStatusOrder.indexOf(b.type)
+      })
+    })
+
     ;['cpu', 'memory', 'storage'].forEach((category) => {
       const globalUtilizationData = newData.globalUtilization[category]
       const clusterUtilizationData = newData.clusterUtilization[category]

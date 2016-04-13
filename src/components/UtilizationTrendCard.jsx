@@ -5,7 +5,6 @@ import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 import ModalDialog from './bootstrap/ModalDialog'
 import ObjectUtilizationList from './ObjectUtilizationList'
-import UtilizationBarChart from './patternfly/UtilizationBarChart'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/utilization-trend-card/
@@ -34,12 +33,13 @@ class UtilizationTrendCard extends React.Component {
 
   render () {
     const {
-      data: { used, total, overcommit, allocated, history, overUtilization },
-      title, unit, overUtilizationDialogTitle, showValueAsPercentage,
+      data: { used, total, overcommit, allocated, history, utilization },
+      title, unit, utilizationDialogTitle, showValueAsPercentage,
       donutCenterLabel, sparklineTooltipType
     } = this.props
 
     const available = total - used
+    const thresholds = { enabled: true, warning: 75, error: 90 }
 
     return (
       <div className='utilization-chart-pf'>
@@ -67,9 +67,10 @@ class UtilizationTrendCard extends React.Component {
           used={used}
           total={total}
           unit={unit}
+          thresholds={thresholds}
           centerLabel={donutCenterLabel}
           onDataClick={() => {
-            this._overUtilizationDialog.show()
+            this._utilizationDialog.show()
           }} />
 
         {/* sparkline chart */}
@@ -79,29 +80,33 @@ class UtilizationTrendCard extends React.Component {
           unit={unit}
           tooltipType={sparklineTooltipType} />
 
-        {/* over-utilization dialog  */}
-        <ModalDialog title={overUtilizationDialogTitle} ref={(e) => { this._overUtilizationDialog = e }}>
+        {/* utilization dialog  */}
+        <ModalDialog
+          title={utilizationDialogTitle}
+          modalContainerClass='overutilization-dialog'
+          ref={(e) => { this._utilizationDialog = e }}>
 
           {/* hosts */}
           <div className='row row-tile-pf'>
             <div className='col-md-12'>
-              <div>Hosts ({overUtilization.hosts.length})</div>
+              <div>Hosts ({utilization.hosts.length})</div>
             </div>
           </div>
           <ObjectUtilizationList
-            data={overUtilization.hosts}
-            emptyListText='There are currently no overutilized hosts' />
+            data={utilization.hosts}
+            emptyListText='There are currently no utilized hosts'
+            thresholds={thresholds} />
 
           {/* virtual machines */}
           <div className='row row-tile-pf'>
             <div className='col-md-12'>
-              <div>Virtual Machines ({overUtilization.vms.length})</div>
+              <div>Virtual Machines ({utilization.vms.length})</div>
             </div>
           </div>
           <ObjectUtilizationList
-            data={overUtilization.vms}
-            emptyListText='There are currently no overutilized virtual machines'
-            thresholds={Object.assign({}, UtilizationBarChart.defaultProps.thresholds, { warning: 75 })} />
+            data={utilization.vms}
+            emptyListText='There are currently no utilized virtual machines'
+            thresholds={thresholds} />
 
         </ModalDialog>
 
@@ -117,7 +122,7 @@ const dataShape = UtilizationTrendCard.dataShape = {
   overcommit: number,
   allocated: number,
   history: SparklineChart.propTypes.data,
-  overUtilization: shape({
+  utilization: shape({
     vms: arrayOf(shape(ObjectUtilizationList.dataItemShape)),
     hosts: arrayOf(shape(ObjectUtilizationList.dataItemShape))
   })
@@ -127,7 +132,7 @@ UtilizationTrendCard.propTypes = {
   data: shape(dataShape).isRequired,
   title: string.isRequired,
   unit: string.isRequired,
-  overUtilizationDialogTitle: string.isRequired,
+  utilizationDialogTitle: string.isRequired,
   showValueAsPercentage: bool,
   donutCenterLabel: DonutChart.propTypes.centerLabel,
   sparklineTooltipType: SparklineChart.propTypes.tooltipType
