@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, element, shape, oneOf } = PropTypes
 import classNames from 'classnames'
-import { formatNumber0D } from '../../utils/formatting'
+import { formatNumber0D, formatNumber1D } from '../../utils/formatting'
 import Tooltip from '../bootstrap/Tooltip'
 
 // PatternFly reference:
@@ -52,7 +52,7 @@ function UtilizationBarChart ({
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
                 {useDefaultFooter && footerLabelFormat === 'actual' &&
                   <span>
-                    <strong>{formatNumber0D(used)} of {formatNumber0D(total)} {unit}</strong> Used
+                    <strong>{formatNumber1D(used)} of {formatNumber1D(total)} {unit}</strong> Used
                   </span>
                 }
                 {useDefaultFooter && footerLabelFormat === 'percent' &&
@@ -85,7 +85,7 @@ function UtilizationBarChart ({
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
                 {useDefaultFooter && footerLabelFormat === 'actual' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
-                    <strong>{formatNumber0D(used)} {unit}</strong> Used
+                    <strong>{formatNumber1D(used)} {unit}</strong> Used
                   </span>
                 }
                 {useDefaultFooter && footerLabelFormat === 'percent' &&
