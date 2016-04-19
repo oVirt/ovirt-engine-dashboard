@@ -7,7 +7,7 @@ class DashboardDataProvider extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = { data: null }
+    this.state = { data: NO_DATA }
   }
 
   componentDidMount () {
@@ -17,19 +17,17 @@ class DashboardDataProvider extends React.Component {
       dataType: 'json',
       headers: {
         'Accept': 'application/json',
-        'Prefer': 'fake_data' // TODO(vs) send 'error' occasionally
+        'Prefer': 'fake_data' // TODO(vs) server supports 'fake_data' and 'error' values
       }
     })
 
     request.done((data) => {
-      this.setState({
-        data: this._transformData({ data }),
-        lastUpdated: new Date()
-      })
+      this._updateData({ data: this._transformData({ data }) })
     })
 
     request.fail(() => {
       console.error('Request failed', request)
+      this._updateData({ data: DATA_ERROR })
     })
   }
 
@@ -38,15 +36,25 @@ class DashboardDataProvider extends React.Component {
   }
 
   render () {
-    if (this.state.data === null) {
-      return this.props.loading
-    }
-
     const child = React.Children.only(this.props.children)
 
-    return React.cloneElement(child, {
-      data: this.state.data,
-      lastUpdated: this.state.lastUpdated
+    switch (this.state.data) {
+      case NO_DATA:
+        return this.props.loading
+      case DATA_ERROR:
+        return this.props.error
+      default:
+        return React.cloneElement(child, {
+          data: this.state.data,
+          lastUpdated: this.state.lastUpdated
+        })
+    }
+  }
+
+  _updateData ({ data }) {
+    this.setState({
+      data,
+      lastUpdated: new Date()
     })
   }
 
@@ -90,9 +98,13 @@ class DashboardDataProvider extends React.Component {
 
 }
 
+const NO_DATA = null
+const DATA_ERROR = 'error'
+
 DashboardDataProvider.propTypes = {
   children: element.isRequired,
-  loading: element.isRequired
+  loading: element.isRequired,
+  error: element.isRequired
 }
 
 export default DashboardDataProvider
