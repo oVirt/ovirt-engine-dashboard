@@ -12,7 +12,7 @@ import ObjectUtilizationListTitle from './ObjectUtilizationListTitle'
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/utilization-trend-card/
 
-// TODO(vs) extract the generic bits into reusable PatternFly component
+// TODO(vs) extract the generic bits into reusable component
 
 /*
   TODO(vs) update markup to match the latest PatternFly reference:

@@ -6,7 +6,7 @@ import Tooltip from './bootstrap/Tooltip'
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/aggregate-status-card/
 
-// TODO(vs) extract the generic bits into reusable PatternFly component
+// TODO(vs) extract the generic bits into reusable component
 
 function AggregateStatusCard ({
     data: { totalCount, statuses },
