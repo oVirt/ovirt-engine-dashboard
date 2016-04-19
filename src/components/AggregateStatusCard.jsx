@@ -43,7 +43,7 @@ function AggregateStatusCard ({
               <Tooltip text={getStatusItemTooltip(statusItem)}>
                 <a href='#' onClick={(event) => {
                   event.preventDefault()
-                  onStatusCountClick(statusItem.type)
+                  onStatusCountClick(statusItem)
                 }}>{formatNumber0D(statusItem.count)}</a>
               </Tooltip>
             </span>
@@ -103,7 +103,7 @@ AggregateStatusCard.propTypes = {
   noStatusText: string,
   noStatusIconClass: string,
   onTotalCountClick: func,     // () => void
-  onStatusCountClick: func     // (statusType:string) => void
+  onStatusCountClick: func     // (statusItem:object) => void
 }
 
 AggregateStatusCard.defaultProps = {

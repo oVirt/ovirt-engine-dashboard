@@ -6,9 +6,11 @@ import GlobalDashboard from './components/GlobalDashboard'
 require('jquery/dist/jquery')
 require('bootstrap/dist/js/bootstrap')
 
-// TODO(vs) use a better looking placeholder
 const loadingPlaceholder = (
-  <h1>Loading...</h1>
+  <div>
+    <h2 className='text-center'>Loading...</h2>
+    <div className='spinner spinner-lg'></div>
+  </div>
 )
 
 render(

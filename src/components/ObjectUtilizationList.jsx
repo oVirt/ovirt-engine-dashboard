@@ -22,7 +22,7 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
             <div className='col-md-2 text-right'>
               <a href='#' onClick={(event) => {
                 event.preventDefault()
-                onObjectNameClick(item.name)
+                onObjectNameClick(item)
               }}>{item.name}</a>
             </div>
             <div className='col-md-9'>
@@ -62,7 +62,7 @@ ObjectUtilizationList.propTypes = {
   emptyListText: string.isRequired,
   thresholds: UtilizationBarChart.propTypes.thresholds,
   utilizationBarFooterLabelFormat: UtilizationBarChart.propTypes.footerLabelFormat,
-  onObjectNameClick: func // (objectName:string) => void
+  onObjectNameClick: func // (dataItem:object) => void
 }
 
 ObjectUtilizationList.defaultProps = {

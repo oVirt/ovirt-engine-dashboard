@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-const { string, number, object, shape, arrayOf } = PropTypes
+const { string, number, object, shape, arrayOf, func } = PropTypes
 import $ from 'jquery'
 import d3 from 'd3'
 
@@ -27,7 +27,7 @@ class HeatMap extends React.Component {
     )
   }
 
-  _generateHeatMap ({ data, thresholds, maxBlockSize, blockPadding }) {
+  _generateHeatMap ({ data, thresholds, maxBlockSize, blockPadding, onBlockClick }) {
     const containerWidth = this._heatMapContainer.clientWidth
     const containerHeight = this._heatMapContainer.clientHeight
 
@@ -64,6 +64,7 @@ class HeatMap extends React.Component {
       blocks.call(highlightBlock, false)
       d3.select(this).call(highlightBlock, true)
     })
+    blocks.on('click', (d) => { onBlockClick(d) })
     svg.on('mouseleave', () => { blocks.call(highlightBlock, true) })
 
     // tooltips are done via jQuery
@@ -120,7 +121,8 @@ HeatMap.propTypes = {
   }),
   maxBlockSize: number,
   blockPadding: number,
-  containerStyle: object
+  containerStyle: object,
+  onBlockClick: func // (dataItem:object) => void
 }
 
 HeatMap.defaultProps = {
@@ -132,7 +134,8 @@ HeatMap.defaultProps = {
   blockPadding: 1,
   containerStyle: {
     height: 100
-  }
+  },
+  onBlockClick () {}
 }
 
 export default HeatMap

@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, arrayOf } = PropTypes
+import { SEARCH_PREFIXES } from '../constants'
 import { formatNumber0D, formatNumber1D } from '../utils/formatting'
+import { applySearch } from '../utils/webadmin_search'
 import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 import ModalDialog from './bootstrap/ModalDialog'
@@ -95,7 +97,10 @@ class UtilizationTrendCard extends React.Component {
                 unit={unit}
                 emptyListText='There are currently no utilized hosts'
                 thresholds={thresholds}
-                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat} />
+                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
+                onObjectNameClick={(dataItem) => {
+                  applySearch(SEARCH_PREFIXES.host, 'name', [dataItem.name])
+                }} />
             </div>
           }
 
@@ -107,7 +112,10 @@ class UtilizationTrendCard extends React.Component {
                 unit={unit}
                 emptyListText='There are currently no utilized storage domains'
                 thresholds={thresholds}
-                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat} />
+                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
+                onObjectNameClick={(dataItem) => {
+                  applySearch(SEARCH_PREFIXES.storage, 'name', [dataItem.name])
+                }} />
             </div>
           }
 
@@ -119,7 +127,10 @@ class UtilizationTrendCard extends React.Component {
                 unit={unit}
                 emptyListText='There are currently no utilized virtual machines'
                 thresholds={thresholds}
-                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat} />
+                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
+                onObjectNameClick={(dataItem) => {
+                  applySearch(SEARCH_PREFIXES.vm, 'name', [dataItem.name])
+                }} />
             </div>
           }
 

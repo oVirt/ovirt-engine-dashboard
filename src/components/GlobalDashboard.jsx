@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 const { shape, instanceOf } = PropTypes
+import { SEARCH_PREFIXES, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS } from '../constants'
+import { applySearch } from '../utils/webadmin_search'
 import LastUpdatedLabel from './LastUpdatedLabel'
 import AggregateStatusCard from './AggregateStatusCard'
 import UtilizationTrendCard from './UtilizationTrendCard'
@@ -7,11 +9,7 @@ import HeatMap from './patternfly/HeatMap'
 import HeatMapLegend from './patternfly/HeatMapLegend'
 
 function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated }) {
-  const heatMapThresholds = Object.assign({}, HeatMap.defaultProps.thresholds, {
-    domain: [0.65, 0.75, 0.9]
-  })
-
-  const heatMapLegendLabels = ['< 65%', '65-75%', '75-90%', '> 90%']
+  const heatMapThresholds = Object.assign({}, HeatMap.defaultProps.thresholds, HEATMAP_THRESHOLDS)
 
   return (
     <div className='container-fluid container-tiles-pf containers-dashboard'>
@@ -30,7 +28,13 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
           <AggregateStatusCard
             data={inventory.dc}
             title='Data Centers'
-            mainIconClass='fa fa-globe' />
+            mainIconClass='fa fa-globe'
+            onTotalCountClick={() => {
+              applySearch(SEARCH_PREFIXES.dc)
+            }}
+            onStatusCountClick={(statusItem) => {
+              applySearch(SEARCH_PREFIXES.dc, 'status', statusItem.statusValues)
+            }} />
         </div>
 
         <div className='col-xs-4 col-sm-4 col-md-2'>
@@ -39,35 +43,62 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title='Clusters'
             mainIconClass='pficon pficon-cluster'
             noStatusText='N/A'
-            noStatusIconClass='' />
+            noStatusIconClass=''
+            onTotalCountClick={() => {
+              applySearch(SEARCH_PREFIXES.cluster)
+            }} />
         </div>
 
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.host}
             title='Hosts'
-            mainIconClass='pficon pficon-screen' />
+            mainIconClass='pficon pficon-screen'
+            onTotalCountClick={() => {
+              applySearch(SEARCH_PREFIXES.host)
+            }}
+            onStatusCountClick={(statusItem) => {
+              applySearch(SEARCH_PREFIXES.host, 'status', statusItem.statusValues)
+            }} />
         </div>
 
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.storage}
             title='Storage Domains'
-            mainIconClass='pficon pficon-storage-domain' />
+            mainIconClass='pficon pficon-storage-domain'
+            onTotalCountClick={() => {
+              applySearch(SEARCH_PREFIXES.storage)
+            }}
+            onStatusCountClick={(statusItem) => {
+              applySearch(SEARCH_PREFIXES.storage, 'status', statusItem.statusValues)
+            }} />
         </div>
 
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.vm}
             title='VMs'
-            mainIconClass='pficon pficon-virtual-machine' />
+            mainIconClass='pficon pficon-virtual-machine'
+            onTotalCountClick={() => {
+              applySearch(SEARCH_PREFIXES.vm)
+            }}
+            onStatusCountClick={(statusItem) => {
+              applySearch(SEARCH_PREFIXES.vm, 'status', statusItem.statusValues)
+            }} />
         </div>
 
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.event}
             title='Events'
-            mainIconClass='pficon pficon-flag' />
+            mainIconClass='pficon pficon-flag'
+            onTotalCountClick={() => {
+              applySearch(SEARCH_PREFIXES.event)
+            }}
+            onStatusCountClick={(statusItem) => {
+              applySearch(SEARCH_PREFIXES.event, 'severity', statusItem.statusValues)
+            }} />
         </div>
 
       </div>
@@ -138,18 +169,24 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                       <span className='h3 heatmap-chart-title'>CPU</span>
                       <HeatMap
                         data={heatMapData.cpu}
-                        thresholds={heatMapThresholds} />
+                        thresholds={heatMapThresholds}
+                        onBlockClick={(dataItem) => {
+                          applySearch(SEARCH_PREFIXES.cluster, 'name', [dataItem.name])
+                        }} />
                     </div>
 
                     <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
                       <span className='h3 heatmap-chart-title'>Memory</span>
                       <HeatMap
                         data={heatMapData.memory}
-                        thresholds={heatMapThresholds} />
+                        thresholds={heatMapThresholds}
+                        onBlockClick={(dataItem) => {
+                          applySearch(SEARCH_PREFIXES.cluster, 'name', [dataItem.name])
+                        }} />
                     </div>
 
                     <div className='col-xs-12 col-sm-12 col-md-12'>
-                      <HeatMapLegend labels={heatMapLegendLabels} />
+                      <HeatMapLegend labels={HEATMAP_LEGEND_LABELS} />
                     </div>
 
                   </div>
@@ -172,11 +209,14 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                       <span className='h3 heatmap-chart-title'>Storage</span>
                       <HeatMap
                         data={heatMapData.storage}
-                        thresholds={heatMapThresholds} />
+                        thresholds={heatMapThresholds}
+                        onBlockClick={(dataItem) => {
+                          applySearch(SEARCH_PREFIXES.storage, 'name', [dataItem.name])
+                        }} />
                     </div>
 
                     <div className='col-xs-12 col-sm-12 col-md-12'>
-                      <HeatMapLegend labels={heatMapLegendLabels} />
+                      <HeatMapLegend labels={HEATMAP_LEGEND_LABELS} />
                     </div>
 
                   </div>
