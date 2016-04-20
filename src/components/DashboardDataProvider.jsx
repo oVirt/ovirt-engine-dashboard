@@ -17,7 +17,11 @@ class DashboardDataProvider extends React.Component {
       dataType: 'json',
       headers: {
         'Accept': 'application/json',
-        'Prefer': 'fake_data' // TODO(vs) server supports 'fake_data' and 'error' values
+        // For testing purposes you can uncomment either of these.
+        // fake data will generate fake data, error will generate
+        // an error
+        // 'Prefer': 'fake_data'
+        // 'Prefer': 'error'
       }
     })
 
