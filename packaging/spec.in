@@ -1,0 +1,45 @@
+Name: ovirt-engine-dashboard
+Summary: oVirt Engine Dashboard
+Version: @RPM_VERSION@
+Release: @RPM_RELEASE@
+License: ASL 2.0
+URL: http://www.ovirt.org/
+Source: @TAR_FILE@
+
+BuildArch: noarch
+
+BuildRequires: ovirt-engine-nodejs
+BuildRequires: ovirt-engine-nodejs-modules
+
+%description
+oVirt UI plugin that gives overview of the virtualized environment and its specific objects.
+
+%prep
+
+# Unpack the source:
+%setup -q -n %{name}-%{version}
+
+# Make sure that we use our Node.js installation:
+export PATH="%{_datadir}/ovirt-engine-nodejs/bin:${PATH}"
+
+# Link the Node.js dependencies to the local "node_modules" directory:
+ln -s "%{_datadir}/ovirt-engine-nodejs-modules/node_modules"
+export PATH="./node_modules/.bin:${PATH}"
+
+# Build the application:
+npm run build
+
+%install
+
+# Install the files:
+mkdir -p %{buildroot}%{_datadir}/%{name}
+cp -r dist/* %{buildroot}%{_datadir}/%{name}
+
+%files
+%{_datadir}/%{name}
+%doc README.adoc
+%license LICENSE
+
+%changelog
+* Thu Apr 21 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1
+- Initial packaging.

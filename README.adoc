@@ -1,0 +1,40 @@
+= oVirt Dashboard
+
+== Introduction
+
+This project contains http://www.ovirt.org/[oVirt]
+http://www.ovirt.org/develop/release-management/features/ux/uiplugins/[UI plugin]
+that gives overview of the virtualized environment and its specific objects.
+
+== Prerequisites
+
+Install https://nodejs.org/[Node.js] v4 (LTS). https://github.com/creationix/nvm[nvm]
+can be used to manage multiple Node.js versions.
+
+Run `node -v` to check the current Node.js version.
+
+== Project setup
+
+* `npm i` to install dependencies (this might take a while)
+* `npm t` to lint code and run tests
+* `npm run dev` to build for development and watch & recompile files on change
+* `npm run build` to build for production
+
+== Engine setup
+
+. clone `ovirt-engine` and setup its
+  https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master[development environment]
+. apply https://gerrit.ovirt.org/#/c/54058/[Alexander's patch] that adds `DashboardDataServlet`
+. build Engine from source using `make install-dev`
+. run `engine-setup` to configure the product
+. symlink plugin files to `ui-plugins` directory as following:
+
+  cd ${PREFIX}/share/ovirt-engine/ui-plugins/
+  ln -s ${PLUGIN_HOME}/dist/dashboard.json dashboard.json
+  ln -s ${PLUGIN_HOME}/dist/dashboard-resources dashboard-resources
+
+== Accessing plugin
+
+Open WebAdmin in your browser, you should land on *Dashboard* main tab automatically:
+
+  https://engine.example:8443/ovirt-engine/webadmin/WebAdmin.html
