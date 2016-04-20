@@ -1,20 +1,11 @@
 {
-  "name": "ovirt-dashboard-ui-plugin",
+  "name": "ovirt-engine-dashboard",
   "version": "0.0.1",
-  "description": "oVirt UI plugin that gives overview of the environment and its specific objects.",
-  "keywords": [
-    "dashboard",
-    "ovirt"
-  ],
-  "homepage": "https://github.com/vojtechszocs/ovirt-dashboard-ui-plugin#readme",
-  "bugs": {
-    "url": "https://github.com/vojtechszocs/ovirt-dashboard-ui-plugin/issues"
-  },
+  "description": "oVirt UI plugin that gives overview of the virtualized environment and its specific objects.",
   "license": "Apache-2.0",
-  "author": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/vojtechszocs/ovirt-dashboard-ui-plugin.git"
+    "url": "git://gerrit.ovirt.org/ovirt-engine-dashboard"
   },
   "scripts": {
     "build": "npm run test && NODE_ENV=production webpack -p --progress",
