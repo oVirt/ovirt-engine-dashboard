@@ -27,8 +27,9 @@ Use `npm run build` to build for production.
 5. symlink plugin files to `ui-plugins` directory as following:
 
 ```
-cd ${PLUGIN_HOME}/dist/
-ln -s dashboard.json dashboard-resources ${PREFIX}/share/ovirt-engine/ui-plugins/
+cd ${PREFIX}/share/ovirt-engine/ui-plugins/
+ln -s ${PLUGIN_HOME}/dist/dashboard.json dashboard.json
+ln -s ${PLUGIN_HOME}/dist/dashboard-resources dashboard-resources
 ```
 
 ## Accessing plugin
