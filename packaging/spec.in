@@ -11,6 +11,8 @@ BuildArch: noarch
 BuildRequires: ovirt-engine-nodejs
 BuildRequires: ovirt-engine-nodejs-modules
 
+Requires: ovirt-engine
+
 %description
 oVirt UI plugin that gives overview of the virtualized environment and its specific objects.
 
@@ -35,11 +37,23 @@ npm run build
 mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -r dist/* %{buildroot}%{_datadir}/%{name}
 
+# Ensure that oVirt Engine "ui-plugins" directory exists:
+mkdir -p %{_datadir}/ovirt-engine/ui-plugins
+
+# Link application's resources to oVirt Engine "ui-plugins" directory:
+ln -s "%{_datadir}/%{name}/dashboard.json" "%{_datadir}/ovirt-engine/ui-plugins"
+ln -s "%{_datadir}/%{name}/dashboard-resources" "%{_datadir}/ovirt-engine/ui-plugins"
+
 %files
 %{_datadir}/%{name}
+%{_datadir}/ovirt-engine/ui-plugins/dashboard.json
+%{_datadir}/ovirt-engine/ui-plugins/dashboard-resources
 %doc README.adoc
 %license LICENSE
 
 %changelog
+* Fri May 6 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1
+- Update spec file to link UI plugin resources to oVirt Engine.
+
 * Thu Apr 21 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1
 - Initial packaging.
