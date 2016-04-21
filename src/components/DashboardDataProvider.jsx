@@ -16,12 +16,10 @@ class DashboardDataProvider extends React.Component {
       url: `${api.engineBaseUrl()}webadmin/dashboard_data`,
       dataType: 'json',
       headers: {
-        'Accept': 'application/json',
+        'Accept': 'application/json'
         // For testing purposes you can uncomment either of these.
-        // fake data will generate fake data, error will generate
-        // an error
-        // 'Prefer': 'fake_data'
-        // 'Prefer': 'error'
+        // 'Prefer': 'fake_data' // returns randomly generated data
+        // 'Prefer': 'error'     // triggers HTTP error response
       }
     })
 
