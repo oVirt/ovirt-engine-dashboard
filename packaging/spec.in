@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 1@RPM_SNAPSHOT@%{?dist}
+Release: 2@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -21,12 +21,8 @@ oVirt UI plugin that gives overview of the virtualized environment and its speci
 # Unpack the source:
 %setup -q -n %{name}-%{version}
 
-# Make sure that we use our Node.js installation:
-export PATH="%{_datadir}/ovirt-engine-nodejs/bin:${PATH}"
-
-# Link the Node.js dependencies to the local "node_modules" directory:
-ln -s "%{_datadir}/ovirt-engine-nodejs-modules/node_modules"
-export PATH="./node_modules/.bin:${PATH}"
+# Set up Node.js environment with npm dependencies linked to ./node_modules:
+source %{_datadir}/ovirt-engine-nodejs-modules/setup-env.sh
 
 # Build the application:
 npm run build
@@ -37,10 +33,10 @@ npm run build
 mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -r dist/* %{buildroot}%{_datadir}/%{name}
 
-# Ensure that oVirt Engine "ui-plugins" directory exists:
+# Ensure that Engine ui-plugins directory exists:
 mkdir -p %{buildroot}%{_datadir}/ovirt-engine/ui-plugins
 
-# Link application's resources to oVirt Engine "ui-plugins" directory:
+# Link application's resources to Engine ui-plugins directory:
 ln -s "%{_datadir}/%{name}/dashboard.json" "%{buildroot}%{_datadir}/ovirt-engine/ui-plugins"
 ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-engine/ui-plugins"
 
@@ -52,6 +48,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Fri May 20 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1-2
+- Use setup-env.sh script provided by ovirt-engine-nodejs-modules.
+
 * Thu May 19 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1-1
 - Define RPM release tag with optional snapshot information.
 
