@@ -6,35 +6,53 @@ This project contains http://www.ovirt.org/[oVirt]
 http://www.ovirt.org/develop/release-management/features/ux/uiplugins/[UI plugin]
 that gives overview of the virtualized environment and its specific objects.
 
-== Prerequisites
+== Setting up development environment
+
+=== Prerequisites
 
 Install https://nodejs.org/[Node.js] v4 (LTS). https://github.com/creationix/nvm[nvm]
 can be used to manage multiple Node.js versions.
 
 Run `node -v` to check the current Node.js version.
 
-== Project setup
+Build and configure oVirt Engine according to its
+https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master[developer instructions].
 
-* `npm i` to install dependencies (this might take a while)
-* `npm t` to lint code and run tests
+=== Dashboard setup
+
+* `npm install` to install dependencies (this might take a while)
+* `npm test` to lint code and run tests
 * `npm run dev` to build for development and watch & recompile files on change
 * `npm run build` to build for production
 
-== Engine setup
+=== Engine setup
 
-. clone `ovirt-engine` and setup its
-  https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master[development environment]
-. apply https://gerrit.ovirt.org/#/c/54058/[Alexander's patch] that adds `DashboardDataServlet`
-. build Engine from source using `make install-dev`
-. run `engine-setup` to configure the product
-. symlink plugin files to `ui-plugins` directory as following:
+Symlink plugin resources to `ui-plugins` directory as following:
 
   cd ${PREFIX}/share/ovirt-engine/ui-plugins/
   ln -s ${PLUGIN_HOME}/dist/dashboard.json dashboard.json
   ln -s ${PLUGIN_HOME}/dist/dashboard-resources dashboard-resources
 
-== Accessing plugin
+=== Accessing plugin
 
 Open WebAdmin in your browser, you should land on *Dashboard* main tab automatically:
 
   https://engine.example:8443/ovirt-engine/webadmin/WebAdmin.html
+
+== Instructions for maintainers
+
+=== Updating dependencies
+
+After updating `devDependencies` in `package.json`:
+
+* bump `version`
+* add entry to `%changelog` section in the spec file
+* submit patch for https://gerrit.ovirt.org/#/q/project:releng-tools[releng-tools] repository:
+** `specs/ovirt-engine-nodejs-modules/package.json` - reflect project's dependencies ^1^
+** `specs/ovirt-engine-nodejs-modules/ovirt-engine-nodejs-modules.spec.in` - bump `Version`,
+   add entry to `%changelog` section
+** `specs/ovirt-engine-nodejs-modules/CHANGES.adoc` - add entries for new and updated packages
+
+^1^ excluding dependencies not required for the build, e.g. `webpack-dev-server`
+
+_Note: this project has no runtime dependencies, make sure to put all dependencies into `devDependencies`._
