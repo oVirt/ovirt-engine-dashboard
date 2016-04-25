@@ -10,6 +10,13 @@ export const SEARCH_PREFIXES = {
   event: 'Event'
 }
 
+export const SEARCH_FIELDS = {
+  name: 'name',
+  status: 'status',
+  severity: 'severity',
+  time: 'time'
+}
+
 export const HEATMAP_THRESHOLDS = {
   domain: [0.65, 0.75, 0.9]
 }

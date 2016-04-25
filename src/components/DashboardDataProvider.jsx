@@ -73,6 +73,13 @@ class DashboardDataProvider extends React.Component {
       inventoryData.statuses.sort((a, b) => {
         return inventoryStatusOrder.indexOf(a.type) - inventoryStatusOrder.indexOf(b.type)
       })
+
+      // define additional search constraints for events
+      category === 'event' && inventoryData.statuses.forEach((obj) => {
+        if (obj.type === 'error' || obj.type === 'warning') {
+          obj.searchSince = 'Today'
+        }
+      })
     })
 
     ;['cpu', 'memory', 'storage'].forEach((category) => {

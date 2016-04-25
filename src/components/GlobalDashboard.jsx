@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 const { shape, instanceOf } = PropTypes
-import { SEARCH_PREFIXES, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS } from '../constants'
+import { SEARCH_PREFIXES, SEARCH_FIELDS, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS } from '../constants'
 import { applySearch } from '../utils/webadmin_search'
 import LastUpdatedLabel from './LastUpdatedLabel'
 import AggregateStatusCard from './AggregateStatusCard'
@@ -33,7 +33,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               applySearch(SEARCH_PREFIXES.dc)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.dc, 'status', statusItem.statusValues)
+              applySearch(SEARCH_PREFIXES.dc, [{
+                name: SEARCH_FIELDS.status,
+                values: statusItem.statusValues
+              }])
             }} />
         </div>
 
@@ -58,7 +61,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               applySearch(SEARCH_PREFIXES.host)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.host, 'status', statusItem.statusValues)
+              applySearch(SEARCH_PREFIXES.host, [{
+                name: SEARCH_FIELDS.status,
+                values: statusItem.statusValues
+              }])
             }} />
         </div>
 
@@ -71,7 +77,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               applySearch(SEARCH_PREFIXES.storage)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.storage, 'status', statusItem.statusValues)
+              applySearch(SEARCH_PREFIXES.storage, [{
+                name: SEARCH_FIELDS.status,
+                values: statusItem.statusValues
+              }])
             }} />
         </div>
 
@@ -84,7 +93,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               applySearch(SEARCH_PREFIXES.vm)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.vm, 'status', statusItem.statusValues)
+              applySearch(SEARCH_PREFIXES.vm, [{
+                name: SEARCH_FIELDS.status,
+                values: statusItem.statusValues
+              }])
             }} />
         </div>
 
@@ -97,7 +109,14 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               applySearch(SEARCH_PREFIXES.event)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.event, 'severity', statusItem.statusValues)
+              applySearch(SEARCH_PREFIXES.event, [{
+                name: SEARCH_FIELDS.severity,
+                values: statusItem.statusValues
+              }, {
+                name: SEARCH_FIELDS.time,
+                values: statusItem.searchSince ? [statusItem.searchSince] : [],
+                operator: '>'
+              }])
             }} />
         </div>
 
@@ -171,7 +190,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.cpu}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.cluster, 'name', [dataItem.name])
+                          applySearch(SEARCH_PREFIXES.cluster, [{
+                            name: SEARCH_FIELDS.name,
+                            values: [dataItem.name]
+                          }])
                         }} />
                     </div>
 
@@ -181,7 +203,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.memory}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.cluster, 'name', [dataItem.name])
+                          applySearch(SEARCH_PREFIXES.cluster, [{
+                            name: SEARCH_FIELDS.name,
+                            values: [dataItem.name]
+                          }])
                         }} />
                     </div>
 
@@ -211,7 +236,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.storage}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.storage, 'name', [dataItem.name])
+                          applySearch(SEARCH_PREFIXES.storage, [{
+                            name: SEARCH_FIELDS.name,
+                            values: [dataItem.name]
+                          }])
                         }} />
                     </div>
 

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, arrayOf } = PropTypes
-import { SEARCH_PREFIXES } from '../constants'
+import { SEARCH_PREFIXES, SEARCH_FIELDS } from '../constants'
 import { formatNumber0D, formatNumber1D } from '../utils/formatting'
 import { applySearch } from '../utils/webadmin_search'
 import DonutChart from './patternfly/DonutChart'
@@ -99,7 +99,10 @@ class UtilizationTrendCard extends React.Component {
                 thresholds={thresholds}
                 utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
                 onObjectNameClick={(dataItem) => {
-                  applySearch(SEARCH_PREFIXES.host, 'name', [dataItem.name])
+                  applySearch(SEARCH_PREFIXES.host, [{
+                    name: SEARCH_FIELDS.name,
+                    values: [dataItem.name]
+                  }])
                 }} />
             </div>
           }
@@ -114,7 +117,10 @@ class UtilizationTrendCard extends React.Component {
                 thresholds={thresholds}
                 utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
                 onObjectNameClick={(dataItem) => {
-                  applySearch(SEARCH_PREFIXES.storage, 'name', [dataItem.name])
+                  applySearch(SEARCH_PREFIXES.storage, [{
+                    name: SEARCH_FIELDS.name,
+                    values: [dataItem.name]
+                  }])
                 }} />
             </div>
           }
@@ -129,7 +135,10 @@ class UtilizationTrendCard extends React.Component {
                 thresholds={thresholds}
                 utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
                 onObjectNameClick={(dataItem) => {
-                  applySearch(SEARCH_PREFIXES.vm, 'name', [dataItem.name])
+                  applySearch(SEARCH_PREFIXES.vm, [{
+                    name: SEARCH_FIELDS.name,
+                    values: [dataItem.name]
+                  }])
                 }} />
             </div>
           }
