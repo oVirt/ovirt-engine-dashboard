@@ -38,7 +38,7 @@ class UtilizationTrendCard extends React.Component {
     const {
       data: { used, total, overcommit, allocated, history, utilization },
       title, unit, utilizationDialogTitle, showValueAsPercentage,
-      donutCenterLabel, sparklineTooltipType, utilizationBarFooterLabelFormat
+      donutCenterLabel, sparklineTooltipType, utilizationFooterLabel
     } = this.props
 
     const available = total - used
@@ -97,7 +97,7 @@ class UtilizationTrendCard extends React.Component {
                 unit={unit}
                 emptyListText='There are currently no utilized hosts'
                 thresholds={thresholds}
-                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
+                utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
                   applySearch(SEARCH_PREFIXES.host, [{
                     name: SEARCH_FIELDS.name,
@@ -115,7 +115,7 @@ class UtilizationTrendCard extends React.Component {
                 unit={unit}
                 emptyListText='There are currently no utilized storage domains'
                 thresholds={thresholds}
-                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
+                utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
                   applySearch(SEARCH_PREFIXES.storage, [{
                     name: SEARCH_FIELDS.name,
@@ -133,7 +133,7 @@ class UtilizationTrendCard extends React.Component {
                 unit={unit}
                 emptyListText='There are currently no utilized virtual machines'
                 thresholds={thresholds}
-                utilizationBarFooterLabelFormat={utilizationBarFooterLabelFormat}
+                utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
                   applySearch(SEARCH_PREFIXES.vm, [{
                     name: SEARCH_FIELDS.name,
@@ -172,14 +172,14 @@ UtilizationTrendCard.propTypes = {
   showValueAsPercentage: bool,
   donutCenterLabel: DonutChart.propTypes.centerLabel,
   sparklineTooltipType: SparklineChart.propTypes.tooltipType,
-  utilizationBarFooterLabelFormat: ObjectUtilizationList.propTypes.utilizationBarFooterLabelFormat
+  utilizationFooterLabel: ObjectUtilizationList.propTypes.utilizationFooterLabel
 }
 
 UtilizationTrendCard.defaultProps = {
   showValueAsPercentage: false,
   donutCenterLabel: DonutChart.defaultProps.centerLabel,
   sparklineTooltipType: SparklineChart.defaultProps.tooltipType,
-  utilizationBarFooterLabelFormat: ObjectUtilizationList.defaultProps.utilizationBarFooterLabelFormat
+  utilizationFooterLabel: ObjectUtilizationList.defaultProps.utilizationFooterLabel
 }
 
 export default UtilizationTrendCard

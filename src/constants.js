@@ -22,3 +22,9 @@ export const HEATMAP_THRESHOLDS = {
 }
 
 export const HEATMAP_LEGEND_LABELS = ['< 65%', '65-75%', '75-90%', '> 90%']
+
+export const STORAGE_UNIT_TABLE = [
+  { unit: 'TB' },
+  { unit: 'GB', factor: 1024 },
+  { unit: 'MB', factor: 1024 }
+]

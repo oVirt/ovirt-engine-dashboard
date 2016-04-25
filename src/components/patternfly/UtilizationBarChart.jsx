@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-const { string, number, bool, element, shape, oneOf } = PropTypes
+const { string, number, bool, shape, oneOf, oneOfType, func } = PropTypes
 import classNames from 'classnames'
 import { formatNumber0D, formatNumber1D } from '../../utils/formatting'
 import Tooltip from '../bootstrap/Tooltip'
@@ -26,12 +26,11 @@ import Tooltip from '../bootstrap/Tooltip'
  */
 
 function UtilizationBarChart ({
-    used, total, unit, thresholds, layout, title, footer, footerLabelFormat,
+    used, total, unit, thresholds, layout, title, footerLabel,
     titleLabelWidth, footerLabelWidth
   }) {
   const percentUsed = used / total * 100
   const percentAvailable = 100 - percentUsed
-  const useDefaultFooter = !footer
 
   const progressThresholdClass = thresholds.enabled && classNames({
     'progress-bar-success': (percentUsed < thresholds.warning),
@@ -50,17 +49,21 @@ function UtilizationBarChart ({
             {/* used progress */}
             <Tooltip text={`${formatNumber0D(percentUsed)}% Used`}>
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
-                {useDefaultFooter && footerLabelFormat === 'actual' &&
+                {footerLabel === 'actual' &&
                   <span>
                     <strong>{formatNumber1D(used)} of {formatNumber1D(total)} {unit}</strong> Used
                   </span>
                 }
-                {useDefaultFooter && footerLabelFormat === 'percent' &&
+                {footerLabel === 'percent' &&
                   <span>
                     <strong>{formatNumber0D(percentUsed)}%</strong> Used
                   </span>
                 }
-                {!useDefaultFooter && footer}
+                {typeof footerLabel === 'function' &&
+                  <span>
+                    {footerLabel(used, total, unit)}
+                  </span>
+                }
               </div>
             </Tooltip>
 
@@ -83,17 +86,21 @@ function UtilizationBarChart ({
             {/* used progress */}
             <Tooltip text={`${formatNumber0D(percentUsed)}% Used`}>
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
-                {useDefaultFooter && footerLabelFormat === 'actual' &&
+                {footerLabel === 'actual' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
                     <strong>{formatNumber1D(used)} {unit}</strong> Used
                   </span>
                 }
-                {useDefaultFooter && footerLabelFormat === 'percent' &&
+                {footerLabel === 'percent' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
                     <strong>{formatNumber0D(percentUsed)}%</strong> Used
                   </span>
                 }
-                {!useDefaultFooter && footer}
+                {typeof footerLabel === 'function' &&
+                  <span style={{ maxWidth: footerLabelWidth }}>
+                    {footerLabel(used, total, unit)}
+                  </span>
+                }
               </div>
             </Tooltip>
 
@@ -121,8 +128,10 @@ UtilizationBarChart.propTypes = {
   }),
   layout: oneOf(['regular', 'inline']),
   title: string,   // custom title
-  footer: element, // custom footer
-  footerLabelFormat: oneOf(['actual', 'percent']),
+  footerLabel: oneOfType([
+    oneOf(['actual', 'percent']),
+    func // (used:number, total:number, unit:string) => void
+  ]),
   titleLabelWidth: string, // used with 'inline' layout
   footerLabelWidth: string // used with 'inline' layout
 }
@@ -134,7 +143,7 @@ UtilizationBarChart.defaultProps = {
     error: 90
   },
   layout: 'regular',
-  footerLabelFormat: 'actual'
+  footerLabel: 'actual'
 }
 
 export default UtilizationBarChart

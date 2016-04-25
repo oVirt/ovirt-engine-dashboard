@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 const { shape, instanceOf } = PropTypes
-import { SEARCH_PREFIXES, SEARCH_FIELDS, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS } from '../constants'
+import { SEARCH_PREFIXES, SEARCH_FIELDS, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS, STORAGE_UNIT_TABLE } from '../constants'
+import { formatNumber1D } from '../utils/formatting'
+import { convertValue } from '../utils/unit_conversion'
 import { applySearch } from '../utils/webadmin_search'
 import LastUpdatedLabel from './LastUpdatedLabel'
 import AggregateStatusCard from './AggregateStatusCard'
@@ -10,6 +12,15 @@ import HeatMapLegend from './patternfly/HeatMapLegend'
 
 function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated }) {
   const heatMapThresholds = Object.assign({}, HeatMap.defaultProps.thresholds, HEATMAP_THRESHOLDS)
+
+  const storageUtilizationFooterLabel = (used, total, unit) => {
+    const { unit: newUnit, value: newUsed } = convertValue(STORAGE_UNIT_TABLE, unit, used)
+    return (
+      <div style={{ display: 'inline-block' }}>
+        <strong>{formatNumber1D(newUsed)} {newUnit}</strong> Used
+      </div>
+    )
+  }
 
   return (
     <div className='container-fluid container-tiles-pf containers-dashboard'>
@@ -141,7 +152,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                     showValueAsPercentage
                     donutCenterLabel='percent'
                     sparklineTooltipType='percentPerDate'
-                    utilizationBarFooterLabelFormat='percent' />
+                    utilizationFooterLabel='percent' />
                 </div>
 
                 <div className='col-xs-12 col-sm-4 col-md-4'>
@@ -152,7 +163,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                     utilizationDialogTitle='Top Utilized Resources (Memory)'
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate'
-                    utilizationBarFooterLabelFormat='actual' />
+                    utilizationFooterLabel={storageUtilizationFooterLabel} />
                 </div>
 
                 <div className='col-xs-12 col-sm-4 col-md-4'>
@@ -163,7 +174,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                     utilizationDialogTitle='Top Utilized Resources (Storage)'
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate'
-                    utilizationBarFooterLabelFormat='actual' />
+                    utilizationFooterLabel={storageUtilizationFooterLabel} />
                 </div>
 
               </div>
