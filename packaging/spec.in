@@ -38,11 +38,11 @@ mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -r dist/* %{buildroot}%{_datadir}/%{name}
 
 # Ensure that oVirt Engine "ui-plugins" directory exists:
-mkdir -p %{_datadir}/ovirt-engine/ui-plugins
+mkdir -p %{buildroot}%{_datadir}/ovirt-engine/ui-plugins
 
 # Link application's resources to oVirt Engine "ui-plugins" directory:
-ln -s "%{_datadir}/%{name}/dashboard.json" "%{_datadir}/ovirt-engine/ui-plugins"
-ln -s "%{_datadir}/%{name}/dashboard-resources" "%{_datadir}/ovirt-engine/ui-plugins"
+ln -s "%{_datadir}/%{name}/dashboard.json" "%{buildroot}%{_datadir}/ovirt-engine/ui-plugins"
+ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-engine/ui-plugins"
 
 %files
 %{_datadir}/%{name}
