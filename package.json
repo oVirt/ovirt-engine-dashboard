@@ -8,7 +8,7 @@
     "url": "git://gerrit.ovirt.org/ovirt-engine-dashboard"
   },
   "scripts": {
-    "build": "npm run test && NODE_ENV=production webpack -p --progress",
+    "build": "npm run test && NODE_ENV=production webpack -p --progress --bail",
     "dev": "webpack -d --progress --watch",
     "test": "eslint src --ext js,jsx"
   },
