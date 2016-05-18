@@ -201,8 +201,8 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.cpu}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.cluster, [{
-                            name: SEARCH_FIELDS.name,
+                          applySearch(SEARCH_PREFIXES.host, [{
+                            name: SEARCH_FIELDS.cluster,
                             values: [dataItem.name]
                           }])
                         }} />
@@ -214,8 +214,8 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.memory}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.cluster, [{
-                            name: SEARCH_FIELDS.name,
+                          applySearch(SEARCH_PREFIXES.host, [{
+                            name: SEARCH_FIELDS.cluster,
                             values: [dataItem.name]
                           }])
                         }} />

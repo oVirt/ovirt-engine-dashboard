@@ -14,7 +14,8 @@ export const SEARCH_FIELDS = {
   name: 'name',
   status: 'status',
   severity: 'severity',
-  time: 'time'
+  time: 'time',
+  cluster: 'cluster'
 }
 
 export const HEATMAP_THRESHOLDS = {
