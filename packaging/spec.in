@@ -11,7 +11,7 @@ BuildArch: noarch
 BuildRequires: ovirt-engine-nodejs
 BuildRequires: ovirt-engine-nodejs-modules
 
-Requires: ovirt-engine
+Requires: ovirt-engine-webadmin-portal
 
 %description
 oVirt UI plugin that gives overview of the virtualized environment and its specific objects.
@@ -52,6 +52,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Wed May 18 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1
+- Require ovirt-engine-webadmin-portal instead of ovirt-engine.
+
 * Fri May 6 2016 Vojtech Szocs <vszocs@redhat.com> - 0.0.1
 - Update spec file to link UI plugin resources to oVirt Engine.
 
