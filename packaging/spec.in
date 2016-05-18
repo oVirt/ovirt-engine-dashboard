@@ -9,7 +9,7 @@ Source: @TAR_FILE@
 BuildArch: noarch
 
 BuildRequires: ovirt-engine-nodejs
-BuildRequires: ovirt-engine-nodejs-modules
+BuildRequires: ovirt-engine-nodejs-modules >= 0.0.7
 
 Requires: ovirt-engine-webadmin-portal
 
