@@ -8,12 +8,12 @@ mkdir -p exported-artifacts
 version="$(automation/version.py)"
 date="$(date --utc +%Y%m%d)"
 commit="$(git log -1 --pretty=format:%h)"
-suffix=".${date}git${commit}"
+snapshot=".${date}git${commit}"
 
 # Build the tar file:
 tar_name="ovirt-engine-dashboard"
 tar_prefix="${tar_name}-${version}/"
-tar_file="${tar_name}-${version}${suffix}.tar.gz"
+tar_file="${tar_name}-${version}${snapshot}.tar.gz"
 git archive --prefix="${tar_prefix}" --output="${tar_file}" HEAD
 
 # Build the RPM:
@@ -21,7 +21,7 @@ mv "${tar_file}" packaging/
 pushd packaging
   export tar_version="${version}"
   export tar_file
-  export rpm_suffix="${suffix}"
+  export rpm_snapshot="${snapshot}"
   ./build.sh
 popd
 
