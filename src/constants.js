@@ -1,6 +1,11 @@
 export const PLUGIN_NAME = 'dashboard'
 export const PLUGIN_API = window.parent.pluginApi(PLUGIN_NAME)
 
+import deMessages from '../intl/de-DE.json'
+export const TRANSLATED_MESSAGES = {
+  'de-DE': deMessages
+}
+
 export const SEARCH_PREFIXES = {
   dc: 'DataCenter',
   cluster: 'Cluster',

@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, arrayOf } = PropTypes
 import { SEARCH_PREFIXES, SEARCH_FIELDS } from '../constants'
-import { formatNumber0D, formatNumber1D } from '../utils/formatting'
+import { msg } from '../intl_messages'
+import { formatNumber0D, formatNumber1D } from '../utils/intl'
 import { applySearch } from '../utils/webadmin_search'
 import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
@@ -56,12 +57,20 @@ class UtilizationTrendCard extends React.Component {
             {showValueAsPercentage ? `${formatNumber0D(available)}%` : formatNumber1D(available)}
           </h1>
           <div className='available-text pull-left'>
-            <div>Available</div>
-            <div>of {showValueAsPercentage ? `${formatNumber0D(total)}%` : `${formatNumber1D(total)} ${unit}`}</div>
+            <div>{msg.available()}</div>
+            <div>
+              {showValueAsPercentage
+                ? msg.utilizationCardAvailableOfPercent({ total: formatNumber0D(total) })
+                : msg.utilizationCardAvailableOfUnit({ total: formatNumber1D(total), unit })
+              }
+            </div>
           </div>
 
           <div style={{ clear: 'left', paddingTop: 5 }}>
-            Over commit: {formatNumber0D(overcommit)}% (allocated {formatNumber0D(allocated)}%)
+            {msg.utilizationCardOverCommit({
+              overcommit: formatNumber0D(overcommit),
+              allocated: formatNumber0D(allocated)
+            })}
           </div>
         </div>
 
@@ -91,11 +100,13 @@ class UtilizationTrendCard extends React.Component {
 
           {utilization.hosts &&
             <div>
-              <ObjectUtilizationListTitle text={`Hosts (${utilization.hosts.length})`} />
+              <ObjectUtilizationListTitle text={msg.utilizationCardDialogHostListTitle({
+                hostCount: utilization.hosts.length
+              })} />
               <ObjectUtilizationList
                 data={utilization.hosts}
                 unit={unit}
-                emptyListText='There are currently no utilized hosts'
+                emptyListText={msg.utilizationCardDialogEmptyHostList()}
                 thresholds={thresholds}
                 utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
@@ -109,11 +120,13 @@ class UtilizationTrendCard extends React.Component {
 
           {utilization.storage &&
             <div>
-              <ObjectUtilizationListTitle text={`Storage Domains (${utilization.storage.length})`} />
+              <ObjectUtilizationListTitle text={msg.utilizationCardDialogStorageListTitle({
+                storageCount: utilization.storage.length
+              })} />
               <ObjectUtilizationList
                 data={utilization.storage}
                 unit={unit}
-                emptyListText='There are currently no utilized storage domains'
+                emptyListText={msg.utilizationCardDialogEmptyStorageList()}
                 thresholds={thresholds}
                 utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
@@ -127,11 +140,13 @@ class UtilizationTrendCard extends React.Component {
 
           {utilization.vms &&
             <div>
-              <ObjectUtilizationListTitle text={`Virtual Machines (${utilization.vms.length})`} />
+              <ObjectUtilizationListTitle text={msg.utilizationCardDialogVmListTitle({
+                vmCount: utilization.vms.length
+              })} />
               <ObjectUtilizationList
                 data={utilization.vms}
                 unit={unit}
-                emptyListText='There are currently no utilized virtual machines'
+                emptyListText={msg.utilizationCardDialogEmptyVmList()}
                 thresholds={thresholds}
                 utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {

@@ -1,9 +1,11 @@
+/* global __DEV__ */
+
 import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'
+import { msg } from '../../intl_messages'
 import { getDefaultSparklineConfig } from '../../patternfly_defaults'
-import { addFormatNumberProp, addFormatDateProp } from '../../utils/react'
-import { formatNumber1D, formatDateTime } from '../../utils/formatting'
+import { formatNumber1D, formatDateTime } from '../../utils/intl'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/sparkline/
@@ -35,7 +37,7 @@ class SparklineChart extends React.Component {
     )
   }
 
-  _generateChart ({ data, total, unit, showXAxis, showYAxis, tooltipType, formatNumber, formatDate }) {
+  _generateChart ({ data, total, unit, showXAxis, showYAxis, tooltipType }) {
     const config = Object.assign({}, getDefaultSparklineConfig(), {
       bindto: this._chartContainer,
       data: {
@@ -46,7 +48,7 @@ class SparklineChart extends React.Component {
         ],
         names: {
           date: 'Date',
-          used: `${unit} Used`
+          used: msg.unitUsed({ unit })
         },
         x: 'date'
       },
@@ -83,11 +85,11 @@ class SparklineChart extends React.Component {
               left: Math.min(x, chartBox.width - width)
             }
           } catch (e) {
-            console.warn('Error while computing tooltip position', e)
+            __DEV__ && console.warn('Error while computing tooltip position', e)
           }
         },
         contents: (d) => {
-          return this._getSparklineChartTooltipHTML({ d, total, tooltipType, formatNumber, formatDate })
+          return this._getSparklineChartTooltipHTML({ d, total, tooltipType })
         }
       }
     })
@@ -104,7 +106,7 @@ class SparklineChart extends React.Component {
     this._chart.destroy()
   }
 
-  _getSparklineChartTooltipHTML ({ d, total, tooltipType, formatNumber, formatDate }) {
+  _getSparklineChartTooltipHTML ({ d, total, tooltipType }) {
     const percentUsed = Math.round(d[0].value / total * 100)
 
     function getTooltipTableHTML (tipRows) {
@@ -119,19 +121,19 @@ class SparklineChart extends React.Component {
       // TODO(vs) this isn't supported in angular-patternfly, replace with custom tooltip function
       case 'percentPerDate':
         return getTooltipTableHTML(
-          `<tr><td class='value'>${formatDate(d[0].x)}</td><td class='value text-nowrap'>${percentUsed}%</td></tr>`
+          `<tr><td class='value'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${percentUsed}%</td></tr>`
         )
       case 'valuePerDate':
         return getTooltipTableHTML(
-          `<tr><td class='value'>${formatDate(d[0].x)}</td><td class='value text-nowrap'>${formatNumber(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><td class='value'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
         )
       case 'usagePerDate':
         return getTooltipTableHTML(
-          `<tr><th colspan='2'>${formatDate(d[0].x)}</th></tr>` +
-          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${formatNumber(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><th colspan='2'>${formatDateTime(d[0].x)}</th></tr>` +
+          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
         )
       default:
-        return `<span class='c3-tooltip-sparkline'>${formatNumber(d[0].value)} ${d[0].name}</span>`
+        return `<span class='c3-tooltip-sparkline'>${formatNumber1D(d[0].value)} ${d[0].name}</span>`
     }
   }
 
@@ -156,8 +158,5 @@ SparklineChart.defaultProps = {
   tooltipType: 'default',
   containerStyle: {}
 }
-
-addFormatNumberProp(SparklineChart, formatNumber1D)
-addFormatDateProp(SparklineChart, formatDateTime)
 
 export default SparklineChart

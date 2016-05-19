@@ -5,24 +5,39 @@ const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
+// production vs. development switch
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
 
+// additional build options
+const extractMessages = process.env.EXTRACT_MESSAGES === '1'
+
+// options passed to Babel transpiler
+const babelOptions = {
+  presets: ['es2015', 'react'],
+  plugins: []
+}
+
 const config = module.exports = {
   entry: {
-    plugin: './src/plugin.js',
-    main_tab: './src/main_tab.jsx'
+    'plugin': './src/plugin.js',
+    'main_tab': './src/main_tab.jsx'
   },
   output: {
+    filename: '[name].js',
     path: `${__dirname}/dist/dashboard-resources`,
-    publicPath: '/',
-    filename: '[name].js'
+    publicPath: '/'
   },
   module: {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel'
+      loader: 'babel',
+      query: babelOptions
+    }, {
+      test: /\.json$/,
+      exclude: /node_modules/,
+      loader: 'json'
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader'
@@ -46,7 +61,7 @@ const config = module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist', 'extra']),
     new CopyWebpackPlugin([
       { from: 'static/dashboard.json', to: '../' },
       { from: 'static/html' },
@@ -76,5 +91,14 @@ if (isProd) {
     new webpack.optimize.UglifyJsPlugin({
       minimize: true
     })
+  )
+}
+
+if (extractMessages) {
+  babelOptions.plugins.push(
+    ['react-intl', {
+      messagesDir: './extra/messages',
+      enforceDescriptions: true
+    }]
   )
 }

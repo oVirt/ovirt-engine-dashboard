@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, oneOf, oneOfType, func } = PropTypes
 import classNames from 'classnames'
-import { formatNumber0D, formatNumber1D } from '../../utils/formatting'
+import { msg } from '../../intl_messages'
+import { formatNumber0D, formatNumber1D } from '../../utils/intl'
 import Tooltip from '../bootstrap/Tooltip'
 
 // PatternFly reference:
@@ -47,16 +48,16 @@ function UtilizationBarChart ({
           <div className='progress progress-label-top-right'>
 
             {/* used progress */}
-            <Tooltip text={`${formatNumber0D(percentUsed)}% Used`}>
+            <Tooltip text={msg.percentUsed({ value: formatNumber0D(percentUsed) })}>
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
                 {footerLabel === 'actual' &&
                   <span>
-                    <strong>{formatNumber1D(used)} of {formatNumber1D(total)} {unit}</strong> Used
+                    <strong>{msg.usedOfTotal({ used: formatNumber1D(used), total: formatNumber1D(total) })} {unit}</strong> {msg.used()}
                   </span>
                 }
                 {footerLabel === 'percent' &&
                   <span>
-                    <strong>{formatNumber0D(percentUsed)}%</strong> Used
+                    <strong>{formatNumber0D(percentUsed)}%</strong> {msg.used()}
                   </span>
                 }
                 {typeof footerLabel === 'function' &&
@@ -68,7 +69,7 @@ function UtilizationBarChart ({
             </Tooltip>
 
             {/* available progress */}
-            <Tooltip text={`${formatNumber0D(percentAvailable)}% Available`}>
+            <Tooltip text={msg.percentAvailable({ value: formatNumber0D(percentAvailable) })}>
               <div className='progress-bar progress-bar-remaining' style={{ width: `${100 - percentUsed}%` }} role='progressbar'>
               </div>
             </Tooltip>
@@ -84,16 +85,16 @@ function UtilizationBarChart ({
           <div className='progress'>
 
             {/* used progress */}
-            <Tooltip text={`${formatNumber0D(percentUsed)}% Used`}>
+            <Tooltip text={msg.percentUsed({ value: formatNumber0D(percentUsed) })}>
               <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
                 {footerLabel === 'actual' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
-                    <strong>{formatNumber1D(used)} {unit}</strong> Used
+                    <strong>{formatNumber1D(used)} {unit}</strong> {msg.used()}
                   </span>
                 }
                 {footerLabel === 'percent' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
-                    <strong>{formatNumber0D(percentUsed)}%</strong> Used
+                    <strong>{formatNumber0D(percentUsed)}%</strong> {msg.used()}
                   </span>
                 }
                 {typeof footerLabel === 'function' &&
@@ -105,7 +106,7 @@ function UtilizationBarChart ({
             </Tooltip>
 
             {/* available progress */}
-            <Tooltip text={`${formatNumber0D(percentAvailable)}% Available`}>
+            <Tooltip text={msg.percentAvailable({ value: formatNumber0D(percentAvailable) })}>
               <div className='progress-bar progress-bar-remaining' style={{ width: `${100 - percentUsed}%` }} role='progressbar'>
               </div>
             </Tooltip>

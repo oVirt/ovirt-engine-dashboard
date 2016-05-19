@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, number, shape, arrayOf, func } = PropTypes
-import { formatNumber0D } from '../utils/formatting'
+import { msg } from '../intl_messages'
+import { formatNumber0D } from '../utils/intl'
 import Tooltip from './bootstrap/Tooltip'
 
 // PatternFly reference:
@@ -67,23 +68,23 @@ function AggregateStatusCard ({
 
 const statusTypeInfo = {
   up: {
-    text: 'Up',
+    text () { return msg.statusTypeUp() },
     iconClass: 'fa fa-arrow-circle-o-up'
   },
   down: {
-    text: 'Down',
+    text () { return msg.statusTypeDown() },
     iconClass: 'fa fa-arrow-circle-o-down'
   },
   error: {
-    text: 'Error',
+    text () { return msg.statusTypeError() },
     iconClass: 'pficon pficon-error-circle-o'
   },
   warning: {
-    text: 'Warning',
+    text () { return msg.statusTypeWarning() },
     iconClass: 'pficon pficon-warning-triangle-o'
   },
   alert: {
-    text: 'Alert',
+    text () { return msg.statusTypeAlert() },
     iconClass: 'fa fa-bell'
   }
 }
@@ -110,7 +111,7 @@ AggregateStatusCard.propTypes = {
 
 AggregateStatusCard.defaultProps = {
   statusTypeToText (statusType) {
-    return statusTypeInfo[statusType] ? statusTypeInfo[statusType].text : 'Unknown status'
+    return statusTypeInfo[statusType] ? statusTypeInfo[statusType].text() : msg.statusTypeUnknown()
   },
   statusTypeToIconClass (statusType) {
     return statusTypeInfo[statusType] ? statusTypeInfo[statusType].iconClass : 'fa fa-question'

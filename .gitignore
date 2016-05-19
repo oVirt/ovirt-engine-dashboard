@@ -1,4 +1,4 @@
-# Dependencies pulled via npm
+# Dependencies managed by npm
 node_modules/
 
 # Optional npm cache directory
@@ -9,6 +9,9 @@ npm-debug.log*
 
 # Distribution files
 dist/
+
+# Additional build artifacts
+extra/
 
 # IDE files
 .idea/

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, node } = PropTypes
 import $ from 'jquery'
+import { msg } from '../../intl_messages'
 
 // TODO(vs) Bootstrap suggests to put modal's HTML right under document's body
 // It's probably better to have a reusable function implemented using jQuery
@@ -23,7 +24,7 @@ class ModalDialog extends React.Component {
             <div className='modal-body'>{this.props.children}</div>
 
             <div className='modal-footer'>
-              <button type='button' className='btn btn-primary' data-dismiss='modal'>Close</button>
+              <button type='button' className='btn btn-primary' data-dismiss='modal'>{msg.closeButton()}</button>
             </div>
 
           </div>

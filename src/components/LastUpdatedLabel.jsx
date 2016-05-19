@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react'
 const { instanceOf } = PropTypes
-import { formatDateTime } from '../utils/formatting'
+import { msg } from '../intl_messages'
+import { formatDateTime } from '../utils/intl'
 
 function LastUpdatedLabel ({ date }) {
   return (
     <span>
-      <span className='fa fa-clock-o' /> <b>Last Updated</b> {formatDateTime(date)}
+      <span className='fa fa-clock-o' /> <b>{msg.lastUpdated()}</b> {formatDateTime(date)}
     </span>
   )
 }

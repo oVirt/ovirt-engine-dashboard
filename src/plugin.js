@@ -1,11 +1,16 @@
 import { PLUGIN_NAME, PLUGIN_API as api } from './constants'
+import { msg } from './intl_messages'
+import { initLocale } from './utils/intl'
 
 const mainTabToken = 'dashboard-main'
 
 api.register({
 
   UiInit () {
-    api.addMainTab('Dashboard', mainTabToken, `plugin/${PLUGIN_NAME}/main_tab.html`, {
+    initLocale()
+
+    // add Dashboard main tab
+    api.addMainTab(msg.mainTabTitle(), mainTabToken, `plugin/${PLUGIN_NAME}/main_tab.html`, {
       // position this tab before any standard ones
       priority: -1,
       // customize the prefix displayed in search bar

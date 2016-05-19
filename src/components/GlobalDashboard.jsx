@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react'
 const { shape, instanceOf } = PropTypes
 import { SEARCH_PREFIXES, SEARCH_FIELDS, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS, STORAGE_UNIT_TABLE } from '../constants'
-import { formatNumber1D } from '../utils/formatting'
+import { msg } from '../intl_messages'
+import { formatNumber1D } from '../utils/intl'
 import { convertValue } from '../utils/unit_conversion'
 import { applySearch } from '../utils/webadmin_search'
 import LastUpdatedLabel from './LastUpdatedLabel'
@@ -38,7 +39,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.dc}
-            title='Data Centers'
+            title={msg.statusCardDataCenterTitle()}
             mainIconClass='fa fa-globe'
             onTotalCountClick={() => {
               applySearch(SEARCH_PREFIXES.dc)
@@ -54,9 +55,9 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.cluster}
-            title='Clusters'
+            title={msg.statusCardClusterTitle()}
             mainIconClass='pficon pficon-cluster'
-            noStatusText='N/A'
+            noStatusText={msg.notAvailableShort()}
             noStatusIconClass=''
             onTotalCountClick={() => {
               applySearch(SEARCH_PREFIXES.cluster)
@@ -66,7 +67,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.host}
-            title='Hosts'
+            title={msg.statusCardHostTitle()}
             mainIconClass='pficon pficon-screen'
             onTotalCountClick={() => {
               applySearch(SEARCH_PREFIXES.host)
@@ -82,7 +83,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.storage}
-            title='Storage Domains'
+            title={msg.statusCardStorageTitle()}
             mainIconClass='pficon pficon-storage-domain'
             onTotalCountClick={() => {
               applySearch(SEARCH_PREFIXES.storage)
@@ -98,7 +99,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.vm}
-            title='VMs'
+            title={msg.statusCardVmTitle()}
             mainIconClass='pficon pficon-virtual-machine'
             onTotalCountClick={() => {
               applySearch(SEARCH_PREFIXES.vm)
@@ -114,7 +115,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-xs-4 col-sm-4 col-md-2'>
           <AggregateStatusCard
             data={inventory.event}
-            title='Events'
+            title={msg.statusCardEventTitle()}
             mainIconClass='pficon pficon-flag'
             onTotalCountClick={() => {
               applySearch(SEARCH_PREFIXES.event)
@@ -138,7 +139,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
         <div className='col-md-12'>
           <div className='card-pf'>
             <div className='card-pf-heading'>
-              <h2 className='card-pf-title'>Global Utilization</h2>
+              <h2 className='card-pf-title'>{msg.globalUtilizationHeading()}</h2>
             </div>
             <div className='card-pf-body'>
               <div className='row'>
@@ -146,9 +147,9 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                 <div className='col-xs-12 col-sm-4 col-md-4'>
                   <UtilizationTrendCard
                     data={globalUtilization.cpu}
-                    title='CPU'
+                    title={msg.cpuTitle()}
                     unit=''
-                    utilizationDialogTitle='Top Utilized Resources (CPU)'
+                    utilizationDialogTitle={msg.utilizationCardCpuDialogTitle()}
                     showValueAsPercentage
                     donutCenterLabel='percent'
                     sparklineTooltipType='percentPerDate'
@@ -158,9 +159,9 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                 <div className='col-xs-12 col-sm-4 col-md-4'>
                   <UtilizationTrendCard
                     data={globalUtilization.memory}
-                    title='Memory'
+                    title={msg.memoryTitle()}
                     unit='GB'
-                    utilizationDialogTitle='Top Utilized Resources (Memory)'
+                    utilizationDialogTitle={msg.utilizationCardMemoryDialogTitle()}
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate'
                     utilizationFooterLabel={storageUtilizationFooterLabel} />
@@ -169,9 +170,9 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                 <div className='col-xs-12 col-sm-4 col-md-4'>
                   <UtilizationTrendCard
                     data={globalUtilization.storage}
-                    title='Storage'
+                    title={msg.storageTitle()}
                     unit='TB'
-                    utilizationDialogTitle='Top Utilized Resources (Storage)'
+                    utilizationDialogTitle={msg.utilizationCardStorageDialogTitle()}
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate'
                     utilizationFooterLabel={storageUtilizationFooterLabel} />
@@ -189,14 +190,14 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
           <div className='heatmap-card'>
             <div className='card-pf'>
               <div className='card-pf-heading'>
-                <h2 className='card-pf-title'>Cluster Utilization</h2>
+                <h2 className='card-pf-title'>{msg.clusterUtilizationHeading()}</h2>
               </div>
               <div className='card-pf-body'>
                 <div className='row'>
                   <div className='col-xs-12 col-sm-12 col-md-12 card-heatmap-body'>
 
                     <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>CPU</span>
+                      <span className='h3 heatmap-chart-title'>{msg.cpuTitle()}</span>
                       <HeatMap
                         data={heatMapData.cpu}
                         thresholds={heatMapThresholds}
@@ -209,7 +210,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                     </div>
 
                     <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>Memory</span>
+                      <span className='h3 heatmap-chart-title'>{msg.memoryTitle()}</span>
                       <HeatMap
                         data={heatMapData.memory}
                         thresholds={heatMapThresholds}
@@ -235,14 +236,14 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
           <div className='heatmap-card'>
             <div className='card-pf'>
               <div className='card-pf-heading'>
-                <h2 className='card-pf-title'>Storage Utilization</h2>
+                <h2 className='card-pf-title'>{msg.storageUtilizationHeading()}</h2>
               </div>
               <div className='card-pf-body'>
                 <div className='row'>
                   <div className='col-xs-12 col-sm-12 col-md-12 card-heatmap-body'>
 
                     <div className='col-xs-12 col-sm-12 col-md-12 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>Storage</span>
+                      <span className='h3 heatmap-chart-title'>{msg.storageTitle()}</span>
                       <HeatMap
                         data={heatMapData.storage}
                         thresholds={heatMapThresholds}

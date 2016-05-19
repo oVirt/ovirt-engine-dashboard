@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, oneOf, func } = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
+import { msg } from '../../intl_messages'
 import { getDefaultDonutConfig } from '../../patternfly_defaults'
-import { addFormatNumberProp } from '../../utils/react'
-import { formatNumber1D } from '../../utils/formatting'
+import { formatNumber1D } from '../../utils/intl'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/donut-chart/
@@ -38,7 +38,7 @@ class DonutChart extends React.Component {
     )
   }
 
-  _generateChart ({ used, total, unit, thresholds, centerLabel, onDataClick, formatNumber }) {
+  _generateChart ({ used, total, unit, thresholds, centerLabel, onDataClick }) {
     const config = Object.assign({}, getDefaultDonutConfig(), {
       bindto: this._chartContainer,
       data: {
@@ -48,8 +48,8 @@ class DonutChart extends React.Component {
           ['available', total - used]
         ],
         names: {
-          used: `${unit} Used`,
-          available: `${unit} Available`
+          used: msg.unitUsed({ unit }),
+          available: msg.unitAvailable({ unit })
         },
         groups: [
           ['used', 'available']
@@ -63,14 +63,14 @@ class DonutChart extends React.Component {
       tooltip: {
         contents (d) {
           const percentUsed = Math.round(d[0].ratio * 100)
-          const tooltipText = `${percentUsed} % ${d[0].name}`
+          const tooltipText = `${percentUsed}% ${d[0].name}`
           return `<span class='donut-tooltip-pf' style='white-space: nowrap;'>${tooltipText}</span>`
         }
       }
     })
 
     this._chart = c3.generate(config)
-    this._setDonutChartCenterLabel({ used, total, unit, centerLabel, formatNumber })
+    this._setDonutChartCenterLabel({ used, total, unit, centerLabel })
   }
 
   _updateChart (props) {
@@ -88,7 +88,7 @@ class DonutChart extends React.Component {
       return defaultPattern
     }
 
-    const percentUsed = used / total * 100
+    const percentUsed = total === 0 ? 0 : used / total * 100
     let color = '#3F9C35'
 
     if (percentUsed >= thresholds.error) {
@@ -101,19 +101,19 @@ class DonutChart extends React.Component {
     return [color].concat(defaultPattern.slice(1))
   }
 
-  _setDonutChartCenterLabel ({ used, total, unit, centerLabel, formatNumber }) {
+  _setDonutChartCenterLabel ({ used, total, unit, centerLabel }) {
     let bigText = ''
     let smallText = ''
 
     if (centerLabel === 'used') {
-      bigText = `${formatNumber(used)}`
-      smallText = `${unit} Used`
+      bigText = `${formatNumber1D(used)}`
+      smallText = msg.unitUsed({ unit })
     } else if (centerLabel === 'available') {
-      bigText = `${formatNumber(total - used)}`
-      smallText = `${unit} Available`
+      bigText = `${formatNumber1D(total - used)}`
+      smallText = msg.unitAvailable({ unit })
     } else if (centerLabel === 'percent') {
-      bigText = `${Math.round(total === 0 ? 0 : used / total * 100)} %`
-      smallText = 'Used'
+      bigText = `${Math.round(total === 0 ? 0 : used / total * 100)}%`
+      smallText = msg.used()
     }
 
     const chartTitle = d3.select(this._chartContainer).select('text.c3-chart-arcs-title')
@@ -148,7 +148,5 @@ DonutChart.defaultProps = {
   containerStyle: {},
   onDataClick () {}
 }
-
-addFormatNumberProp(DonutChart, formatNumber1D)
 
 export default DonutChart
