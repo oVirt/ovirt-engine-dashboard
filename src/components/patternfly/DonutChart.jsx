@@ -112,7 +112,7 @@ class DonutChart extends React.Component {
       bigText = `${formatNumber(total - used)}`
       smallText = `${unit} Available`
     } else if (centerLabel === 'percent') {
-      bigText = `${Math.round(used / total * 100)} %`
+      bigText = `${Math.round(total === 0 ? 0 : used / total * 100)} %`
       smallText = 'Used'
     }
 
