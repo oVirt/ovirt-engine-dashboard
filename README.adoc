@@ -43,16 +43,22 @@ Open WebAdmin in your browser, you should land on *Dashboard* main tab automatic
 
 === Updating dependencies
 
-After updating `devDependencies` in `package.json`:
+After updating dependencies in `package.json`:
 
-* bump `version`
-* add entry to `%changelog` section in the spec file
-* submit patch for https://gerrit.ovirt.org/#/q/project:releng-tools[releng-tools] repository:
+* submit patch for https://gerrit.ovirt.org/#/q/project:releng-tools[releng-tools]:
 ** `specs/ovirt-engine-nodejs-modules/package.json` - reflect project's dependencies ^1^
-** `specs/ovirt-engine-nodejs-modules/ovirt-engine-nodejs-modules.spec.in` - bump `Version`,
-   add entry to `%changelog` section
-** `specs/ovirt-engine-nodejs-modules/CHANGES.adoc` - add entries for new and updated packages
+** `specs/ovirt-engine-nodejs-modules/ovirt-engine-nodejs-modules.spec.in` - bump `Version` and update `%changelog` section
+** `specs/ovirt-engine-nodejs-modules/CHANGES.adoc` - document dependency changes
 
-^1^ excluding dependencies not required for the build, e.g. `webpack-dev-server`
+^1^ excluding dependencies not required for production build, e.g. `webpack-dev-server`
 
-_Note: this project has no runtime dependencies, make sure to put all dependencies into `devDependencies`._
+=== Package versioning ===
+
+* alpha and beta builds: `x.y.z-0.N` where version stays the same, for example:
+** `1.0.0-0.1` - alpha build #1
+** `1.0.0-0.2` - alpha build #2
+** `1.0.0-0.3` - beta build #1
+* release builds (including RC): `x.y.z-N` where version grows between releases, for example:
+** `1.0.0-1` - RC1 build #1
+** `1.0.0-2` - RC1 build #2
+** `1.0.1-1` - RC2 build #1
