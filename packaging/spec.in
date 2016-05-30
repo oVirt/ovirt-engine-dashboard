@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 0.1@RPM_SNAPSHOT@%{?dist}
+Release: 0.2@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -11,7 +11,7 @@ BuildArch: noarch
 BuildRequires: ovirt-engine-nodejs
 BuildRequires: ovirt-engine-nodejs-modules >= 0.0.7
 
-Requires: ovirt-engine-webadmin-portal
+Requires: ovirt-engine-webadmin-portal >= 4.0.0
 
 %description
 oVirt UI plugin that gives overview of the virtualized environment and its specific objects.
@@ -48,6 +48,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Mon May 30 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.0-0.2
+- Require ovirt-engine-webadmin-portal 4.0.0 or greater.
+
 * Thu May 26 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.0-0.1
 - Bump package version to 1.0.0.
 
