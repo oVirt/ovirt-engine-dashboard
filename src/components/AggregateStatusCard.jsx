@@ -22,11 +22,11 @@ function AggregateStatusCard ({
 
       {/* header */}
       <h2 className='card-pf-title'>
-        <span className={mainIconClass} />
         <a href='#' onClick={(event) => {
           event.preventDefault()
           onTotalCountClick()
         }}>
+          <span className={mainIconClass} />
           <span className='card-pf-aggregate-status-count'>{formatNumber0D(totalCount)}</span>
           {' '}
           <span className='card-pf-aggregate-status-title'>{title.toUpperCase()}</span>
@@ -39,12 +39,14 @@ function AggregateStatusCard ({
 
           {statuses.map((statusItem) => (
             <span className='card-pf-aggregate-status-notification' key={statusItem.type}>
-              <span className={statusTypeToIconClass(statusItem.type)} />
               <Tooltip text={getStatusItemTooltip(statusItem)}>
                 <a href='#' onClick={(event) => {
                   event.preventDefault()
                   onStatusCountClick(statusItem)
-                }}>{formatNumber0D(statusItem.count)}</a>
+                }}>
+                  <span className={statusTypeToIconClass(statusItem.type)} />
+                  {formatNumber0D(statusItem.count)}
+                </a>
               </Tooltip>
             </span>
           ))}
