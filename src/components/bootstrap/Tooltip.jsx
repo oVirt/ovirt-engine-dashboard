@@ -7,7 +7,8 @@ class Tooltip extends React.Component {
 
   componentDidMount () {
     $(this._childElement).tooltip({
-      title: this.props.text
+      title: this.props.text,
+      container: 'body'
     })
   }
 
