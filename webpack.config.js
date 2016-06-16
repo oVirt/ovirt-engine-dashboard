@@ -21,7 +21,7 @@ const babelOptions = {
 const config = module.exports = {
   entry: {
     'plugin': './src/plugin.js',
-    'main_tab': './src/main_tab.jsx'
+    'main-tab': './src/main-tab.jsx'
   },
   output: {
     filename: '[name].js',

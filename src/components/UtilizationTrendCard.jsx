@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, arrayOf } = PropTypes
-import { SEARCH_PREFIXES, SEARCH_FIELDS } from '../constants'
-import { msg } from '../intl_messages'
+import { searchPrefixes, searchFields } from '../constants'
+import { msg } from '../intl-messages'
 import { formatNumber0D, formatNumber1D } from '../utils/intl'
-import { applySearch } from '../utils/webadmin_search'
+import { applySearch } from '../utils/webadmin-search'
 import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 import ModalDialog from './bootstrap/ModalDialog'
@@ -110,8 +110,8 @@ class UtilizationTrendCard extends React.Component {
                 thresholds={thresholds}
                 utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
-                  applySearch(SEARCH_PREFIXES.host, [{
-                    name: SEARCH_FIELDS.name,
+                  applySearch(searchPrefixes.host, [{
+                    name: searchFields.name,
                     values: [dataItem.name]
                   }])
                 }} />
@@ -130,8 +130,8 @@ class UtilizationTrendCard extends React.Component {
                 thresholds={thresholds}
                 utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
-                  applySearch(SEARCH_PREFIXES.storage, [{
-                    name: SEARCH_FIELDS.name,
+                  applySearch(searchPrefixes.storage, [{
+                    name: searchFields.name,
                     values: [dataItem.name]
                   }])
                 }} />
@@ -150,8 +150,8 @@ class UtilizationTrendCard extends React.Component {
                 thresholds={thresholds}
                 utilizationFooterLabel={utilizationFooterLabel}
                 onObjectNameClick={(dataItem) => {
-                  applySearch(SEARCH_PREFIXES.vm, [{
-                    name: SEARCH_FIELDS.name,
+                  applySearch(searchPrefixes.vm, [{
+                    name: searchFields.name,
                     values: [dataItem.name]
                   }])
                 }} />

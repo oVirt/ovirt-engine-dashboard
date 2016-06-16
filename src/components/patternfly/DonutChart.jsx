@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, oneOf, func } = PropTypes
 import c3 from 'c3'
 import d3 from 'd3'
-import { msg } from '../../intl_messages'
-import { getDefaultDonutConfig } from '../../patternfly_defaults'
+import { msg } from '../../intl-messages'
+import { getDefaultDonutConfig } from '../../patternfly-defaults'
 import { formatNumber1D } from '../../utils/intl'
 
 // PatternFly reference:

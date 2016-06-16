@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, node } = PropTypes
 import $ from 'jquery'
-import { msg } from '../../intl_messages'
+import { msg } from '../../intl-messages'
 
 // TODO(vs) Bootstrap suggests to put modal's HTML right under document's body
 // It's probably better to have a reusable function implemented using jQuery

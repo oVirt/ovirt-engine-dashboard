@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 const { string, number, shape, arrayOf, func } = PropTypes
-import { msg } from '../intl_messages'
+import { msg } from '../intl-messages'
 import { formatNumber0D } from '../utils/intl'
 import Tooltip from './bootstrap/Tooltip'
 

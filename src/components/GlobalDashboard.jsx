@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
 const { shape, instanceOf } = PropTypes
-import { SEARCH_PREFIXES, SEARCH_FIELDS, HEATMAP_THRESHOLDS, HEATMAP_LEGEND_LABELS, STORAGE_UNIT_TABLE } from '../constants'
-import { msg } from '../intl_messages'
+import { searchPrefixes, searchFields, heatMapThresholds, heatMapLegendLabels, storageUnitTable } from '../constants'
+import { msg } from '../intl-messages'
 import { formatNumber1D } from '../utils/intl'
-import { convertValue } from '../utils/unit_conversion'
-import { applySearch } from '../utils/webadmin_search'
+import { convertValue } from '../utils/unit-conversion'
+import { applySearch } from '../utils/webadmin-search'
 import LastUpdatedLabel from './LastUpdatedLabel'
 import AggregateStatusCard from './AggregateStatusCard'
 import UtilizationTrendCard from './UtilizationTrendCard'
@@ -12,10 +12,8 @@ import HeatMap from './patternfly/HeatMap'
 import HeatMapLegend from './patternfly/HeatMapLegend'
 
 function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated }) {
-  const heatMapThresholds = Object.assign({}, HeatMap.defaultProps.thresholds, HEATMAP_THRESHOLDS)
-
   const storageUtilizationFooterLabel = (used, total, unit) => {
-    const { unit: newUnit, value: newUsed } = convertValue(STORAGE_UNIT_TABLE, unit, used)
+    const { unit: newUnit, value: newUsed } = convertValue(storageUnitTable, unit, used)
     return (
       <div style={{ display: 'inline-block' }}>
         <strong>{formatNumber1D(newUsed)} {newUnit}</strong> Used
@@ -42,11 +40,11 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardDataCenterTitle()}
             mainIconClass='fa fa-globe'
             onTotalCountClick={() => {
-              applySearch(SEARCH_PREFIXES.dc)
+              applySearch(searchPrefixes.dc)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.dc, [{
-                name: SEARCH_FIELDS.status,
+              applySearch(searchPrefixes.dc, [{
+                name: searchFields.status,
                 values: statusItem.statusValues
               }])
             }} />
@@ -60,7 +58,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             noStatusText={msg.notAvailableShort()}
             noStatusIconClass=''
             onTotalCountClick={() => {
-              applySearch(SEARCH_PREFIXES.cluster)
+              applySearch(searchPrefixes.cluster)
             }} />
         </div>
 
@@ -70,11 +68,11 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardHostTitle()}
             mainIconClass='pficon pficon-screen'
             onTotalCountClick={() => {
-              applySearch(SEARCH_PREFIXES.host)
+              applySearch(searchPrefixes.host)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.host, [{
-                name: SEARCH_FIELDS.status,
+              applySearch(searchPrefixes.host, [{
+                name: searchFields.status,
                 values: statusItem.statusValues
               }])
             }} />
@@ -86,11 +84,11 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardStorageTitle()}
             mainIconClass='pficon pficon-storage-domain'
             onTotalCountClick={() => {
-              applySearch(SEARCH_PREFIXES.storage)
+              applySearch(searchPrefixes.storage)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.storage, [{
-                name: SEARCH_FIELDS.status,
+              applySearch(searchPrefixes.storage, [{
+                name: searchFields.status,
                 values: statusItem.statusValues
               }])
             }} />
@@ -102,11 +100,11 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardVmTitle()}
             mainIconClass='pficon pficon-virtual-machine'
             onTotalCountClick={() => {
-              applySearch(SEARCH_PREFIXES.vm)
+              applySearch(searchPrefixes.vm)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.vm, [{
-                name: SEARCH_FIELDS.status,
+              applySearch(searchPrefixes.vm, [{
+                name: searchFields.status,
                 values: statusItem.statusValues
               }])
             }} />
@@ -118,14 +116,14 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardEventTitle()}
             mainIconClass='pficon pficon-flag'
             onTotalCountClick={() => {
-              applySearch(SEARCH_PREFIXES.event)
+              applySearch(searchPrefixes.event)
             }}
             onStatusCountClick={(statusItem) => {
-              applySearch(SEARCH_PREFIXES.event, [{
-                name: SEARCH_FIELDS.severity,
+              applySearch(searchPrefixes.event, [{
+                name: searchFields.severity,
                 values: statusItem.statusValues
               }, {
-                name: SEARCH_FIELDS.time,
+                name: searchFields.time,
                 values: statusItem.searchSince ? [statusItem.searchSince] : [],
                 operator: '>'
               }])
@@ -202,8 +200,8 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.cpu}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.host, [{
-                            name: SEARCH_FIELDS.cluster,
+                          applySearch(searchPrefixes.host, [{
+                            name: searchFields.cluster,
                             values: [dataItem.name]
                           }])
                         }} />
@@ -215,15 +213,15 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.memory}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.host, [{
-                            name: SEARCH_FIELDS.cluster,
+                          applySearch(searchPrefixes.host, [{
+                            name: searchFields.cluster,
                             values: [dataItem.name]
                           }])
                         }} />
                     </div>
 
                     <div className='col-xs-12 col-sm-12 col-md-12'>
-                      <HeatMapLegend labels={HEATMAP_LEGEND_LABELS} />
+                      <HeatMapLegend labels={heatMapLegendLabels} />
                     </div>
 
                   </div>
@@ -248,15 +246,15 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.storage}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(SEARCH_PREFIXES.storage, [{
-                            name: SEARCH_FIELDS.name,
+                          applySearch(searchPrefixes.storage, [{
+                            name: searchFields.name,
                             values: [dataItem.name]
                           }])
                         }} />
                     </div>
 
                     <div className='col-xs-12 col-sm-12 col-md-12'>
-                      <HeatMapLegend labels={HEATMAP_LEGEND_LABELS} />
+                      <HeatMapLegend labels={heatMapLegendLabels} />
                     </div>
 
                   </div>

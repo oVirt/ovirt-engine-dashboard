@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, oneOf, oneOfType, func } = PropTypes
 import classNames from 'classnames'
-import { msg } from '../../intl_messages'
+import { msg } from '../../intl-messages'
 import { formatNumber0D, formatNumber1D } from '../../utils/intl'
 import Tooltip from '../bootstrap/Tooltip'
 

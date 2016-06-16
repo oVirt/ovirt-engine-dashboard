@@ -1,4 +1,4 @@
-import { PLUGIN_API as api } from '../constants'
+import { pluginApi } from '../constants'
 
 // TODO(vs) this is complex enough to have a unit test
 
@@ -19,5 +19,5 @@ export function applySearch (prefix, fields = []) {
     }
   })
 
-  api.setSearchString(str)
+  pluginApi.setSearchString(str)
 }

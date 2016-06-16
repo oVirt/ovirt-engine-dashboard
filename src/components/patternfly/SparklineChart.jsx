@@ -3,8 +3,8 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'
-import { msg } from '../../intl_messages'
-import { getDefaultSparklineConfig } from '../../patternfly_defaults'
+import { msg } from '../../intl-messages'
+import { getDefaultSparklineConfig } from '../../patternfly-defaults'
 import { formatNumber1D, formatDateTime } from '../../utils/intl'
 
 // PatternFly reference:

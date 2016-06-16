@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 const { instanceOf } = PropTypes
-import { msg } from '../intl_messages'
+import { msg } from '../intl-messages'
 import { formatDateTime } from '../utils/intl'
 
 function LastUpdatedLabel ({ date }) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { msg } from './intl_messages'
+import { msg } from './intl-messages'
 import { initLocale, currentLocale } from './utils/intl'
 import DashboardIntlProvider from './components/DashboardIntlProvider'
 import DashboardDataProvider from './components/DashboardDataProvider'

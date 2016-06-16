@@ -1,17 +1,17 @@
 // TODO(vs) this is complex enough to have a unit test
 
 // scale down
-// convertValue(STORAGE_UNIT_TABLE, 'TB', 0.001) -> { unit: "GB", value: 1.024 }
-// convertValue(STORAGE_UNIT_TABLE, 'TB', 0.000001) -> { unit: "MB", value: 1.048576 }
-// convertValue(STORAGE_UNIT_TABLE, 'GB', 0.001) -> { unit: "MB", value: 1.024 }
+// convertValue(storageUnitTable, 'TB', 0.001) -> { unit: "GB", value: 1.024 }
+// convertValue(storageUnitTable, 'TB', 0.000001) -> { unit: "MB", value: 1.048576 }
+// convertValue(storageUnitTable, 'GB', 0.001) -> { unit: "MB", value: 1.024 }
 //
 // scale up
-// convertValue(STORAGE_UNIT_TABLE, 'MB', 10000) -> { unit: "GB", value: 9.765625 }
-// convertValue(STORAGE_UNIT_TABLE, 'MB', 10000000) -> { unit: "TB", value: 9.5367431640625 }
-// convertValue(STORAGE_UNIT_TABLE, 'GB', 10000) -> { unit: "TB", value: 9.765625 }
+// convertValue(storageUnitTable, 'MB', 10000) -> { unit: "GB", value: 9.765625 }
+// convertValue(storageUnitTable, 'MB', 10000000) -> { unit: "TB", value: 9.5367431640625 }
+// convertValue(storageUnitTable, 'GB', 10000) -> { unit: "TB", value: 9.765625 }
 //
 // bad unit
-// convertValue(STORAGE_UNIT_TABLE, 'XX', 1) -> { unit: "XX", value: 1 }
+// convertValue(storageUnitTable, 'XX', 1) -> { unit: "XX", value: 1 }
 
 export function convertValue (unitTable = [], unit, value) {
   let newUnit = unit

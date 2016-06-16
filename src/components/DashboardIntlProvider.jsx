@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, node } = PropTypes
 import { addLocaleData, IntlProvider } from 'react-intl'
-import { TRANSLATED_MESSAGES } from '../constants'
+import { translatedMessages } from '../constants'
 
 // register supported locales with react-intl
 import en from 'react-intl/locale-data/en'
@@ -10,7 +10,7 @@ import de from 'react-intl/locale-data/de'
 
 function DashboardIntlProvider ({ children, locale }) {
   return (
-    <IntlProvider locale={locale} messages={TRANSLATED_MESSAGES[locale]} defaultLocale='en-US'>
+    <IntlProvider locale={locale} messages={translatedMessages[locale]} defaultLocale='en-US'>
       {children}
     </IntlProvider>
   )

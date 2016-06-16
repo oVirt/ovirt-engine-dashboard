@@ -1,12 +1,12 @@
-export const PLUGIN_NAME = 'dashboard'
-export const PLUGIN_API = window.parent.pluginApi(PLUGIN_NAME)
+export const pluginName = 'dashboard'
+export const pluginApi = window.parent.pluginApi(pluginName)
 
 import deMessages from '../intl/de-DE.json'
-export const TRANSLATED_MESSAGES = {
+export const translatedMessages = {
   'de-DE': deMessages
 }
 
-export const SEARCH_PREFIXES = {
+export const searchPrefixes = {
   dc: 'DataCenter',
   cluster: 'Cluster',
   host: 'Host',
@@ -15,7 +15,7 @@ export const SEARCH_PREFIXES = {
   event: 'Event'
 }
 
-export const SEARCH_FIELDS = {
+export const searchFields = {
   name: 'name',
   status: 'status',
   severity: 'severity',
@@ -23,13 +23,14 @@ export const SEARCH_FIELDS = {
   cluster: 'cluster'
 }
 
-export const HEATMAP_THRESHOLDS = {
-  domain: [0.65, 0.75, 0.9]
+export const heatMapThresholds = {
+  domain: [0.65, 0.75, 0.9],
+  colors: ['#D4F0FA', '#F9D67A', '#EC7A08', '#CE0000']
 }
 
-export const HEATMAP_LEGEND_LABELS = ['< 65%', '65-75%', '75-90%', '> 90%']
+export const heatMapLegendLabels = ['< 65%', '65-75%', '75-90%', '> 90%']
 
-export const STORAGE_UNIT_TABLE = [
+export const storageUnitTable = [
   { unit: 'TiB' },
   { unit: 'GiB', factor: 1024 },
   { unit: 'MiB', factor: 1024 }
