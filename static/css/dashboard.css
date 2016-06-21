@@ -1,3 +1,6 @@
 .containers-dashboard {
     background-color: #F5F5F5
 }
+.heatmap-container rect {
+    cursor: pointer;
+}
