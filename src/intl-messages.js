@@ -168,8 +168,8 @@ export const msg = messageDescriptorsToFormatFunctions(defineMessages({
 
   statusCardVmTitle: {
     id: 'mainTab.statusCardVmTitle',
-    defaultMessage: 'VMs',
-    description: 'title of `VMs` status card'
+    defaultMessage: 'Virtual Machines',
+    description: 'title of `Virtual Machines` status card'
   },
 
   statusCardEventTitle: {
