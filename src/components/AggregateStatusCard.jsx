@@ -30,7 +30,7 @@ function AggregateStatusCard ({
           <span className={mainIconClass} />
           <span className='card-pf-aggregate-status-count'>{formatNumber0D(totalCount)}</span>
           {' '}
-          <span className='card-pf-aggregate-status-title'>{title.toUpperCase()}</span>
+          <span className='card-pf-aggregate-status-title'>{title}</span>
         </a>
       </h2>
 
@@ -85,7 +85,7 @@ const statusTypeInfo = {
   },
   alert: {
     text () { return msg.statusTypeAlert() },
-    iconClass: 'fa fa-bell'
+    iconClass: 'pficon pficon-flag'
   }
 }
 

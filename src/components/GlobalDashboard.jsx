@@ -38,7 +38,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
           <AggregateStatusCard
             data={inventory.dc}
             title={msg.statusCardDataCenterTitle()}
-            mainIconClass='fa fa-globe'
+            mainIconClass='fa fa-building-o'
             onTotalCountClick={() => {
               applySearch(searchPrefixes.dc)
             }}
@@ -114,7 +114,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
           <AggregateStatusCard
             data={inventory.event}
             title={msg.statusCardEventTitle()}
-            mainIconClass='pficon pficon-flag'
+            mainIconClass='fa fa-bell'
             onTotalCountClick={() => {
               applySearch(searchPrefixes.event)
             }}
