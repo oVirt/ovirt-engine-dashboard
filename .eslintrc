@@ -1,13 +1,16 @@
 {
   "extends": ["standard", "standard-react"],
   "env": {
-    "browser": true
+    "browser": true,
+    "mocha": true
+  },
+  "globals": {
+    "__DEV__": false
   },
   "rules": {
     "react/jsx-no-bind": [1, {
       "ignoreRefs": true,
       "allowArrowFunctions": true
-    }],
-    "react/no-string-refs": [1]
+    }]
   }
 }

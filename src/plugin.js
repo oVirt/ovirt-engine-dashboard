@@ -1,16 +1,17 @@
-import { pluginName, pluginApi } from './constants'
+import { pluginName } from './constants'
+import getPluginApi from './plugin-api'
 import { msg } from './intl-messages'
 import { initLocale } from './utils/intl'
 
 const mainTabToken = 'dashboard-main'
 
-pluginApi.register({
+getPluginApi().register({
 
   UiInit () {
     initLocale()
 
     // add Dashboard main tab
-    pluginApi.addMainTab(msg.mainTabTitle(), mainTabToken, `plugin/${pluginName}/main-tab.html`, {
+    getPluginApi().addMainTab(msg.mainTabTitle(), mainTabToken, `plugin/${pluginName}/main-tab.html`, {
       // position this tab before any standard ones
       priority: -1,
       // customize the prefix displayed in search bar
@@ -18,15 +19,15 @@ pluginApi.register({
     })
 
     // switch to Dashboard main tab
-    pluginApi.revealPlace(mainTabToken)
+    getPluginApi().revealPlace(mainTabToken)
   },
 
   SystemTreeSelectionChange (selectedItem) {
     // selecting anything other than 'System' (root node) hides the main tab
     const rootNodeSelected = selectedItem.type === 'System'
-    pluginApi.setTabAccessible(mainTabToken, rootNodeSelected)
+    getPluginApi().setTabAccessible(mainTabToken, rootNodeSelected)
   }
 
 })
 
-pluginApi.ready()
+getPluginApi().ready()

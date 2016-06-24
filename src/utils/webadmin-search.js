@@ -1,8 +1,6 @@
-import { pluginApi } from '../constants'
+import getPluginApi from '../plugin-api'
 
-// TODO(vs) this is complex enough to have a unit test
-
-export function applySearch (prefix, fields = []) {
+export function buildSearch (prefix, fields = []) {
   let str = `${prefix}:`
 
   fields.forEach(({ name, values, operator = '=' }, fieldIndex) => {
@@ -19,5 +17,10 @@ export function applySearch (prefix, fields = []) {
     }
   })
 
-  pluginApi.setSearchString(str)
+  return str
+}
+
+export function applySearch (prefix, fields = []) {
+  const str = buildSearch(prefix, fields)
+  getPluginApi().setSearchString(str)
 }

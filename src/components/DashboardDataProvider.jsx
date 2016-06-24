@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { element } = PropTypes
 import $ from 'jquery'
-import { pluginApi } from '../constants'
+import getPluginApi from '../plugin-api'
 
 class DashboardDataProvider extends React.Component {
 
@@ -13,7 +13,7 @@ class DashboardDataProvider extends React.Component {
   componentDidMount () {
     const request = this._jqXHR = $.ajax({
       method: 'GET',
-      url: `${pluginApi.engineBaseUrl()}webadmin/dashboard_data`,
+      url: `${getPluginApi().engineBaseUrl()}webadmin/dashboard_data`,
       dataType: 'json',
       headers: {
         'Accept': 'application/json'

@@ -1,5 +1,3 @@
-/* global __DEV__ */
-
 import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'

@@ -1,3 +1,6 @@
+require('jquery/dist/jquery')
+require('bootstrap/dist/js/bootstrap')
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { msg } from './intl-messages'
@@ -5,9 +8,6 @@ import { initLocale, currentLocale } from './utils/intl'
 import DashboardIntlProvider from './components/DashboardIntlProvider'
 import DashboardDataProvider from './components/DashboardDataProvider'
 import GlobalDashboard from './components/GlobalDashboard'
-
-require('jquery/dist/jquery')
-require('bootstrap/dist/js/bootstrap')
 
 initLocale()
 

@@ -1,7 +1,5 @@
-/* global __DEV__ */
-
 import IntlMessageFormat from 'intl-messageformat'
-import { pluginApi } from '../constants'
+import getPluginApi from '../plugin-api'
 import translatedMessages from '../../intl/translations.json'
 
 // IntlMessageFormat object cache
@@ -13,7 +11,7 @@ let locale
 // TODO(vs) fetch translations for given locale asynchronously
 
 export function initLocale () {
-  locale = pluginApi.currentLocale()
+  locale = getPluginApi().currentLocale()
   !locale && __DEV__ && console.error('Failed to resolve current locale')
 }
 

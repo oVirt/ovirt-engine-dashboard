@@ -1,5 +1,4 @@
 export const pluginName = 'dashboard'
-export const pluginApi = window.parent.pluginApi(pluginName)
 
 export const searchPrefixes = {
   dc: 'DataCenter',
