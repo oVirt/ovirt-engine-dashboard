@@ -10,7 +10,8 @@
   "scripts": {
     "build": "npm run test && NODE_ENV=production webpack -p --bail",
     "dev": "webpack -d --progress --watch",
-    "intl:extract": "EXTRACT_MESSAGES=1 webpack -d && rip json2pot extra/messages/**/*.json -o extra/messages/dashboard-messages.pot",
+    "intl:extract": "EXTRACT_MESSAGES=1 webpack -d && rip json2pot 'extra/messages/**/*.json' -o 'extra/messages/dashboard-messages.pot'",
+    "intl:apply": "rip po2json 'extra/messages/po/dashboard-messages.*.po' -m 'extra/messages/src/*.json' -o 'intl/translations.json'",
     "test": "eslint src --ext js,jsx"
   },
   "devDependencies": {
