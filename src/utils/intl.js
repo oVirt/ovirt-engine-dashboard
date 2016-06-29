@@ -1,7 +1,8 @@
 /* global __DEV__ */
 
 import IntlMessageFormat from 'intl-messageformat'
-import { pluginApi, translatedMessages } from '../constants'
+import { pluginApi } from '../constants'
+import translatedMessages from '../../intl/translations.json'
 
 // IntlMessageFormat object cache
 const messageFormats = {}

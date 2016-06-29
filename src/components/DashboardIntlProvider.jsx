@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 const { string, node } = PropTypes
 import { addLocaleData, IntlProvider } from 'react-intl'
-import { translatedMessages } from '../constants'
+import translatedMessages from '../../intl/translations.json'
 
 // register supported locales with react-intl
 import en from 'react-intl/locale-data/en'

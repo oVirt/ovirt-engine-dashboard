@@ -1,9 +1,6 @@
 export const pluginName = 'dashboard'
 export const pluginApi = window.parent.pluginApi(pluginName)
 
-import _translatedMessages from '../intl/translations.json'
-export const translatedMessages = _translatedMessages
-
 export const searchPrefixes = {
   dc: 'DataCenter',
   cluster: 'Cluster',
