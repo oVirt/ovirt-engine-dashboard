@@ -3,11 +3,6 @@ const { string, node } = PropTypes
 import $ from 'jquery'
 import { msg } from '../../intl-messages'
 
-// TODO(vs) Bootstrap suggests to put modal's HTML right under document's body
-// It's probably better to have a reusable function implemented using jQuery
-// to show modal dialogs, making sure that modal's <div> gets appended to the
-// right document's body (e.g. `parent.document.body`)
-
 class ModalDialog extends React.Component {
 
   render () {

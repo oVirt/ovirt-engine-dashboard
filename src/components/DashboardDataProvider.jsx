@@ -75,11 +75,13 @@ class DashboardDataProvider extends React.Component {
       })
 
       // define additional search constraints for events
-      category === 'event' && inventoryData.statuses.forEach((obj) => {
-        if (obj.type === 'error' || obj.type === 'warning') {
-          obj.searchSince = 'Today'
-        }
-      })
+      if (category === 'event') {
+        inventoryData.statuses.forEach((obj) => {
+          if (obj.type === 'error' || obj.type === 'warning') {
+            obj.searchSince = 'Today'
+          }
+        })
+      }
     })
 
     ;['cpu', 'memory', 'storage'].forEach((category) => {

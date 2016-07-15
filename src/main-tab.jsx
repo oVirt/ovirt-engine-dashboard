@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { msg } from './intl-messages'
 import { initLocale, currentLocale } from './utils/intl'
 import DashboardIntlProvider from './components/DashboardIntlProvider'
@@ -27,7 +27,7 @@ const errorPlaceholder = (
   </div>
 )
 
-render(
+ReactDOM.render(
   <DashboardIntlProvider locale={currentLocale()}>
     <DashboardDataProvider loading={loadingPlaceholder} error={errorPlaceholder}>
       <GlobalDashboard />
