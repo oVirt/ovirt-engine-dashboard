@@ -158,7 +158,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                   <UtilizationTrendCard
                     data={globalUtilization.memory}
                     title={msg.memoryTitle()}
-                    unit='GB'
+                    unit='GiB'
                     utilizationDialogTitle={msg.utilizationCardMemoryDialogTitle()}
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate'
@@ -169,7 +169,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                   <UtilizationTrendCard
                     data={globalUtilization.storage}
                     title={msg.storageTitle()}
-                    unit='TB'
+                    unit='TiB'
                     utilizationDialogTitle={msg.utilizationCardStorageDialogTitle()}
                     donutCenterLabel='used'
                     sparklineTooltipType='valuePerDate'
