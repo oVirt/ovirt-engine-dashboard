@@ -4,11 +4,17 @@
 rm -rf exported-artifacts
 mkdir -p exported-artifacts
 
-# Calculate the version number:
+# Resolve the version and snapshot used for RPM build:
 version="$(automation/version.py)"
 date="$(date --utc +%Y%m%d)"
 commit="$(git log -1 --pretty=format:%h)"
 snapshot=".${date}git${commit}"
+
+# Check if the commit is tagged (indicates a release build):
+tag="$(git describe --exact-match ${commit} 2>/dev/null)"
+if [ ! -z ${tag} ]; then
+  snapshot=""
+fi
 
 # Build the tar file:
 tar_name="ovirt-engine-dashboard"
@@ -25,7 +31,7 @@ pushd packaging
   ./build.sh
 popd
 
-# Copy the .tar.gz and .rpm files to the exported artifacts directory:
+# Copy the .tar.gz and .rpm files to the artifacts directory:
 for file in $(find . -type f -regex '.*\.\(tar.gz\|rpm\)'); do
   echo "Archiving file \"$file\"."
   mv "$file" exported-artifacts/

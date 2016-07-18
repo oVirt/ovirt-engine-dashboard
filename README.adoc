@@ -6,6 +6,9 @@ This project contains http://www.ovirt.org/[oVirt]
 http://www.ovirt.org/develop/release-management/features/ux/uiplugins/[UI plugin]
 that gives overview of the virtualized environment and its specific objects.
 
+This plugin is installed during oVirt Engine installation and upgraded via `engine-setup`.
+This means no manual steps are required in order to install this plugin in production env.
+
 == Setting up development environment
 
 === Prerequisites
@@ -21,9 +24,10 @@ https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb
 === Dashboard setup
 
 * `npm install` to install dependencies (this might take a while)
-* `npm test` to lint code and run tests
-* `npm run dev` to build for development and watch & recompile files on change
-* `npm run build` to build for production
+* `npm test` to run tests (single run)
+* `npm run test:watch` for continuous testing (watch & rerun tests on change)
+* `npm run dev` for development build and watch & recompile files on change
+* `npm run build` for production build
 
 === Engine setup
 
@@ -41,24 +45,40 @@ Open WebAdmin in your browser, you should land on *Dashboard* main tab automatic
 
 == Instructions for maintainers
 
-=== Updating dependencies
+=== Managing dependencies
 
-After updating dependencies in `package.json`:
+Dependencies not related to production build (not needed for `npm run build`)
+should go into `devDependencies`. Try to keep as few `dependencies` as possible.
+
+Whenever `dependencies` are changed:
 
 * submit patch for https://gerrit.ovirt.org/#/q/project:releng-tools[releng-tools]:
-** `specs/ovirt-engine-nodejs-modules/package.json` - reflect project's dependencies ^1^
-** `specs/ovirt-engine-nodejs-modules/ovirt-engine-nodejs-modules.spec.in` - bump `Version` and update `%changelog` section
-** `specs/ovirt-engine-nodejs-modules/CHANGES.adoc` - document dependency changes
+** `specs/ovirt-engine-nodejs-modules/package.json` - reflect required dependencies
+** `specs/ovirt-engine-nodejs-modules/ovirt-engine-nodejs-modules.spec.in` - bump `Version` and update `%changelog`
+** `specs/ovirt-engine-nodejs-modules/CHANGES.adoc` - document changes made to `package.json`
 
-^1^ excluding dependencies not required for production build, e.g. `webpack-dev-server`
+=== Package versioning
 
-=== Package versioning ===
+* alpha and beta builds (pre-releases): `x.y.z-0.N` where version stays the same
+* RC and GA builds (releases): `x.y.z-N` where version grows between releases
 
-* alpha and beta builds: `x.y.z-0.N` where version stays the same, for example:
-** `1.0.0-0.1` - alpha build #1
-** `1.0.0-0.2` - alpha build #2
-** `1.0.0-0.3` - beta build #1
-* release builds (including RC): `x.y.z-N` where version grows between releases, for example:
-** `1.0.0-1` - RC1 build #1
-** `1.0.0-2` - RC1 build #2
-** `1.0.1-1` - RC2 build #1
+`version` in `package.json` is reflected into the RPM `x.y.z` version.
+
+=== Release process
+
+Only covers release builds (RC and GA).
+
+. switch to appropriate stable branch
+. submit & merge patch that prepares the branch for release:
+.. `package.json` - ensure proper `version`
+.. `packaging/spec.in` - ensure proper `Release` number and update `%changelog`
+. pull changes from remote, tag release-prep patch and push the tag to remote:
+.. `git fetch`
+.. `git tag -a <tag-name> -m <tag-annotation-message>`
+.. `git push origin <tag-name>`
+. trigger Jenkins build on release-prep patch or build locally using
+  http://ovirt-infra-docs.readthedocs.io/en/latest/CI/Build_and_test_standards.html#testing-the-scripts-locally[mock_runner]
+
+Tag name example: `ovirt-engine-dashboard-1.0.0-1`
+
+Tag annotation message example: `Dashboard 1.0 RC1`
