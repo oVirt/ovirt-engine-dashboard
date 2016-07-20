@@ -11,7 +11,7 @@ commit="$(git log -1 --pretty=format:%h)"
 snapshot=".${date}git${commit}"
 
 # Check if the commit is tagged (indicates a release build):
-tag="$(git describe --exact-match ${commit} 2>/dev/null)"
+tag="$(git describe --exact-match ${commit} 2>/dev/null || true)"
 if [ ! -z ${tag} ]; then
   snapshot=""
 fi
