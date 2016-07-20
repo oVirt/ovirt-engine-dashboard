@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 0.5@RPM_SNAPSHOT@%{?dist}
+Release: 1@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -48,6 +48,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Wed Jul 20 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.0-1
+- 1.0.0 release 1.
+
 * Mon Jul 18 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.0-0.5
 - Bump ovirt-engine-nodejs-modules BuildRequires to 0.0.9.
 
