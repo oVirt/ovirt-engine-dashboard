@@ -48,8 +48,8 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
-* Wed Jul 20 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.0-1
-- 1.0.0 release 1.
+* Wed Jul 20 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.1-1
+- 1.0.1 release 1.
 
 * Mon Jul 18 2016 Vojtech Szocs <vszocs@redhat.com> - 1.0.0-0.5
 - Bump ovirt-engine-nodejs-modules BuildRequires to 0.0.9.
