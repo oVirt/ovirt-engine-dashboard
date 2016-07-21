@@ -73,14 +73,14 @@ Only covers release builds (RC and GA).
 .. `package.json` - ensure proper `version`
 .. `packaging/spec.in` - ensure proper `Release` number and update `%changelog`
 .. `automation/*.repos` - ensure proper repos (don't use `ovirt-master-snapshot`)
-. pull changes from remote, tag release-prep patch and push the tag to remote:
-.. `git fetch`
-.. `git tag -a <tag-name> -m <tag-annotation-message>`
+. pull changes from remote
+. tag release-prep patch and push the tag to remote:
+.. `git tag -a <tag-name>`
 .. `git push origin <tag-name>`
-. trigger Jenkins build on release-prep patch or build locally using
-  http://ovirt-infra-docs.readthedocs.io/en/latest/CI/Build_and_test_standards.html#testing-the-scripts-locally[mock_runner]
+. trigger Jenkins build on release-prep patch
 . update oVirt release config in `releng-tools` repo
 
 Tag name example: `ovirt-engine-dashboard-1.0.0-1`
 
-Tag annotation message example: `Dashboard 1.0 RC1`
+If needed, RPM can be built locally using
+http://ovirt-infra-docs.readthedocs.io/en/latest/CI/Build_and_test_standards.html#testing-the-scripts-locally[mock_runner].
