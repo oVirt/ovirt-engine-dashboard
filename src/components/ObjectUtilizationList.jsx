@@ -3,6 +3,11 @@ const { string, number, shape, oneOf, arrayOf, func } = PropTypes
 import classNames from 'classnames'
 import UtilizationBarChart from './patternfly/UtilizationBarChart'
 
+/*
+  TODO(gs)
+  swap out col-md-2/9 for 3/8 when any name is longer than X chars
+ */
+
 function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utilizationFooterLabel, onObjectNameClick }) {
   if (data.length === 0) {
     return (
@@ -19,13 +24,13 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
       <div className='overutilized-section'>
         {sortedData.map((item) => (
           <div key={item.name} className='row'>
-            <div className='col-md-2 text-right'>
-              <a href='#' onClick={(event) => {
+            <div className='col-md-2 text-right overutilized-item-name-container'>
+              <a className='overutilized-item-name' href='#' onClick={(event) => {
                 event.preventDefault()
                 onObjectNameClick(item)
               }}>{item.name}</a>
             </div>
-            <div className='col-md-9'>
+            <div className='col-md-9 overutilized-item-bar'>
               <UtilizationBarChart
                 used={item.used}
                 total={item.total}
@@ -34,7 +39,7 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
                 layout='inline'
                 footerLabel={utilizationFooterLabel} />
             </div>
-            <div className='col-md-1'>
+            <div className='col-md-1 overutilized-item-trend'>
               {item.trend !== 'same' &&
                 <span className={classNames('pficon', {
                   'pficon-trend-up': item.trend === 'up',

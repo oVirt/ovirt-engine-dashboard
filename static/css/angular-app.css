@@ -383,18 +383,24 @@
 .overutilization-dialog .overutilized-section .progress-container.progress-description-left {
   padding-left: 0px;
 }
+.overutilization-dialog .overutilized-section .overutilized-item-name {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .overutilization-dialog .overutilized-section .progress-label-right .progress-bar span {
   margin-right: 20px;
 }
-.overutilization-dialog .overutilized-section .col-md-2.text-right {
+.overutilization-dialog .overutilized-section .overutilized-item-name-container {
+  padding-right: 0px;
+}
+.overutilization-dialog .overutilized-section .overutilized-item-trend {
   padding-left: 0px;
   padding-right: 0px;
 }
-.overutilization-dialog .overutilized-section .col-md-1 {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-.overutilization-dialog .overutilized-section .col-md-9 {
+.overutilization-dialog .overutilized-section .overutilized-item-bar {
   padding-right: 0px;
 }
 .d3-context-menu {
