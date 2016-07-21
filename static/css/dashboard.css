@@ -4,3 +4,8 @@
 .heatmap-container rect {
     cursor: pointer;
 }
+/* TODO (gs) -- remove this when https://patternfly.atlassian.net/browse/PTNFLY-1579 is fixed */
+.card-pf-aggregate-status-notification .pficon-warning-triangle-o {
+    position: relative;
+    top: 2px;
+}
