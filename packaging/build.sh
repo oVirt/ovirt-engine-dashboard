@@ -25,7 +25,8 @@ spectool \
 
 # Build the source and binary .rpm files:
 rpmbuild \
-  -bb \
+  -ba \
   --define="_sourcedir ${PWD}" \
   --define="_rpmdir ${PWD}" \
+  --define="_srcrpmdir ${PWD}" \
   "${spec_file}"
