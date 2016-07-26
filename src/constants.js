@@ -29,3 +29,6 @@ export const storageUnitTable = [
   { unit: 'GiB', factor: 1024 },
   { unit: 'MiB', factor: 1024 }
 ]
+
+// number of characters before giving more space to bar chart labels
+export const utilizationListGridNameThreshold = 30
