@@ -2,11 +2,7 @@ import React, { PropTypes } from 'react'
 const { string, number, shape, oneOf, arrayOf, func } = PropTypes
 import classNames from 'classnames'
 import UtilizationBarChart from './patternfly/UtilizationBarChart'
-
-/*
-  TODO(gs)
-  swap out col-md-2/9 for 3/8 when any name is longer than X chars
- */
+import { utilizationListGridNameThreshold } from '../constants'
 
 function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utilizationFooterLabel, onObjectNameClick }) {
   if (data.length === 0) {
@@ -19,18 +15,26 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
     return (b.used / b.total) - (a.used / a.total)
   })
 
+  const nameThresholdClass = (item) => (
+    item.name.length <= utilizationListGridNameThreshold ? 'col-md-2' : 'col-md-3'
+  )
+
+  const barThresholdClass = (item) => (
+    item.name.length <= utilizationListGridNameThreshold ? 'col-md-9' : 'col-md-8'
+  )
+
   return (
     <div className='overutilized-container'>
       <div className='overutilized-section'>
         {sortedData.map((item) => (
           <div key={item.name} className='row'>
-            <div className='col-md-2 text-right overutilized-item-name-container'>
+            <div className={`text-right overutilized-item-name-container ${nameThresholdClass(item)}`}>
               <a className='overutilized-item-name' href='#' onClick={(event) => {
                 event.preventDefault()
                 onObjectNameClick(item)
               }}>{item.name}</a>
             </div>
-            <div className='col-md-9 overutilized-item-bar'>
+            <div className={`overutilized-item-bar ${barThresholdClass(item)}`}>
               <UtilizationBarChart
                 used={item.used}
                 total={item.total}
