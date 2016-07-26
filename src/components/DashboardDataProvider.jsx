@@ -88,6 +88,11 @@ class DashboardDataProvider extends React.Component {
       const globalUtilizationData = newData.globalUtilization[category]
       const heatMapData = newData.heatMapData[category]
 
+      // make sure that used never exceeds total
+      if (globalUtilizationData.used > globalUtilizationData.total) {
+        globalUtilizationData.used = globalUtilizationData.total
+      }
+
       globalUtilizationData.history.forEach((obj) => {
         // sparkline chart works with Date objects on X axis
         obj.date = new Date(obj.date)
