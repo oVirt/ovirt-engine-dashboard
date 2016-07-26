@@ -195,7 +195,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                   <div className='col-xs-12 col-sm-12 col-md-12 card-heatmap-body'>
 
                     <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>{msg.cpuTitle()}</span>
+                      <h3 className='heatmap-chart-title'>{msg.cpuTitle()}</h3>
                       <HeatMap
                         data={heatMapData.cpu}
                         thresholds={heatMapThresholds}
@@ -208,7 +208,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                     </div>
 
                     <div className='col-xs-12 col-sm-6 col-md-6 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>{msg.memoryTitle()}</span>
+                      <h3 className='heatmap-chart-title'>{msg.memoryTitle()}</h3>
                       <HeatMap
                         data={heatMapData.memory}
                         thresholds={heatMapThresholds}
@@ -241,7 +241,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                   <div className='col-xs-12 col-sm-12 col-md-12 card-heatmap-body'>
 
                     <div className='col-xs-12 col-sm-12 col-md-12 container-heatmap-tile'>
-                      <span className='h3 heatmap-chart-title'>{msg.storageTitle()}</span>
+                      <h3 className='heatmap-chart-title'>{msg.storageTitle()}</h3>
                       <HeatMap
                         data={heatMapData.storage}
                         thresholds={heatMapThresholds}
