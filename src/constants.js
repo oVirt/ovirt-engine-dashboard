@@ -1,5 +1,21 @@
 export const pluginName = 'dashboard'
 
+export const pluginBasePath = `plugin/${pluginName}`
+
+export const defaultLocale = 'en-US'
+
+export const supportedLocales = [
+  defaultLocale,
+  'de-DE',
+  'es-ES',
+  'fr-FR',
+  'it-IT',
+  'ja-JP',
+  'ko-KR',
+  'pt-BR',
+  'zh-CN'
+]
+
 export const searchPrefixes = {
   dc: 'DataCenter',
   cluster: 'Cluster',

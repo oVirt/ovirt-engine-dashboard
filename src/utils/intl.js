@@ -1,18 +1,16 @@
 import IntlMessageFormat from 'intl-messageformat'
-import getPluginApi from '../plugin-api'
+import { defaultLocale } from '../constants'
 import translatedMessages from '../../intl/translations.json'
+
+// TODO(vs) this is beyond simple utility functions, extract the code into services/intl
 
 // IntlMessageFormat object cache
 const messageFormats = {}
 
-// initialized lazily due to UI plugin lifecycle
 let locale
 
-// TODO(vs) fetch translations for given locale asynchronously
-
-export function initLocale () {
-  locale = getPluginApi().currentLocale()
-  !locale && __DEV__ && console.error('Failed to resolve current locale')
+export function initLocale (currentLocale) {
+  locale = currentLocale
 }
 
 export function currentLocale () {
@@ -23,7 +21,7 @@ export function translateMessage (id, defaultMessage) {
   const translation = translatedMessages[locale] && translatedMessages[locale][id]
 
   if (!translation) {
-    __DEV__ && console.warn(`Missing [${locale}] translation for message [${id}]`)
+    __DEV__ && console.warn(`Missing [${locale}] translation for message key [${id}]`)
     return defaultMessage
   }
 
@@ -34,14 +32,17 @@ export function formatMessage (id, defaultMessage, values = {}) {
   let fmt = messageFormats[id]
 
   if (!fmt) {
-    fmt = new IntlMessageFormat(translateMessage(id, defaultMessage), locale)
+    // translation needed only for non-default locale
+    const message = (locale !== defaultLocale) ? translateMessage(id, defaultMessage) : defaultMessage
+
+    fmt = new IntlMessageFormat(message, locale)
     messageFormats[id] = fmt
   }
 
   return fmt.format(values)
 }
 
-// TODO(vs) use Intl.NumberFormat and Intl.DateTimeFormat (ECMA-402 standard)
+// TODO(vs) use Intl.NumberFormat and Intl.DateTimeFormat
 
 export function formatNumber (num, digits) {
   return Number(num.toFixed(digits))

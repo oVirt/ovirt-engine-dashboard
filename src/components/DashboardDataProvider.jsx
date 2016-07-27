@@ -3,6 +3,8 @@ const { element } = PropTypes
 import $ from 'jquery'
 import getPluginApi from '../plugin-api'
 
+// TODO(vs) extract data fetch logic into services/data-fetch
+
 class DashboardDataProvider extends React.Component {
 
   constructor (props) {
