@@ -71,13 +71,15 @@ const config = module.exports = {
 // common development and production build configuration
 if (isDev || isProd) {
   config.entry = {
-    'plugin': './src/plugin.js',
-    'main-tab': './src/main-tab.jsx'
+    // TODO(vs) use CommonsChunkPlugin to extract common vendor libs into separate chunk
+    // https://webpack.github.io/docs/code-splitting.html#split-app-and-vendor-code
+    'plugin': ['babel-polyfill', './src/plugin.js'],
+    'main-tab': ['babel-polyfill', './src/main-tab.jsx']
   }
   config.output = {
     filename: '[name].js',
     path: `${__dirname}/dist/dashboard-resources`,
-    publicPath: '/'
+    publicPath: '/ovirt-engine/webadmin/plugin/dashboard/'
   }
   config.plugins.push(
     new CleanWebpackPlugin(['dist', 'extra']),

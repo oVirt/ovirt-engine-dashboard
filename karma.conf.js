@@ -8,7 +8,7 @@ module.exports = function (config) {
     frameworks: ['mocha'],
     files: [
       './node_modules/babel-polyfill/dist/polyfill.js',
-      'src/test-index.js'
+      './src/test-index.js'
     ],
     preprocessors: {
       'src/test-index.js': ['webpack', 'sourcemap']

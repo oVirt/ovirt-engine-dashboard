@@ -1,17 +1,16 @@
-import { pluginName } from './constants'
+import { pluginBasePath } from './constants'
 import getPluginApi from './plugin-api'
 import { msg } from './intl-messages'
-import { initLocale } from './utils/intl'
+import appInit from './services/app-init'
 
 const mainTabToken = 'dashboard-main'
 
+// register event handlers
 getPluginApi().register({
 
   UiInit () {
-    initLocale()
-
     // add Dashboard main tab
-    getPluginApi().addMainTab(msg.mainTabTitle(), mainTabToken, `plugin/${pluginName}/main-tab.html`, {
+    getPluginApi().addMainTab(msg.mainTabTitle(), mainTabToken, `${pluginBasePath}/main-tab.html`, {
       // position this tab before any standard ones
       priority: -1,
       // customize the prefix displayed in search bar
@@ -30,4 +29,7 @@ getPluginApi().register({
 
 })
 
-getPluginApi().ready()
+appInit.run().then(() => {
+  // proceed with plugin initialization (UiInit)
+  getPluginApi().ready()
+})
