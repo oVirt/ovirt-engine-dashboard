@@ -11,30 +11,36 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
     )
   }
 
+  function namePastThreshold (sortedData) {
+    for (let item of sortedData) {
+      if (item.name.length > utilizationListGridNameThreshold) {
+        return true
+      }
+    }
+    return false
+  }
+
   const sortedData = data.slice().sort((a, b) => {
     return (b.used / b.total) - (a.used / a.total)
   })
 
-  const nameThresholdClass = (item) => (
-    item.name.length <= utilizationListGridNameThreshold ? 'col-md-2' : 'col-md-3'
-  )
+  let hasNamePastThreshold = namePastThreshold(sortedData)
 
-  const barThresholdClass = (item) => (
-    item.name.length <= utilizationListGridNameThreshold ? 'col-md-9' : 'col-md-8'
-  )
+  const nameThresholdClass = hasNamePastThreshold ? 'col-md-3' : 'col-md-2'
+  const barThresholdClass = hasNamePastThreshold ? 'col-md-8' : 'col-md-9'
 
   return (
     <div className='overutilized-container'>
       <div className='overutilized-section'>
         {sortedData.map((item) => (
           <div key={item.name} className='row'>
-            <div className={`text-right overutilized-item-name-container ${nameThresholdClass(item)}`}>
+            <div className={`text-right overutilized-item-name-container ${nameThresholdClass}`}>
               <a className='overutilized-item-name' href='#' onClick={(event) => {
                 event.preventDefault()
                 onObjectNameClick(item)
               }}>{item.name}</a>
             </div>
-            <div className={`overutilized-item-bar ${barThresholdClass(item)}`}>
+            <div className={`overutilized-item-bar ${barThresholdClass}`}>
               <UtilizationBarChart
                 used={item.used}
                 total={item.total}
