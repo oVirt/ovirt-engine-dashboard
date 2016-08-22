@@ -11,23 +11,16 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
     )
   }
 
-  function namePastThreshold (sortedData) {
-    for (let item of sortedData) {
-      if (item.name.length > utilizationListGridNameThreshold) {
-        return true
-      }
-    }
-    return false
-  }
-
   const sortedData = data.slice().sort((a, b) => {
     return (b.used / b.total) - (a.used / a.total)
   })
 
-  let hasNamePastThreshold = namePastThreshold(sortedData)
+  const someItemHasNamePastThreshold = sortedData.some((item) => {
+    return item.name.length > utilizationListGridNameThreshold
+  })
 
-  const nameThresholdClass = hasNamePastThreshold ? 'col-md-3' : 'col-md-2'
-  const barThresholdClass = hasNamePastThreshold ? 'col-md-8' : 'col-md-9'
+  const nameThresholdClass = someItemHasNamePastThreshold ? 'col-md-3' : 'col-md-2'
+  const barThresholdClass = someItemHasNamePastThreshold ? 'col-md-8' : 'col-md-9'
 
   return (
     <div className='overutilized-container'>
