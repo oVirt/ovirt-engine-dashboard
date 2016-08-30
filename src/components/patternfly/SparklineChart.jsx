@@ -105,7 +105,7 @@ class SparklineChart extends React.Component {
   }
 
   _getSparklineChartTooltipHTML ({ d, total, tooltipType }) {
-    const percentUsed = Math.round(d[0].value / total * 100)
+    const percentUsed = total === 0 ? 0 : Math.round(d[0].value / total * 100)
 
     function getTooltipTableHTML (tipRows) {
       return `<table class='c3-tooltip'><tbody>${tipRows}</tbody></table>`
