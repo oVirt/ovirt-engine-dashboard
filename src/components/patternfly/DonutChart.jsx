@@ -33,7 +33,8 @@ class DonutChart extends React.Component {
 
   render () {
     return (
-      <div className='donut-chart-pf' style={this.props.containerStyle} ref={(e) => { this._chartContainer = e }}>
+      <div className='donut-chart-pf' style={this.props.containerStyle}>
+        <div ref={(e) => { this._chartContainer = e }}></div>
       </div>
     )
   }
