@@ -33,6 +33,10 @@ function UtilizationBarChart ({
   const percentUsed = used / total * 100
   const percentAvailable = 100 - percentUsed
 
+  // percent used can be >100% but we render only up to 100% (anything longer will be clipped)
+  const barUsedWidth = Math.min(100, percentUsed)
+  const barAvailableWidth = 100 - barUsedWidth
+
   const progressThresholdClass = thresholds.enabled && classNames({
     'progress-bar-success': (percentUsed < thresholds.warning),
     'progress-bar-warning': (percentUsed >= thresholds.warning && percentUsed <= thresholds.error),
@@ -49,7 +53,7 @@ function UtilizationBarChart ({
 
             {/* used progress */}
             <Tooltip text={msg.percentUsed({ value: formatNumber0D(percentUsed) })}>
-              <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
+              <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${barUsedWidth}%` }} role='progressbar'>
                 {footerLabel === 'actual' &&
                   <span>
                     <strong>{msg.usedOfTotal({ used: formatNumber1D(used), total: formatNumber1D(total) })} {unit}</strong> {msg.used()}
@@ -70,7 +74,7 @@ function UtilizationBarChart ({
 
             {/* available progress */}
             <Tooltip text={msg.percentAvailable({ value: formatNumber0D(percentAvailable) })}>
-              <div className='progress-bar progress-bar-remaining' style={{ width: `${100 - percentUsed}%` }} role='progressbar'>
+              <div className='progress-bar progress-bar-remaining' style={{ width: `${barAvailableWidth}%` }} role='progressbar'>
               </div>
             </Tooltip>
 
@@ -86,7 +90,7 @@ function UtilizationBarChart ({
 
             {/* used progress */}
             <Tooltip text={msg.percentUsed({ value: formatNumber0D(percentUsed) })}>
-              <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${percentUsed}%` }} role='progressbar'>
+              <div className={`progress-bar ${progressThresholdClass}`} style={{ width: `${barUsedWidth}%` }} role='progressbar'>
                 {footerLabel === 'actual' &&
                   <span style={{ maxWidth: footerLabelWidth }}>
                     <strong>{formatNumber1D(used)} {unit}</strong> {msg.used()}
@@ -107,7 +111,7 @@ function UtilizationBarChart ({
 
             {/* available progress */}
             <Tooltip text={msg.percentAvailable({ value: formatNumber0D(percentAvailable) })}>
-              <div className='progress-bar progress-bar-remaining' style={{ width: `${100 - percentUsed}%` }} role='progressbar'>
+              <div className='progress-bar progress-bar-remaining' style={{ width: `${barAvailableWidth}%` }} role='progressbar'>
               </div>
             </Tooltip>
 
