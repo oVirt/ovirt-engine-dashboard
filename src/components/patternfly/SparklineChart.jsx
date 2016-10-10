@@ -3,7 +3,7 @@ const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = Prop
 import c3 from 'c3'
 import { msg } from '../../intl-messages'
 import { getDefaultSparklineConfig } from '../../patternfly-defaults'
-import { formatNumber1D, formatDateTime } from '../../utils/intl'
+import { formatNumber1D, formatPercent1D, formatDateTime } from '../../utils/intl'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/sparkline/
@@ -105,7 +105,7 @@ class SparklineChart extends React.Component {
   }
 
   _getSparklineChartTooltipHTML ({ d, total, tooltipType }) {
-    const percentUsed = total === 0 ? 0 : Math.round(d[0].value / total * 100)
+    const percentUsed = total === 0 ? 0 : d[0].value / total
 
     function getTooltipTableHTML (tipRows) {
       return `<table class='c3-tooltip'><tbody>${tipRows}</tbody></table>`
@@ -114,12 +114,12 @@ class SparklineChart extends React.Component {
     switch (tooltipType) {
       case 'percent':
         return getTooltipTableHTML(
-          `<tr><td class='name'>${percentUsed}%</td></tr>`
+          `<tr><td class='name'>${formatPercent1D(percentUsed)}</td></tr>`
         )
       // TODO(vs) this isn't supported in angular-patternfly, replace with custom tooltip function
       case 'percentPerDate':
         return getTooltipTableHTML(
-          `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${percentUsed}%</td></tr>`
+          `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${formatPercent1D(percentUsed)}</td></tr>`
         )
       case 'valuePerDate':
         return getTooltipTableHTML(
@@ -128,7 +128,7 @@ class SparklineChart extends React.Component {
       case 'usagePerDate':
         return getTooltipTableHTML(
           `<tr><th colspan='2'>${formatDateTime(d[0].x)}</th></tr>` +
-          `<tr><td class='name'>${percentUsed}%:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><td class='name'>${formatPercent1D(percentUsed)}:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
         )
       default:
         return `<span class='c3-tooltip-sparkline'>${formatNumber1D(d[0].value)} ${d[0].name}</span>`
