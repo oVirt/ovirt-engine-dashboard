@@ -5,7 +5,7 @@ import { initLocale } from '../utils/intl'
 // TODO(vs) fetch translations for given locale as part of application init
 
 // polyfill Intl API (ECMA-402) if not natively supported
-const polyfillIntl = new Promise((resolve) => {
+const polyfillIntlFn = (resolve) => {
   if (!global.Intl) {
     // use code splitting to fetch all required modules
     require.ensure([], (require) => {
@@ -24,10 +24,10 @@ const polyfillIntl = new Promise((resolve) => {
   } else {
     resolve()
   }
-})
+}
 
 // determine and use current WebAdmin UI locale
-const initApplicationLocale = new Promise((resolve, reject) => {
+const initApplicationLocaleFn = (resolve, reject) => {
   const currentLocale = getPluginApi().currentLocale()
 
   if (supportedLocales.includes(currentLocale)) {
@@ -36,12 +36,16 @@ const initApplicationLocale = new Promise((resolve, reject) => {
   } else {
     reject(`Unsupported UI locale [${currentLocale}]`)
   }
-})
+}
 
 export default {
 
   run () {
-    return Promise.all([polyfillIntl, initApplicationLocale])
+    return Promise
+      .all([
+        new Promise(initApplicationLocaleFn),
+        new Promise(polyfillIntlFn)
+      ])
       .catch((error) => {
         console.error(`Application init failed: ${error}`)
       })

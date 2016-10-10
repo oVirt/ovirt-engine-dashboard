@@ -4,7 +4,7 @@ import c3 from 'c3'
 import d3 from 'd3'
 import { msg } from '../../intl-messages'
 import { getDefaultDonutConfig } from '../../patternfly-defaults'
-import { formatNumber1D } from '../../utils/intl'
+import { formatNumber1D, formatPercent0D, formatPercent1D } from '../../utils/intl'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/donut-chart/
@@ -63,9 +63,7 @@ class DonutChart extends React.Component {
       },
       tooltip: {
         contents (d) {
-          const percentUsed = Math.round(d[0].ratio * 100)
-          const tooltipText = `${percentUsed}% ${d[0].name}`
-          return `<span class='donut-tooltip-pf' style='white-space: nowrap;'>${tooltipText}</span>`
+          return `<span class='donut-tooltip-pf' style='white-space: nowrap;'>${formatPercent1D(d[0].ratio)} ${d[0].name}</span>`
         }
       }
     })
@@ -113,7 +111,7 @@ class DonutChart extends React.Component {
       bigText = `${formatNumber1D(total - used)}`
       smallText = msg.unitAvailable({ unit })
     } else if (centerLabel === 'percent') {
-      bigText = `${Math.round(total === 0 ? 0 : used / total * 100)}%`
+      bigText = `${formatPercent0D(total === 0 ? 0 : used / total)}`
       smallText = msg.used()
     }
 

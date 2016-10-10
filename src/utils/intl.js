@@ -42,10 +42,34 @@ export function formatMessage (id, defaultMessage, values = {}) {
   return fmt.format(values)
 }
 
-// TODO(vs) use Intl.NumberFormat and Intl.DateTimeFormat
+export function formatPercent (num, digits = 0) {
+  const fmt = new Intl.NumberFormat([ locale, defaultLocale ], {
+    style: 'percent',
+    minimumIntegerDigits: 1,
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+    useGrouping: false
+  })
+  return fmt.format(num)
+}
 
-export function formatNumber (num, digits) {
-  return Number(num.toFixed(digits))
+export function formatPercent0D (num) {
+  return formatPercent(num, 0)
+}
+
+export function formatPercent1D (num) {
+  return formatPercent(num, 1)
+}
+
+export function formatNumber (num, digits = 0) {
+  const fmt = new Intl.NumberFormat([ locale, defaultLocale ], {
+    style: 'decimal',
+    minimumIntegerDigits: 1,
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+    useGrouping: false
+  })
+  return fmt.format(num)
 }
 
 export function formatNumber0D (num) {
@@ -55,6 +79,8 @@ export function formatNumber0D (num) {
 export function formatNumber1D (num) {
   return formatNumber(num, 1)
 }
+
+// TODO(vs) use Intl.DateTimeFormat
 
 export function formatDate (date) {
   return date.toLocaleDateString()

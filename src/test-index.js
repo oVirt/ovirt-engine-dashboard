@@ -1,3 +1,7 @@
+import appInit from './services/app-init'
+import { defaultLocale } from './constants'
+import { resetApi } from './plugin-api'
+
 // require all modules ending in `-test` from the current directory and all subdirectories
 const testContext = require.context('.', true, /-test$/)
 testContext.keys().forEach(testContext)
@@ -6,7 +10,7 @@ testContext.keys().forEach(testContext)
 // https://github.com/webpack/webpack/issues/304#issuecomment-170883329
 import sinon from 'imports?define=>false,require=>false!sinon/pkg/sinon.js'
 
-beforeEach(function setupFakeEnv () {
+beforeEach(function setupFakeEnv (done) {
   // all tests should use `this.sandbox` to create fakes
   const sandbox = this.sandbox = sinon.sandbox.create()
 
@@ -24,9 +28,15 @@ beforeEach(function setupFakeEnv () {
   ].forEach((apiMethod) => {
     pluginApiStubs[apiMethod] = sandbox.stub()
   })
+  pluginApiStubs.currentLocale.returns(defaultLocale)
 
-  // ensure the global pluginApi function exists
+  // ensure the global pluginApi function exists and is unique for each test
   window.top.pluginApi = () => pluginApiStubs
+  resetApi()
+
+  appInit.run()
+    .then(() => { done() })
+    .catch((error) => { done(error) })
 })
 
 afterEach(function disposeFakeEnv () {

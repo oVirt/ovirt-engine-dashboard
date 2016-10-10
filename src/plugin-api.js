@@ -7,4 +7,8 @@ const getPluginApi = () => {
   return api
 }
 
-export default getPluginApi
+function resetApi () {
+  api = undefined
+}
+
+export { getPluginApi as default, resetApi }
