@@ -32,3 +32,31 @@ body, .containers-dashboard {
 .card-pf {
     margin-bottom: 5px;
 }
+
+/* Following media queries are required to split a row into seven equal columns
+   in bootstrap grid system. This is based on the reference implementation at
+   https://gist.github.com/kanakiyajay/15e4fc98248956614643
+*/
+@media (min-width: 768px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1  {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+  }
+}

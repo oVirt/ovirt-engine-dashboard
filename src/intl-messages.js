@@ -166,6 +166,12 @@ export const msg = messageDescriptorsToFormatFunctions(defineMessages({
     description: 'title of `Storage Domains` status card'
   },
 
+  statusCardGlusterVolumeTitle: {
+    id: 'mainTab.statusCardGlusterVolumeTitle',
+    defaultMessage: 'Gluster Volumes',
+    description: 'title of `Gluster Volumes` status card'
+  },
+
   statusCardVmTitle: {
     id: 'mainTab.statusCardVmTitle',
     defaultMessage: 'Virtual Machines',

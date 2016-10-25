@@ -22,7 +22,8 @@ export const searchPrefixes = {
   host: 'Host',
   storage: 'Storage',
   vm: 'Vm',
-  event: 'Event'
+  event: 'Event',
+  volume: 'Volume'
 }
 
 export const searchFields = {

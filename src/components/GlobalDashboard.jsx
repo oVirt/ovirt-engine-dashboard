@@ -10,6 +10,7 @@ import AggregateStatusCard from './AggregateStatusCard'
 import UtilizationTrendCard from './UtilizationTrendCard'
 import HeatMap from './patternfly/HeatMap'
 import HeatMapLegend from './patternfly/HeatMapLegend'
+import classNames from 'classnames'
 
 function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated }) {
   const storageUtilizationFooterLabel = (used, total, unit) => {
@@ -20,6 +21,11 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
       </div>
     )
   }
+  const showGlusterCard = inventory.volume.totalCount > 0
+  const statusCardClass = classNames('col-xs-4', 'col-sm-4', {
+    'col-md-1': showGlusterCard,
+    'col-md-2': !showGlusterCard
+  })
 
   return (
     <div className='container-fluid container-tiles-pf containers-dashboard'>
@@ -32,9 +38,9 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
       </div>
 
       {/* inventory cards */}
-      <div className='row row-tile-pf'>
+      <div className={classNames('row', 'row-tile-pf', {'seven-cols': showGlusterCard})}>
 
-        <div className='col-xs-4 col-sm-4 col-md-2'>
+        <div className={statusCardClass}>
           <AggregateStatusCard
             data={inventory.dc}
             title={msg.statusCardDataCenterTitle()}
@@ -50,7 +56,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             }} />
         </div>
 
-        <div className='col-xs-4 col-sm-4 col-md-2'>
+        <div className={statusCardClass}>
           <AggregateStatusCard
             data={inventory.cluster}
             title={msg.statusCardClusterTitle()}
@@ -62,7 +68,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             }} />
         </div>
 
-        <div className='col-xs-4 col-sm-4 col-md-2'>
+        <div className={statusCardClass}>
           <AggregateStatusCard
             data={inventory.host}
             title={msg.statusCardHostTitle()}
@@ -78,7 +84,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             }} />
         </div>
 
-        <div className='col-xs-4 col-sm-4 col-md-2'>
+        <div className={statusCardClass}>
           <AggregateStatusCard
             data={inventory.storage}
             title={msg.statusCardStorageTitle()}
@@ -94,7 +100,25 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             }} />
         </div>
 
-        <div className='col-xs-4 col-sm-4 col-md-2'>
+        {showGlusterCard &&
+          <div className={statusCardClass}>
+            <AggregateStatusCard
+              data={inventory.volume}
+              title={msg.statusCardGlusterVolumeTitle()}
+              mainIconClass='pficon pficon-volume'
+              onTotalCountClick={() => {
+                applySearch(searchPrefixes.volume)
+              }}
+              onStatusCountClick={(statusItem) => {
+                applySearch(searchPrefixes.volume, [{
+                  name: searchFields.status,
+                  values: statusItem.statusValues
+                }])
+              }} />
+          </div>
+        }
+
+        <div className={statusCardClass}>
           <AggregateStatusCard
             data={inventory.vm}
             title={msg.statusCardVmTitle()}
@@ -110,7 +134,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             }} />
         </div>
 
-        <div className='col-xs-4 col-sm-4 col-md-2'>
+        <div className={statusCardClass}>
           <AggregateStatusCard
             data={inventory.event}
             title={msg.statusCardEventTitle()}
@@ -275,6 +299,7 @@ const dataShape = {
     cluster: shape(AggregateStatusCard.dataShape),
     host: shape(AggregateStatusCard.dataShape),
     storage: shape(AggregateStatusCard.dataShape),
+    volume: shape(AggregateStatusCard.dataShape),
     vm: shape(AggregateStatusCard.dataShape),
     event: shape(AggregateStatusCard.dataShape)
   }),
