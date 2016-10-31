@@ -107,6 +107,10 @@ class SparklineChart extends React.Component {
   _getSparklineChartTooltipHTML ({ d, total, tooltipType }) {
     const percentUsed = total === 0 ? 0 : d[0].value / total
 
+    function lowerBoundPercentUsed () {
+      return (percentUsed === 0 || percentUsed >= 0.001) ? formatPercent1D(percentUsed) : `<${formatPercent1D(0.001)}`
+    }
+
     function getTooltipTableHTML (tipRows) {
       return `<table class='c3-tooltip'><tbody>${tipRows}</tbody></table>`
     }
@@ -114,12 +118,13 @@ class SparklineChart extends React.Component {
     switch (tooltipType) {
       case 'percent':
         return getTooltipTableHTML(
-          `<tr><td class='name'>${formatPercent1D(percentUsed)}</td></tr>`
+          `<tr><td class='name'>${lowerBoundPercentUsed()}</td></tr>`
         )
       // TODO(vs) this isn't supported in angular-patternfly, replace with custom tooltip function
       case 'percentPerDate':
         return getTooltipTableHTML(
-          `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${formatPercent1D(percentUsed)}</td></tr>`
+          `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td>
+               <td class='value text-nowrap'>${lowerBoundPercentUsed()}</td></tr>`
         )
       case 'valuePerDate':
         return getTooltipTableHTML(
@@ -128,7 +133,7 @@ class SparklineChart extends React.Component {
       case 'usagePerDate':
         return getTooltipTableHTML(
           `<tr><th colspan='2'>${formatDateTime(d[0].x)}</th></tr>` +
-          `<tr><td class='name'>${formatPercent1D(percentUsed)}:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><td class='name'>${lowerBoundPercentUsed()}:</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
         )
       default:
         return `<span class='c3-tooltip-sparkline'>${formatNumber1D(d[0].value)} ${d[0].name}</span>`
