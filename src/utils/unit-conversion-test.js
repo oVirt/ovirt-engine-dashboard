@@ -15,6 +15,15 @@ describe('convertValue', function () {
     })
   })
 
+  it('scales down the unit when value is too small (custom minimum thresholds)', function () {
+    expect(convertValue(storageUnitTable, 'TiB', 0.0499, 0.05)).to.deep.equal({
+      unit: 'GiB', value: 0.0499 * 1024
+    })
+    expect(convertValue(storageUnitTable, 'TiB', 0.051, 0.05)).to.deep.equal({
+      unit: 'TiB', value: 0.051
+    })
+  })
+
   it('scales up the unit when value is too big', function () {
     expect(convertValue(storageUnitTable, 'MiB', 10000)).to.deep.equal({
       unit: 'GiB', value: 10000 / 1024

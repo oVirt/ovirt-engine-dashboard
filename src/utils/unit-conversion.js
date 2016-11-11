@@ -1,9 +1,7 @@
-export function convertValue (unitTable = [], unit, value) {
+export function convertValue (unitTable = [], unit, value, minThreshold = 0.1, maxThreshold = 1024) {
   let newUnit = unit
   let newValue = value
 
-  const minThreshold = 0.1
-  const maxThreshold = 1024
   const availableUnits = unitTable.map((obj) => obj.unit)
 
   if (availableUnits.includes(unit)) {
