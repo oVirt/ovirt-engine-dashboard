@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
 import c3 from 'c3'
+import { storageUnitTable } from '../../constants'
 import { msg } from '../../intl-messages'
 import { getDefaultSparklineConfig } from '../../patternfly-defaults'
 import { formatNumber1D, formatPercent1D, formatDateTime } from '../../utils/intl'
+import { convertValue } from '../../utils/unit-conversion'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/sparkline/
@@ -87,7 +89,7 @@ class SparklineChart extends React.Component {
           }
         },
         contents: (d) => {
-          return this._getSparklineChartTooltipHTML({ d, total, tooltipType })
+          return this._getSparklineChartTooltipHTML({ d, unit, total, tooltipType })
         }
       }
     })
@@ -104,7 +106,7 @@ class SparklineChart extends React.Component {
     this._chart.destroy()
   }
 
-  _getSparklineChartTooltipHTML ({ d, total, tooltipType }) {
+  _getSparklineChartTooltipHTML ({ d, unit, total, tooltipType }) {
     const percentUsed = total === 0 ? 0 : d[0].value / total
 
     function lowerBoundPercentUsed () {
@@ -127,8 +129,10 @@ class SparklineChart extends React.Component {
                <td class='value text-nowrap'>${lowerBoundPercentUsed()}</td></tr>`
         )
       case 'valuePerDate':
+        // any TiB value <= 0.1 converted to GiB or MiB
+        const { unit: newUnit, value: newUsed } = convertValue(storageUnitTable, unit, d[0].value, 0.1)
         return getTooltipTableHTML(
-          `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${formatNumber1D(d[0].value)} ${d[0].name}</td></tr>`
+          `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${formatNumber1D(newUsed)} ${newUnit}</td></tr>`
         )
       case 'usagePerDate':
         return getTooltipTableHTML(
