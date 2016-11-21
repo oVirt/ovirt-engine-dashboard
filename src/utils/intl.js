@@ -17,6 +17,18 @@ export function currentLocale () {
   return locale
 }
 
+/*
+   ECMA-402 Intl spec says that implementations need to, at the very least, support 2 time zones.  First
+   is 'undefined' and equates to the "runtime's default time zone".  Second is 'UTC'.  Since the first
+   option is ambiguous and we don't know what it is unless we parse a formatted string, using a default
+   of 'UTC' will provide cross-browser consistency.
+ */
+const timeZone = 'UTC'
+
+export function currentTimeZone () {
+  return timeZone
+}
+
 export function translateMessage (id, defaultMessage) {
   const translation = translatedMessages[locale] && translatedMessages[locale][id]
 
@@ -80,12 +92,41 @@ export function formatNumber1D (num) {
   return formatNumber(num, 1)
 }
 
-// TODO(vs) use Intl.DateTimeFormat
-
+/**
+ * Format a date object to a string with numeric month, day and year in the order and style dictated by
+ * the module's current time zone.
+ *
+ * @param date
+ * @returns {string} locale specific formatted month, day and year
+ */
 export function formatDate (date) {
-  return date.toLocaleDateString()
+  const fmt = new Intl.DateTimeFormat([ locale, defaultLocale ], {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: timeZone
+  })
+  return fmt.format(date)
 }
 
+/**
+ * Format a date object to a string with numeric month, day and year plus hour, minute, second and time zone name
+ * in the order and style dictated by the module's current time zone.
+ *
+ * @param date
+ * @returns {string} locale specific formatted month, day, year, hour, minute, second and time zone name
+ */
 export function formatDateTime (date) {
-  return `${formatDate(date)} ${date.toLocaleTimeString()}`
+  const fmt = new Intl.DateTimeFormat([ locale, defaultLocale ], {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    hour12: true,
+    minute: 'numeric',
+    second: 'numeric',
+    timeZoneName: 'short',
+    timeZone: timeZone
+  })
+  return fmt.format(date)
 }

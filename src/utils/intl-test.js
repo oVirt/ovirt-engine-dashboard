@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { initLocale, currentLocale, formatNumber, formatPercent } from './intl'
+import { initLocale, currentLocale, formatNumber, formatPercent, formatDate, formatDateTime } from './intl'
 
 describe('Intl Number Formatters', function () {
   describe('format numbers (en-US)', function () {
@@ -61,7 +61,7 @@ describe('Intl Percent Formatters', function () {
       expect(formatPercent(1, 2)).to.equal('100.00%')
       expect(formatPercent(0.012, 2)).to.equal('1.20%')
       expect(formatPercent(0.01234, 2)).to.equal('1.23%')
-      expect(formatPercent(0.01235, 2)).to.equal('1.23%')
+      expect(formatPercent(0.01235, 2)).to.equal('1.23%') // TODO(sd): should this round up or truncate???
       expect(formatPercent(0.01236, 2)).to.equal('1.24%')
     })
   })
@@ -92,6 +92,71 @@ describe('Intl Percent Formatters', function () {
       expect(formatPercent(0.0987, 1)).to.equal('9,9\xA0%')
       expect(formatPercent(0.0987, 2)).to.equal('9,87\xA0%')
       expect(formatPercent(0.0987, 3)).to.equal('9,870\xA0%')
+    })
+  })
+})
+
+// Intl polyfill only supports UTC but doesn't include the time zone name after formatting.  Extract the UTC
+// time zone's locale specific name from a formatted string.  Use that locale specific name in test comparison.
+function extractUtcTimezoneName (locale) {
+  // This is the minimal time + timezone only formatter configuration that must be supported by a ECMA-402 implementation
+  const dtf = new Intl.DateTimeFormat(locale, {
+    hour: '2-digit',
+    hour12: false,
+    minute: '2-digit',
+    timeZoneName: 'short',
+    timeZone: 'UTC'
+  })
+  let utcTzName = dtf.format()
+  utcTzName = utcTzName.substr(utcTzName.indexOf(' ')).trim()
+  return utcTzName
+}
+
+describe('DateTime Formatters', function () {
+  describe('format dates and date+times (en-US)', function () {
+    it('format date', function () {
+      expect(formatDate(new Date(Date.UTC(1999, 11, 31)))).to.equal('12/31/1999')
+      expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('7/4/2020')
+    })
+    it('format datetime', function () {
+      const utcTzName = extractUtcTimezoneName(currentLocale())
+
+      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`12/31/1999, 4:35:42 PM ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`7/4/2020, 11:12:13 AM ${utcTzName}`)
+    })
+  })
+
+  describe('format date (it-IT)', function () {
+    it('format date', function () {
+      initLocale('it-IT')
+      expect(currentLocale()).to.equal('it-IT')
+
+      expect(formatDate(new Date(Date.UTC(1999, 11, 31)))).to.equal('31/12/1999')
+      expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('4/7/2020')
+    })
+    it('format datetime', function () {
+      initLocale('it-IT')
+      const utcTzName = extractUtcTimezoneName(currentLocale())
+
+      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31/12/1999, 4:35:42 PM ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4/7/2020, 11:12:13 AM ${utcTzName}`)
+    })
+  })
+
+  describe('format date (de-DE)', function () {
+    it('format date', function () {
+      initLocale('de-DE')
+      expect(currentLocale()).to.equal('de-DE')
+
+      expect(formatDate(new Date(Date.UTC(1999, 11, 31)))).to.equal('31.12.1999')
+      expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('4.7.2020')
+    })
+    it('format datetime', function () {
+      initLocale('de-DE')
+      const utcTzName = extractUtcTimezoneName(currentLocale())
+
+      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31.12.1999, 4:35:42 nachm. ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4.7.2020, 11:12:13 vorm. ${utcTzName}`)
     })
   })
 })
