@@ -32,8 +32,7 @@ class SparklineChart extends React.Component {
 
   render () {
     return (
-      <div className='sparkline-chart' style={this.props.containerStyle} ref={(e) => { this._chartContainer = e }}>
-      </div>
+      <div className='sparkline-chart' style={this.props.containerStyle} ref={(e) => { this._chartContainer = e }} />
     )
   }
 

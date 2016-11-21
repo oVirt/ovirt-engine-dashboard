@@ -74,8 +74,7 @@ function UtilizationBarChart ({
 
             {/* available progress */}
             <Tooltip text={msg.percentAvailable({ value: formatNumber0D(percentAvailable) })}>
-              <div className='progress-bar progress-bar-remaining' style={{ width: `${barAvailableWidth}%` }} role='progressbar'>
-              </div>
+              <div className='progress-bar progress-bar-remaining' style={{ width: `${barAvailableWidth}%` }} role='progressbar' />
             </Tooltip>
 
           </div>
@@ -111,8 +110,7 @@ function UtilizationBarChart ({
 
             {/* available progress */}
             <Tooltip text={msg.percentAvailable({ value: formatNumber0D(percentAvailable) })}>
-              <div className='progress-bar progress-bar-remaining' style={{ width: `${barAvailableWidth}%` }} role='progressbar'>
-              </div>
+              <div className='progress-bar progress-bar-remaining' style={{ width: `${barAvailableWidth}%` }} role='progressbar' />
             </Tooltip>
 
           </div>
