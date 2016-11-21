@@ -13,7 +13,7 @@ import GlobalDashboard from './components/GlobalDashboard'
 const loadingPlaceholder = (
   <div className='text-center'>
     <h2>{msg.dataLoading()}</h2>
-    <div className='spinner spinner-lg'></div>
+    <div className='spinner spinner-lg' />
   </div>
 )
 
