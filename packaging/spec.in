@@ -1,15 +1,15 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 0.3@RPM_SNAPSHOT@%{?dist}
+Release: 0.4@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
 
 BuildArch: noarch
 
-BuildRequires: ovirt-engine-nodejs >= 4.4.6
-BuildRequires: ovirt-engine-nodejs-modules >= 0.0.12
+BuildRequires: ovirt-engine-nodejs >= 6.9.1
+BuildRequires: ovirt-engine-nodejs-modules >= 0.0.16
 
 Requires: ovirt-engine-webadmin-portal >= 4.0.2
 
@@ -48,6 +48,10 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Fri Nov 25 2016 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-0.4
+- Bump ovirt-engine-nodejs-modules BuildRequires to 0.0.16.
+  Bump ovirt-engine-nodejs BuildRequires to 6.9.1.
+
 * Tue Aug 2 2016 Vojtech Szocs <vszocs@redhat.com> - 1.1.0-0.3
 - Bump ovirt-engine-nodejs-modules BuildRequires to 0.0.12.
 - Bump ovirt-engine-webadmin-portal to 4.0.2 to leverage oVirt

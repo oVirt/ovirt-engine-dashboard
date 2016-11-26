@@ -13,7 +13,7 @@ This means no manual steps are required in order to install this plugin in produ
 
 === Prerequisites
 
-Install https://nodejs.org/[Node.js] v4 (LTS). https://github.com/creationix/nvm[nvm]
+Install https://nodejs.org/[Node.js] v6 (LTS). https://github.com/creationix/nvm[nvm]
 can be used to manage multiple Node.js versions.
 
 Run `node -v` to check the current Node.js version.
