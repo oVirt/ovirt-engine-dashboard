@@ -48,6 +48,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Sun Nov 27 2016 Greg Sheremeta <gshereme@redhat.com> - 1.0.6-1
+- 1.0.6-1.
+
 * Tue Oct 11 2016 Greg Sheremeta <gshereme@redhat.com> - 1.0.5-1
 - 1.0.5-1.
 
