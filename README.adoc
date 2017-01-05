@@ -68,11 +68,35 @@ Whenever `dependencies` are changed:
 
 Only covers release builds (RC and GA).
 
+==== Stable branches
+
+To create new stable branch:
+
+. create new branch via https://gerrit.ovirt.org/#/admin/projects/ovirt-engine-dashboard,branches[Gerrit]
+. rebase on top of the newly created branch
+. submit patch with following changes:
+.. `automation/*.repos` - ensure proper oVirt repos (don't use `ovirt-master-snapshot`)
+
+Then, update the master branch:
+
+* submit patch with following changes:
+** `package.json` - bump `version`
+** `packaging/spec.in` - reset `Release` number to `0.1` and update `%changelog`
+
+Finally, update Jenkins CI job config:
+
+* submit patch for https://gerrit.ovirt.org/#/q/project:jenkins[jenkins]:
+** `jobs/confs/projects/ovirt-engine-dashboard/ovirt-engine-dashboard_standard.yaml` - ensure that `version`
+   contains the Engine version to corresponding Dashboard stable branch mapping
+
+==== Releases
+
+To perform new release:
+
 . switch to appropriate stable branch
-. submit & merge patch that prepares the branch for release:
-.. `package.json` - ensure proper `version`
+. submit patch that prepares the branch for release:
+.. `package.json` - ensure proper `version` (e.g. bump `.z` component)
 .. `packaging/spec.in` - ensure proper `Release` number and update `%changelog`
-.. `automation/*.repos` - ensure proper repos (don't use `ovirt-master-snapshot`)
 . pull changes from remote
 . tag release-prep patch and push the tag to remote:
 .. `git tag -a <tag-name>`
