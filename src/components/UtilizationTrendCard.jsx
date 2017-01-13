@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 const { string, number, bool, shape, arrayOf } = PropTypes
-import { searchPrefixes, searchFields } from '../constants'
+import { searchPrefixes, searchFields, storageUnitTable } from '../constants'
 import { msg } from '../intl-messages'
 import { formatNumber0D, formatNumber1D } from '../utils/intl'
+import { convertValue } from '../utils/unit-conversion'
 import { applySearch } from '../utils/webadmin-search'
 import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
@@ -46,6 +47,12 @@ class UtilizationTrendCard extends React.Component {
     const available = total - used
     const thresholds = { enabled: true, warning: 75, error: 90 }
 
+    // for non-percentage values summary - scale the available and total unit values together
+    const { unit: summaryUnit, value: [summaryAvailable, summaryTotal] } = convertValue(storageUnitTable, unit, [ available, total ])
+
+    // for the donut chart - want to adjust the used and total values together so they stay balanced
+    const { unit: newUnit, value: [newUsed, newTotal] } = convertValue(storageUnitTable, unit, [used, total])
+
     return (
       <div className='utilization-chart-pf'>
 
@@ -55,14 +62,14 @@ class UtilizationTrendCard extends React.Component {
         {/* summary */}
         <div className='current-values'>
           <h1 className='available-count pull-left'>
-            {showValueAsPercentage ? `${formatNumber0D(available)}%` : formatNumber1D(available)}
+            {showValueAsPercentage ? `${formatNumber0D(available)}%` : formatNumber1D(summaryAvailable)}
           </h1>
           <div className='available-text pull-left'>
             <div>{msg.available()}</div>
             <div>
               {showValueAsPercentage
                 ? msg.utilizationCardAvailableOfPercent({ total: formatNumber0D(total) })
-                : msg.utilizationCardAvailableOfUnit({ total: formatNumber1D(total), unit })
+                : msg.utilizationCardAvailableOfUnit({ total: formatNumber1D(summaryTotal), unit: summaryUnit })
               }
             </div>
           </div>
@@ -77,9 +84,9 @@ class UtilizationTrendCard extends React.Component {
 
         {/* donut chart */}
         <DonutChart
-          used={used}
-          total={total}
-          unit={unit}
+          used={newUsed}
+          total={newTotal}
+          unit={newUnit}
           thresholds={thresholds}
           centerLabel={donutCenterLabel}
           onDataClick={() => {

@@ -129,7 +129,7 @@ class SparklineChart extends React.Component {
         )
       case 'valuePerDate':
         // any TiB value <= 0.1 converted to GiB or MiB
-        const { unit: newUnit, value: newUsed } = convertValue(storageUnitTable, unit, d[0].value, 0.1)
+        const { unit: newUnit, value: newUsed } = convertValue(storageUnitTable, unit, d[0].value)
         return getTooltipTableHTML(
           `<tr><td class='value text-nowrap'>${formatDateTime(d[0].x)}</td><td class='value text-nowrap'>${formatNumber1D(newUsed)} ${newUnit}</td></tr>`
         )
