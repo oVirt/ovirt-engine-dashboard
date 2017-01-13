@@ -41,4 +41,31 @@ describe('convertValue', function () {
       unit: 'foo', value: 1
     })
   })
+
+  it('scale all values down 1 unit', function () {
+    expect(convertValue(storageUnitTable, 'TiB', [ 0.0123, 0.0456 ])).to.deep.equal({
+      unit: 'GiB',
+      value: [ 0.0123 * 1024, 0.0456 * 1024 ]
+    })
+  })
+
+  it('scale all values up 2 units', function () {
+    expect(convertValue(storageUnitTable, 'MiB', [ (1 * 1024 * 1024), (2 * 1024 * 1024) ])).to.deep.equal({
+      unit: 'TiB',
+      value: [ 1, 2 ]
+    })
+  })
+
+  it('no scaling, 1 value in the array is in range', function () {
+    expect(convertValue(storageUnitTable, 'TiB', [ 1.01, 0.02 ])).to.deep.equal({
+      unit: 'TiB',
+      value: [ 1.01, 0.02 ]
+    })
+  })
+
+  it('returns the same unit and values when unit is not in the table', function () {
+    expect(convertValue(storageUnitTable, 'foo', [ 1, 2, 3 ])).to.deep.equal({
+      unit: 'foo', value: [ 1, 2, 3 ]
+    })
+  })
 })
