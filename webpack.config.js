@@ -23,13 +23,13 @@ const config = module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
+        test: /\.(js|jsx)$/,
+        exclude: /(node_modules)|(zanata)/,
         loader: 'babel',
         query: babelOptions
       }, {
         test: /\.json$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules)|(zanata)/,
         loader: 'json'
       }, {
         test: /\.css$/,

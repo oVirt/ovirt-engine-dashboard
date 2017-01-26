@@ -15,3 +15,7 @@ extra/
 
 # IDE files
 .idea/
+
+# Zanata Cache files
+.zanata-cache/
+
