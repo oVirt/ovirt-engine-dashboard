@@ -32,6 +32,15 @@ body, .containers-dashboard {
 .card-pf {
     margin-bottom: 5px;
 }
+.card-pf-aggregate-status-notifications {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card-pf-aggregate-status-notification {
+    white-space: nowrap;
+}
 
 /* Following media queries are required to split a row into seven equal columns
    in bootstrap grid system. This is based on the reference implementation at
