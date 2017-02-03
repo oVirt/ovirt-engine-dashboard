@@ -1,8 +1,4 @@
-git
 ovirt-engine-nodejs
 ovirt-engine-nodejs-modules
 ovirt-engine-yarn
-python
-rpm-build
-rpmdevtools
 fontconfig

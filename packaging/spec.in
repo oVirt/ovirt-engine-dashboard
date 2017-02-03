@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 1@RPM_SNAPSHOT@%{?dist}
+Release: 2@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -25,7 +25,7 @@ oVirt UI plugin that gives overview of the virtualized environment and its speci
 source %{_datadir}/ovirt-engine-nodejs-modules/setup-env.sh
 
 # Build the application:
-npm run build
+yarn run build
 
 %install
 
@@ -48,6 +48,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Mon Feb 6 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-2
+- Switch to yarn
+
 * Thu Jan 5 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-1
 - Bump ovirt-engine-nodejs-modules BuildRequires to 0.0.19.
   Bump webadmin Requires to 4.1.
