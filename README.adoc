@@ -23,11 +23,11 @@ https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb
 
 === Dashboard setup
 
-* `npm install` to install dependencies (this might take a while)
-* `npm test` to run tests (single run)
-* `npm run test:watch` for continuous testing (watch & rerun tests on change)
-* `npm run dev` for development build and watch & recompile files on change
-* `npm run build` for production build
+* `yarn install` to install dependencies (this might take a while)
+* `yarn test` to run tests (single run)
+* `yarn run test:watch` for continuous testing (watch & rerun tests on change)
+* `yarn run dev` for development build and watch & recompile files on change
+* `yarn run build` for production build
 
 === Engine setup
 
@@ -47,7 +47,7 @@ Open WebAdmin in your browser, you should land on *Dashboard* main tab automatic
 
 === Managing dependencies
 
-Dependencies not related to production build (not needed for `npm run build`)
+Dependencies not related to production build (not needed for `yarn run build`)
 should go into `devDependencies`. Try to keep as few `dependencies` as possible.
 
 Whenever `dependencies` are changed:

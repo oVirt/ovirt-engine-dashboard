@@ -8,7 +8,7 @@
     "url": "git://gerrit.ovirt.org/ovirt-engine-dashboard"
   },
   "scripts": {
-    "prebuild": "npm run test",
+    "prebuild": "yarn run test",
     "build": "NODE_ENV=production webpack -p --bail",
     "dev": "webpack -d --progress --watch",
     "intl:extract": "EXTRACT_MESSAGES=1 webpack -d && rip json2pot 'extra/messages/**/*.json' -o 'extra/messages/dashboard-messages.pot'",
