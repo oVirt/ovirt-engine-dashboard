@@ -122,7 +122,6 @@ export function formatDateTime (date) {
     day: 'numeric',
     year: 'numeric',
     hour: 'numeric',
-    hour12: true,
     minute: 'numeric',
     second: 'numeric',
     timeZoneName: 'short',

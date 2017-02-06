@@ -119,10 +119,12 @@ describe('DateTime Formatters', function () {
       expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('7/4/2020')
     })
     it('format datetime', function () {
+      const amName = 'AM'
+      const pmName = 'PM'
       const utcTzName = extractUtcTimezoneName(currentLocale())
 
-      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`12/31/1999, 4:35:42 PM ${utcTzName}`)
-      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`7/4/2020, 11:12:13 AM ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`12/31/1999, 4:35:42 ${pmName} ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`7/4/2020, 11:12:13 ${amName} ${utcTzName}`)
     })
   })
 
@@ -136,10 +138,15 @@ describe('DateTime Formatters', function () {
     })
     it('format datetime', function () {
       initLocale('it-IT')
+      const amName = ''
+      const pmName = ''
       const utcTzName = extractUtcTimezoneName(currentLocale())
 
-      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31/12/1999, 4:35:42 PM ${utcTzName}`)
-      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4/7/2020, 11:12:13 AM ${utcTzName}`)
+      // NOTE: The output string will ALWAYS have a suffix of " {am/pm} {TZname}" when tested in PhantomJS
+      //       using the Intl polyfill.  Since it-IT's default is a 24 hour clock, and Intl polyfill doesn't
+      //       output the TZ name, the formatted string will end up having 2 trailing spaces.
+      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31/12/1999, 16:35:42 ${pmName} ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4/7/2020, 11:12:13 ${amName} ${utcTzName}`)
     })
   })
 
@@ -153,10 +160,12 @@ describe('DateTime Formatters', function () {
     })
     it('format datetime', function () {
       initLocale('de-DE')
+      const amName = ''
+      const pmName = ''
       const utcTzName = extractUtcTimezoneName(currentLocale())
 
-      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31.12.1999, 4:35:42 nachm. ${utcTzName}`)
-      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4.7.2020, 11:12:13 vorm. ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31.12.1999, 16:35:42 ${pmName} ${utcTzName}`)
+      expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4.7.2020, 11:12:13 ${amName} ${utcTzName}`)
     })
   })
 })
