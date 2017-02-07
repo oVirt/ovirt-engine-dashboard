@@ -1,15 +1,17 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 0.2@RPM_SNAPSHOT@%{?dist}
+Release: 0.3@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
 
 BuildArch: noarch
 
-BuildRequires: ovirt-engine-nodejs >= 6.9.1
-BuildRequires: ovirt-engine-nodejs-modules >= 0.0.19
+# Following packages have their version specified in the .packages file:
+BuildRequires: ovirt-engine-nodejs
+BuildRequires: ovirt-engine-nodejs-modules
+BuildRequires: ovirt-engine-yarn
 
 Requires: ovirt-engine-webadmin-portal >= 4.2
 
@@ -21,7 +23,7 @@ oVirt UI plugin that gives overview of the virtualized environment and its speci
 # Unpack the source:
 %setup -q -n %{name}-%{version}
 
-# Set up Node.js environment with npm dependencies linked to ./node_modules:
+# Set up Node.js environment with dependencies linked to ./node_modules:
 source %{_datadir}/ovirt-engine-nodejs-modules/setup-env.sh
 
 # Build the application:
@@ -48,6 +50,11 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Tue Feb 7 2017 Vojtech Szocs <vszocs@redhat.com> - 1.2.0-0.3
+- "automation" directory cleanup.
+- Node.js, Yarn and nodejs-modules versions are now specified in
+  the .packages file.
+
 * Fri Feb 3 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-0.2
 - Switch to yarn
 
