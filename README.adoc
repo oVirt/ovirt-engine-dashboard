@@ -13,8 +13,10 @@ This means no manual steps are required in order to install this plugin in produ
 
 === Prerequisites
 
-Install https://nodejs.org/[Node.js] v6 (LTS). https://github.com/creationix/nvm[nvm]
-can be used to manage multiple Node.js versions.
+Install https://nodejs.org/[Node.js] (LTS) based on the version specified in
+`automation/build.packages` (used when building the project in oVirt CI system).
+
+https://github.com/creationix/nvm[nvm] can be used to manage multiple Node.js versions.
 
 Run `node -v` to check the current Node.js version.
 
@@ -23,7 +25,7 @@ https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb
 
 === Dashboard setup
 
-* `yarn install` to install dependencies (this might take a while)
+* `yarn install` to install dependencies
 * `yarn test` to run tests (single run)
 * `yarn run test:watch` for continuous testing (watch & rerun tests on change)
 * `yarn run dev` for development build and watch & recompile files on change
@@ -52,10 +54,10 @@ should go into `devDependencies`. Try to keep as few `dependencies` as possible.
 
 Whenever `dependencies` are changed:
 
-* submit patch for https://gerrit.ovirt.org/#/q/project:releng-tools[releng-tools]:
-** `specs/ovirt-engine-nodejs-modules/package.json` - reflect required dependencies
-** `specs/ovirt-engine-nodejs-modules/ovirt-engine-nodejs-modules.spec.in` - bump `Version` and update `%changelog`
-** `specs/ovirt-engine-nodejs-modules/CHANGES.adoc` - document changes made to `package.json`
+* submit patch for https://gerrit.ovirt.org/#/q/project:ovirt-engine-nodejs-modules[ovirt-engine-nodejs-modules]:
+** bump the `Release` number
+** merge the patch, this triggers `ovirt-engine-nodejs-modules` RPM build
+* update `automation/build.packages` according to the new RPM version
 
 === Package versioning
 
@@ -68,6 +70,31 @@ Whenever `dependencies` are changed:
 
 Only covers release builds (RC and GA).
 
+==== Stable branches
+
+To create new stable branch:
+
+. create new branch via https://gerrit.ovirt.org/#/admin/projects/ovirt-engine-dashboard,branches[Gerrit]
+. rebase on top of the newly created branch
+. ensure that `automation/build.repos` contains proper repos (avoid `master` repos)
+
+Then, update the master branch:
+
+* submit patch with following changes:
+** `package.json` - bump `version`
+** `packaging/spec.in` - reset `Release` number to `0.1` and update `%changelog`
+
+Finally, update CI job config:
+
+* submit patch for https://gerrit.ovirt.org/#/q/project:jenkins[jenkins]:
+** in `jobs/confs/projects/ovirt-engine-dashboard/ovirt-engine-dashboard_standard.yaml`,
+   ensure that `version` contains proper Engine version to corresponding Dashboard stable
+   branch mapping
+
+==== Releases
+
+To perform new release:
+
 . switch to appropriate stable branch
 . submit & merge patch that prepares the branch for release:
 .. `package.json` - ensure proper `version`
@@ -77,7 +104,7 @@ Only covers release builds (RC and GA).
 . tag release-prep patch and push the tag to remote:
 .. `git tag -a <tag-name>`
 .. `git push origin <tag-name>`
-. trigger Jenkins build on release-prep patch
+. trigger CI build on release-prep patch
 . update oVirt release config in `releng-tools` repo
 
 Tag name example: `ovirt-engine-dashboard-1.0.0-1`
