@@ -5,7 +5,7 @@ rm -rf exported-artifacts
 mkdir -p exported-artifacts
 
 # Resolve the version and snapshot used for RPM build:
-version="$(automation/version.py)"
+version="$(jq -r '.version' package.json)"
 date="$(date --utc +%Y%m%d)"
 commit="$(git log -1 --pretty=format:%h)"
 snapshot=".${date}git${commit}"
