@@ -22,13 +22,27 @@ tar_prefix="${tar_name}-${version}/"
 tar_file="${tar_name}-${version}${snapshot}.tar.gz"
 git archive --prefix="${tar_prefix}" --output="${tar_file}" HEAD
 
+# The "build.packages.force" file contains BuildRequires packages
+# to be installed using their latest version.
+# When reading the file, make sure to remove blank lines as well
+# as lines starting with the "#" character:
+build_requires="$(sed -e '/^[ \t]*$/d' -e '/^#/d' -e 's/^/BuildRequires: /' < \
+    automation/build.packages.force | \
+    sed ':a;N;$!ba;s/\n/\\n/g')"
+
+# Force CI to get the latest version of these packages:
+dependencies="$(sed -e '/^[ \t]*$/d' -e '/^#/d' automation/build.packages.force)"
+yum-deprecated clean metadata || yum clean metadata
+yum-deprecated -y install ${dependencies} || yum -y install ${dependencies}
+
 # Build the RPM:
 mv "${tar_file}" packaging/
 pushd packaging
-  export tar_version="${version}"
-  export tar_file
-  export rpm_snapshot="${snapshot}"
-  ./build.sh
+    export tar_version="${version}"
+    export tar_file
+    export rpm_snapshot="${snapshot}"
+    export build_requires
+    ./build.sh
 popd
 
 # Copy the .tar.gz and .rpm files to the artifacts directory:
