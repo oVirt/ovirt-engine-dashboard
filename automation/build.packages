@@ -1,6 +1,6 @@
 fontconfig
 git
-python
+jq
 rpm-build
 rpmdevtools
 yum
