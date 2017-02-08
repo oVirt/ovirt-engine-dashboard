@@ -1,17 +1,14 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 3@RPM_SNAPSHOT@%{?dist}
+Release: 4@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
 
 BuildArch: noarch
 
-# Following packages have their version specified in the .packages file:
-BuildRequires: ovirt-engine-nodejs
-BuildRequires: ovirt-engine-nodejs-modules
-BuildRequires: ovirt-engine-yarn
+@BUILD_REQUIRES@
 
 Requires: ovirt-engine-webadmin-portal >= 4.1
 
@@ -50,6 +47,10 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Wed Feb 8 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-4
+- added build.packages.force that specify forced yum installs,
+  to work around CI caching issue.
+
 * Tue Feb 7 2017 Vojtech Szocs <vszocs@redhat.com> - 1.1.0-3
 - "automation" directory cleanup.
 - Node.js, Yarn and nodejs-modules versions are now specified in
