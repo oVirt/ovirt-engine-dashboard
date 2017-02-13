@@ -1,6 +1,10 @@
 require('jquery/dist/jquery')
 require('bootstrap/dist/js/bootstrap')
 
+// NOTE: Bootstrap ^3.3.7 has a bug in tooltip placement. This override,
+//       which must be referenced after bootstrap itself, fixes the problem.
+require('../static/js/tooltip-position-override')
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { msg } from './intl-messages'
