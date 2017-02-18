@@ -16,7 +16,7 @@ function messageDescriptorsToFormatFunctions (descriptors) {
   return result
 }
 
-export const msg = messageDescriptorsToFormatFunctions(defineMessages({
+export const messageDescriptors = defineMessages({
 
   // common strings
 
@@ -292,4 +292,6 @@ export const msg = messageDescriptorsToFormatFunctions(defineMessages({
     description: 'title of resource utilization dialog for `Storage` utilization card'
   }
 
-}))
+})
+
+export const msg = messageDescriptorsToFormatFunctions(messageDescriptors)
