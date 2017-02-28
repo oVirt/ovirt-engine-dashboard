@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 5@RPM_SNAPSHOT@%{?dist}
+Release: 6@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -51,6 +51,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Tue Feb 28 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-6
+- Bump package version to 1.1.0-6.
+
 * Thu Feb 9 2017 Vojtech Szocs <vszocs@redhat.com> - 1.1.0-5
 - Use "yarn check" in check & build scripts to ensure consistency
   between package.json and yarn.lock files.
