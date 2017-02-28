@@ -51,7 +51,7 @@
     "common.closeButton": "Cerrar",
     "common.cpuTitle": "CPU",
     "common.memoryTitle": "Memoria",
-    "common.notAvailableShort": "N/A",
+    "common.notAvailableShort": "N. D.",
     "common.percentAvailable": "{value, number}% Disponible",
     "common.percentUsed": "{value, number}% Utilizado",
     "common.storageTitle": "Almacenamiento",
@@ -90,7 +90,7 @@
     "mainTab.utilizationCardDialogStorageListTitle": "Dominios de almacenamiento ({storageCount, number})",
     "mainTab.utilizationCardDialogVmListTitle": "Maquinas virtuales ({vmCount, number})",
     "mainTab.utilizationCardMemoryDialogTitle": "Recursos más utilizados (Memoria)",
-    "mainTab.utilizationCardOverCommit": "Sobreasignar: {overcommit, number}% (allocated {allocated, number}%)",
+    "mainTab.utilizationCardOverCommit": "Sobreasignar: {overcommit, number}% (asignado {allocated, number}%)",
     "mainTab.utilizationCardStorageDialogTitle": "Recursos más utilizados (Almacenamiento)"
   },
   "fr-FR": {
