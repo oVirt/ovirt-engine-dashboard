@@ -16,6 +16,15 @@ export const supportedLocales = [
   'zh-CN'
 ]
 
+// per ECMA-402, undefined means "runtime's default time zone"
+export const defaultTimeZone = undefined
+
+// per ECMA-402, browsers only need to support undefined and 'UTC' so that's what is expected
+export const supportedTimeZones = [
+  undefined,
+  'UTC'
+]
+
 export const searchPrefixes = {
   dc: 'DataCenter',
   cluster: 'Cluster',
