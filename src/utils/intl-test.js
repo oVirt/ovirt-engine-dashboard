@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { initLocale, currentLocale, formatNumber, formatPercent, formatDate, formatDateTime } from './intl'
+import { initLocale, currentLocale, initTimeZone, currentTimeZone, formatNumber, formatPercent, formatDate, formatDateTime } from './intl'
 
 describe('Intl Number Formatters', function () {
   describe('format numbers (en-US)', function () {
@@ -84,7 +84,7 @@ describe('Intl Percent Formatters', function () {
   })
 
   describe('format percents (de-DE)', function () {
-    it('format percents with localized decimal point and "&nbps;%" (de-DE)', function () {
+    it('format percents with localized decimal point and "&nbsp;%" (de-DE)', function () {
       initLocale('de-DE')
       expect(currentLocale()).to.equal('de-DE')
 
@@ -96,29 +96,49 @@ describe('Intl Percent Formatters', function () {
   })
 })
 
-// Intl polyfill only supports UTC but doesn't include the time zone name after formatting.  Extract the UTC
-// time zone's locale specific name from a formatted string.  Use that locale specific name in test comparison.
+// Extract the UTC time zone's locale specific name from a formatted DateTime.
 function extractUtcTimezoneName (locale) {
+  return extractTimeZoneName(locale, 'UTC')
+}
+
+/*
+ * Extract the time zone's locale specific name from a formatted DateTime.  Use that
+ * locale specific name in test comparison.
+ *
+ * NOTE: The Intl polyfill, required by PhantomJS, does not currently output any
+ * timezone name.  Expected output from this function is '' in an Intl polyfill
+ * environment.
+ */
+function extractTimeZoneName (locale, timeZone) {
   // This is the minimal time + timezone only formatter configuration that must be supported by a ECMA-402 implementation
   const dtf = new Intl.DateTimeFormat(locale, {
     hour: '2-digit',
     hour12: false,
     minute: '2-digit',
     timeZoneName: 'short',
-    timeZone: 'UTC'
+    timeZone: timeZone
   })
-  let utcTzName = dtf.format()
-  utcTzName = utcTzName.substr(utcTzName.indexOf(' ')).trim()
-  return utcTzName
+  let tzName = dtf.format()
+  tzName = tzName.substr(tzName.indexOf(' ')).trim()
+  return tzName
 }
+
+// TODO(sd): If Intl polyfill ever adds a timezone name (specifically UTC) to it's formatted
+//           output, or PhantonJS adds Intl support, a new test can be added to verifiy that
+//           initTimeZone() works. The test would just verify that if the undefined and 'UTC'
+//           time zone names are not the same, then the formatted output is different.
 
 describe('DateTime Formatters', function () {
   describe('format dates and date+times (en-US)', function () {
     it('format date', function () {
+      initTimeZone('UTC')
+      expect(currentTimeZone()).to.equal('UTC')
+
       expect(formatDate(new Date(Date.UTC(1999, 11, 31)))).to.equal('12/31/1999')
       expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('7/4/2020')
     })
     it('format datetime', function () {
+      initTimeZone('UTC')
       const amName = 'AM'
       const pmName = 'PM'
       const utcTzName = extractUtcTimezoneName(currentLocale())
@@ -133,11 +153,15 @@ describe('DateTime Formatters', function () {
       initLocale('it-IT')
       expect(currentLocale()).to.equal('it-IT')
 
+      initTimeZone('UTC')
+      expect(currentTimeZone()).to.equal('UTC')
+
       expect(formatDate(new Date(Date.UTC(1999, 11, 31)))).to.equal('31/12/1999')
       expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('4/7/2020')
     })
     it('format datetime', function () {
       initLocale('it-IT')
+      initTimeZone('UTC')
       const amName = ''
       const pmName = ''
       const utcTzName = extractUtcTimezoneName(currentLocale())
@@ -155,11 +179,15 @@ describe('DateTime Formatters', function () {
       initLocale('de-DE')
       expect(currentLocale()).to.equal('de-DE')
 
+      initTimeZone('UTC')
+      expect(currentTimeZone()).to.equal('UTC')
+
       expect(formatDate(new Date(Date.UTC(1999, 11, 31)))).to.equal('31.12.1999')
       expect(formatDate(new Date(Date.UTC(2020, 6, 4)))).to.equal('4.7.2020')
     })
     it('format datetime', function () {
       initLocale('de-DE')
+      initTimeZone('UTC')
       const amName = ''
       const pmName = ''
       const utcTzName = extractUtcTimezoneName(currentLocale())

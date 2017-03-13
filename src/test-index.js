@@ -1,5 +1,5 @@
 import appInit from './services/app-init'
-import { defaultLocale } from './constants'
+import { defaultLocale, defaultTimeZone } from './constants'
 import { resetApi } from './plugin-api'
 
 // require all modules ending in `-test` from the current directory and all subdirectories
@@ -24,11 +24,13 @@ beforeEach(function setupFakeEnv (done) {
     'setSearchString',
     'revealPlace',
     'engineBaseUrl',
-    'currentLocale'
+    'currentLocale',
+    'currentTimeZone'
   ].forEach((apiMethod) => {
     pluginApiStubs[apiMethod] = sandbox.stub()
   })
   pluginApiStubs.currentLocale.returns(defaultLocale)
+  pluginApiStubs.currentTimeZone.returns(defaultTimeZone)
 
   // ensure the global pluginApi function exists and is unique for each test
   window.top.pluginApi = () => pluginApiStubs

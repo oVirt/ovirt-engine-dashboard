@@ -1,6 +1,6 @@
-import { supportedLocales } from '../constants'
+import { supportedLocales, supportedTimeZones, defaultTimeZone } from '../constants'
 import getPluginApi from '../plugin-api'
-import { initLocale } from '../utils/intl'
+import { initLocale, initTimeZone } from '../utils/intl'
 
 // TODO(vs) fetch translations for given locale as part of application init
 
@@ -30,11 +30,15 @@ const polyfillIntlFn = (resolve) => {
 const initApplicationLocaleFn = (resolve, reject) => {
   const currentLocale = getPluginApi().currentLocale()
 
-  if (supportedLocales.includes(currentLocale)) {
+  // TODO(sd): This should be simplified if/when currentTimeZone is added to the ovirt ui-plugin API
+  const currentTimeZone = getPluginApi().currentTimeZone ? getPluginApi().currentTimeZone() : defaultTimeZone
+
+  if (supportedLocales.includes(currentLocale) && supportedTimeZones.includes(currentTimeZone)) {
     initLocale(currentLocale)
+    initTimeZone(currentTimeZone)
     resolve()
   } else {
-    reject(`Unsupported UI locale [${currentLocale}]`)
+    reject(`Unsupported UI locale [${currentLocale}] or timezone [${currentTimeZone}]`)
   }
 }
 
