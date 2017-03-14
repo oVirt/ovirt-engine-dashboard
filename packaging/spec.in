@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 6.1@RPM_SNAPSHOT@%{?dist}
+Release: 7@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -51,6 +51,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Tue Mar 14 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-7
+- Bump package version to 1.1.0-7.
+
 * Wed Mar 1 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.0-6.1
 - Bump package version to 1.1.0-6.1.
 
