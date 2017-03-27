@@ -162,8 +162,8 @@ export const msg = messageDescriptorsToFormatFunctions(defineMessages({
 
   statusCardStorageTitle: {
     id: 'mainTab.statusCardStorageTitle',
-    defaultMessage: 'Storage Domains',
-    description: 'title of `Storage Domains` status card'
+    defaultMessage: 'Data Storage Domains',
+    description: 'title of `Data Storage Domains` status card'
   },
 
   statusCardGlusterVolumeTitle: {
