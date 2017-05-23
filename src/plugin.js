@@ -19,18 +19,8 @@ getPluginApi().register({
 
     // switch to Dashboard main tab
     getPluginApi().revealPlace(mainTabToken)
-  },
-
-  SystemTreeSelectionChange (selectedItem) {
-    // selecting anything other than 'System' (root node) hides the main tab
-    const rootNodeSelected = selectedItem.type === 'System'
-    getPluginApi().setTabAccessible(mainTabToken, rootNodeSelected)
-  },
-
-  TagActivationChange (...activeTagList) {
-    // check if the active tag list is empty or not, if not empty hide the main tab
-    getPluginApi().setTabAccessible(mainTabToken, activeTagList.length === 0)
   }
+
 })
 
 appInit.run().then(() => {

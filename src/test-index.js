@@ -20,7 +20,6 @@ beforeEach(function setupFakeEnv (done) {
     'register',
     'ready',
     'addMainTab',
-    'setTabAccessible',
     'setSearchString',
     'revealPlace',
     'engineBaseUrl',
