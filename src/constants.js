@@ -30,9 +30,19 @@ export const searchPrefixes = {
   cluster: 'Cluster',
   host: 'Host',
   storage: 'Storage',
-  vm: 'Vm',
-  event: 'Event',
-  volume: 'Volume'
+  vm: 'Vms',
+  event: 'Events',
+  volume: 'Volumes'
+}
+
+export const webadminPlaces = {
+  dc: 'dataCenters',
+  cluster: 'clusters',
+  host: 'hosts',
+  storage: 'storage',
+  vm: 'vms',
+  event: 'events',
+  volume: 'volumes'
 }
 
 export const searchFields = {
