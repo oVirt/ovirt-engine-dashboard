@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { initLocale, currentLocale, initTimeZone, currentTimeZone, formatNumber, formatPercent, formatDate, formatDateTime } from './intl'
+import { initLocale, currentLocale, initTimeZone, currentTimeZone, formatNumber, formatPercent, formatDate, formatDateTime, formatMessage } from './intl'
 
 describe('Intl Number Formatters', function () {
   describe('format numbers (en-US)', function () {
@@ -194,6 +194,79 @@ describe('DateTime Formatters', function () {
 
       expect(formatDateTime(new Date(Date.UTC(1999, 11, 31, 16, 35, 42)))).to.equal(`31.12.1999, 16:35:42 ${pmName} ${utcTzName}`)
       expect(formatDateTime(new Date(Date.UTC(2020, 6, 4, 11, 12, 13)))).to.equal(`4.7.2020, 11:12:13 ${amName} ${utcTzName}`)
+    })
+  })
+})
+
+describe('MessageFormat custom number styles', function () {
+  describe('numbers in messages', function () {
+    it('unstyled include', function () {
+      expect(formatMessage('test1', '{n}', { n: 1234.5678 })).to.equal('1234.5678')
+    })
+
+    it('as number with default format options', function () {
+      expect(formatMessage('test1', '{n, number}', { n: 1234.5 })).to.equal('1,234.5')
+      expect(formatMessage('test2', '{n, number}', { n: 1234.56 })).to.equal('1,234.56')
+      expect(formatMessage('test3', '{n, number}', { n: 1234.567 })).to.equal('1,234.567')
+      expect(formatMessage('test4', '{n, number}', { n: 1234.5674 })).to.equal('1,234.567')
+      expect(formatMessage('test5', '{n, number}', { n: 1234.5675 })).to.equal('1,234.568')
+    })
+
+    it('custom number style "0" - rounded to integer', function () {
+      expect(formatMessage('test1', '{n, number, 0}', { n: 1234.4 })).to.equal('1,234')
+      expect(formatMessage('test2', '{n, number, 0}', { n: 1234.5 })).to.equal('1,235')
+    })
+
+    it('custom number style "0.0" - rounded to 1 decimal place', function () {
+      expect(formatMessage('test1', '{n, number, 0.0}', { n: 1234.5 })).to.equal('1,234.5')
+      expect(formatMessage('test2', '{n, number, 0.0}', { n: 1234.54 })).to.equal('1,234.5')
+      expect(formatMessage('test3', '{n, number, 0.0}', { n: 1234.55 })).to.equal('1,234.6')
+    })
+  })
+
+  const localeTests = [
+    { locale: 'de-DE', groupSeparator: '.', decimalSeparator: ',' },
+    { locale: 'fr-FR', groupSeparator: '\u00A0', decimalSeparator: ',' }
+  ]
+
+  localeTests.forEach((test) => {
+    let { locale: l, groupSeparator: g, decimalSeparator: d } = test
+
+    describe(`numbers in messages (${l})`, function () {
+      it('unstyled include', function () {
+        initLocale(l)
+        expect(currentLocale()).to.equal(l)
+
+        expect(formatMessage('test1', '{n}', { n: 1234.5678 })).to.equal('1234.5678')
+      })
+
+      it('as number with default format options', function () {
+        initLocale(l)
+        expect(currentLocale()).to.equal(l)
+
+        expect(formatMessage('test1', '{n, number}', { n: 1234.5 })).to.equal(`1${g}234${d}5`)
+        expect(formatMessage('test2', '{n, number}', { n: 1234.56 })).to.equal(`1${g}234${d}56`)
+        expect(formatMessage('test3', '{n, number}', { n: 1234.567 })).to.equal(`1${g}234${d}567`)
+        expect(formatMessage('test4', '{n, number}', { n: 1234.5674 })).to.equal(`1${g}234${d}567`)
+        expect(formatMessage('test5', '{n, number}', { n: 1234.5675 })).to.equal(`1${g}234${d}568`)
+      })
+
+      it('custom number style "0" - rounded to integer', function () {
+        initLocale(l)
+        expect(currentLocale()).to.equal(l)
+
+        expect(formatMessage('test1', '{n, number, 0}', { n: 1234.4 })).to.equal(`1${g}234`)
+        expect(formatMessage('test2', '{n, number, 0}', { n: 1234.5 })).to.equal(`1${g}235`)
+      })
+
+      it('custom number style "0.0" - rounded to 1 decimal place', function () {
+        initLocale(l)
+        expect(currentLocale()).to.equal(l)
+
+        expect(formatMessage('test1', '{n, number, 0.0}', { n: 1234.5 })).to.equal(`1${g}234${d}5`)
+        expect(formatMessage('test2', '{n, number, 0.0}', { n: 1234.54 })).to.equal(`1${g}234${d}5`)
+        expect(formatMessage('test3', '{n, number, 0.0}', { n: 1234.55 })).to.equal(`1${g}234${d}6`)
+      })
     })
   })
 })

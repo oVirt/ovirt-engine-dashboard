@@ -1,6 +1,7 @@
 import appInit from './services/app-init'
 import { defaultLocale, defaultTimeZone } from './constants'
 import { resetApi } from './plugin-api'
+import { clearMessageCache } from './utils/intl'
 
 // require all modules ending in `-test` from the current directory and all subdirectories
 const testContext = require.context('.', true, /-test$/)
@@ -34,6 +35,8 @@ beforeEach(function setupFakeEnv (done) {
   // ensure the global pluginApi function exists and is unique for each test
   window.top.pluginApi = () => pluginApiStubs
   resetApi()
+
+  clearMessageCache()
 
   appInit.run()
     .then(() => { done() })

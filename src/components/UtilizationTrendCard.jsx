@@ -3,6 +3,7 @@ const { string, number, bool, shape, arrayOf } = PropTypes
 import { searchPrefixes, searchFields, storageUnitTable } from '../constants'
 import { msg } from '../intl-messages'
 import { formatNumber0D, formatNumber1D } from '../utils/intl'
+import { round } from '../utils/round'
 import { convertValue } from '../utils/unit-conversion'
 import { applySearch } from '../utils/webadmin-search'
 import DonutChart from './patternfly/DonutChart'
@@ -68,16 +69,16 @@ class UtilizationTrendCard extends React.Component {
             <div>{msg.available()}</div>
             <div>
               {showValueAsPercentage
-                ? msg.utilizationCardAvailableOfPercent({ total: formatNumber0D(total) })
-                : msg.utilizationCardAvailableOfUnit({ total: formatNumber1D(summaryTotal), unit: summaryUnit })
+                ? msg.utilizationCardAvailableOfPercent({ total: round(total) })
+                : msg.utilizationCardAvailableOfUnit({ total: round(summaryTotal, 1), unit: summaryUnit })
               }
             </div>
           </div>
 
           <div style={{ clear: 'left', paddingTop: 5 }}>
             {msg.utilizationCardOverCommit({
-              overcommit: formatNumber0D(overcommit),
-              allocated: formatNumber0D(allocated)
+              overcommit: round(overcommit),
+              allocated: round(allocated)
             })}
           </div>
         </div>

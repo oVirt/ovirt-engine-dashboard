@@ -5,7 +5,11 @@ import translatedMessages from '../../intl/translations.json'
 // TODO(vs) this is beyond simple utility functions, extract the code into services/intl
 
 // IntlMessageFormat object cache
-const messageFormats = {}
+const messageFormats = new Map()
+
+export function clearMessageCache () {
+  messageFormats.clear()
+}
 
 let locale
 
@@ -46,14 +50,29 @@ export function translateMessage (id, defaultMessage) {
 }
 
 export function formatMessage (id, defaultMessage, values = {}) {
-  let fmt = messageFormats[id]
+  let fmt = messageFormats.get(id)
 
   if (!fmt) {
     // translation needed only for non-default locale
     const message = (locale !== defaultLocale) ? translateMessage(id, defaultMessage) : defaultMessage
 
-    fmt = new IntlMessageFormat(message, locale)
-    messageFormats[id] = fmt
+    fmt = new IntlMessageFormat(message, locale, {
+      number: {
+        '0': {
+          style: 'decimal',
+          minimumIntegerDigits: 1,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        },
+        '0.0': {
+          style: 'decimal',
+          minimumIntegerDigits: 1,
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1
+        }
+      }
+    })
+    messageFormats.set(id, fmt)
   }
 
   return fmt.format(values)
