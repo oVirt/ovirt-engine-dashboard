@@ -8,7 +8,8 @@ class Tooltip extends React.Component {
   componentDidMount () {
     $(this._childElement).tooltip({
       title: this.props.text,
-      container: 'body'
+      container: 'body',
+      placement: this.props.placement || 'top'
     })
   }
 
@@ -21,7 +22,8 @@ class Tooltip extends React.Component {
 
 Tooltip.propTypes = {
   children: element.isRequired,
-  text: string.isRequired
+  text: string.isRequired,
+  placement: string
 }
 
 export default Tooltip
