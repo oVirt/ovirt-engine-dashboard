@@ -80,7 +80,7 @@ describe('verify the content of each locale in translations.json', function () {
       const localeNormalForm = normalizeMessagesForDiff(translatedMessages[locale])
 
       it('no unique message keys', function () {
-        expect(englishNormalForm, `locale[${locale}]`).to.have.all.keys(localeNormalForm)
+        expect(englishNormalForm, `locale[${locale}]`).to.have.include.keys(localeNormalForm)
       })
 
       it('messages match ICU arguments', function () {

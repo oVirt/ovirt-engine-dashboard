@@ -11,6 +11,14 @@ body, .containers-dashboard {
     top: 2px;
 }
 
+.global-dashboard-update-column {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 10px -10px;
+}
+
 /* these are small tweaks to try to make the dashboard squeeze into a 1920x1080
    window without vertical scrolling. It fits great on Chrome, needs work on FF.
 */

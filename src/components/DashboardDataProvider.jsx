@@ -13,6 +13,33 @@ class DashboardDataProvider extends React.Component {
   }
 
   componentDidMount () {
+    this._fetchData()
+  }
+
+  componentWillUnmount () {
+    this._jqXHR.abort()
+  }
+
+  render () {
+    const child = React.Children.only(this.props.children)
+
+    switch (this.state.data) {
+      case NO_DATA:
+        return this.props.loading
+      case DATA_ERROR:
+        return this.props.error
+      default:
+        return React.cloneElement(child, {
+          data: this.state.data,
+          lastUpdated: this.state.lastUpdated,
+          refreshData: () => {
+            this._fetchData()
+          }
+        })
+    }
+  }
+
+  _fetchData () {
     const request = this._jqXHR = $.ajax({
       method: 'GET',
       url: `${getPluginApi().engineBaseUrl()}webadmin/dashboard_data`,
@@ -33,26 +60,6 @@ class DashboardDataProvider extends React.Component {
       console.error('Request failed', request)
       this._updateData({ data: DATA_ERROR })
     })
-  }
-
-  componentWillUnmount () {
-    this._jqXHR.abort()
-  }
-
-  render () {
-    const child = React.Children.only(this.props.children)
-
-    switch (this.state.data) {
-      case NO_DATA:
-        return this.props.loading
-      case DATA_ERROR:
-        return this.props.error
-      default:
-        return React.cloneElement(child, {
-          data: this.state.data,
-          lastUpdated: this.state.lastUpdated
-        })
-    }
   }
 
   _updateData ({ data }) {

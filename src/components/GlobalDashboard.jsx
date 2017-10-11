@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react'
-const { shape, instanceOf } = PropTypes
+const { shape, instanceOf, func } = PropTypes
 import { searchPrefixes, searchFields, heatMapThresholds, heatMapLegendLabels, storageUnitTable, webadminPlaces } from '../constants'
 import getPluginApi from '../plugin-api'
 import { msg } from '../intl-messages'
 import { formatNumber1D } from '../utils/intl'
 import { convertValue } from '../utils/unit-conversion'
 import { applySearch } from '../utils/webadmin-search'
+import RefreshDataControl from './RefreshDataControl'
 import LastUpdatedLabel from './LastUpdatedLabel'
 import AggregateStatusCard from './AggregateStatusCard'
 import UtilizationTrendCard from './UtilizationTrendCard'
@@ -14,7 +15,7 @@ import HeatMapLegend from './patternfly/HeatMapLegend'
 import AggregateStatusCardHeightMatching from './AggregateStatusCardHeightMatching'
 import classNames from 'classnames'
 
-function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated }) {
+function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated, refreshData }) {
   const storageUtilizationFooterLabel = (used, total, unit) => {
     const { unit: newUnit, value: newUsed } = convertValue(storageUnitTable, unit, used)
     return (
@@ -32,11 +33,15 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
   return (
     <div className='container-fluid container-tiles-pf containers-dashboard'>
 
-      {/* last updated label */}
+      {/* refresh buttons and last updated information label */}
       <div className='row row-tile-pf'>
-        <p style={{ marginLeft: 10, marginTop: 10 }}>
-          <LastUpdatedLabel date={lastUpdated} />
-        </p>
+        <div className='col-xs-12 global-dashboard-update-column'>
+          <RefreshDataControl onRefresh={refreshData} />
+
+          <div style={{ marginLeft: 10 }}>
+            <LastUpdatedLabel date={lastUpdated} />
+          </div>
+        </div>
       </div>
 
       {/* inventory cards - match height of all of the card's titles and body */}
@@ -332,7 +337,8 @@ const dataShape = {
 
 GlobalDashboard.propTypes = {
   data: shape(dataShape),
-  lastUpdated: instanceOf(Date)
+  lastUpdated: instanceOf(Date),
+  refreshData: func.isRequired
 }
 
 export default GlobalDashboard
