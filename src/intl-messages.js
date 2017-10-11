@@ -118,6 +118,14 @@ export const msg = messageDescriptorsToFormatFunctions(defineMessages({
     description: 'detail shown when Dashboard main tab failed to load data'
   },
 
+  refreshButtonTooltip: {
+    id: 'mainTab.refreshButtonTooltip',
+    defaultMessage:
+      'Manually refresh dashboard. With default server settings, status card' +
+      ' data is updated once a minute and utilization data is updated once every 5 minutes.',
+    description: 'tooltip on the refresh button to explain it is manual update and with what frequency the data is updated'
+  },
+
   lastUpdated: {
     id: 'mainTab.lastUpdated',
     defaultMessage: 'Last Updated',
