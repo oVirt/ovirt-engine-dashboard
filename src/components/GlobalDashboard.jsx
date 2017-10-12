@@ -340,8 +340,8 @@ const dataShape = {
 }
 
 GlobalDashboard.propTypes = {
-  data: shape(dataShape),
-  lastUpdated: instanceOf(Date),
+  data: shape(dataShape).isRequired,
+  lastUpdated: instanceOf(Date).isRequired,
   onRefreshData: func
 }
 
