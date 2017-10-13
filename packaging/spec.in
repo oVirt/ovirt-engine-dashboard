@@ -51,6 +51,10 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Fri Oct 12 2017 Scott J Dickerson <sdickers@redhat.com> - 1.1.7-1
+- Fix rendering NaN instead of real numbers in other languages
+- Release 1.1.7-1.
+
 * Sun Apr 23 2017 Greg Sheremeta <gshereme@redhat.com> - 1.1.2-1
 - Add "Data" to the Storage Domain inventory card label.
 - Release 1.1.2-1.
