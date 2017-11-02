@@ -14,11 +14,9 @@ getPluginApi().register({
       // position this tab before any standard ones
       priority: -1,
       // customize the prefix displayed in search bar
-      searchPrefix: 'Dashboard'
+      searchPrefix: 'Dashboard',
+      defaultPlace: true
     })
-
-    // switch to Dashboard main tab
-    getPluginApi().revealPlace(mainTabToken)
   }
 
 })
