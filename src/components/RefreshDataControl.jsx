@@ -5,7 +5,7 @@ import Tooltip from './bootstrap/Tooltip'
 
 function RefreshDataControl ({ onRefresh }) {
   return (
-    <Tooltip text={msg.refreshButtonTooltip()} placement='bottom'>
+    <Tooltip text={msg.refreshButtonTooltip()} placement='bottom' hideOnClick='true'>
       <div className='btn-group'>
         <button type='button' className='btn btn-default' onClick={(event) => {
           event.preventDefault()
