@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-const { string, element } = PropTypes
+const { bool, string, element } = PropTypes
 import $ from 'jquery'
 import { cloneElementWithCustomRef } from '../../utils/react'
 
@@ -9,8 +9,14 @@ class Tooltip extends React.Component {
     $(this._childElement).tooltip({
       title: this.props.text,
       container: 'body',
-      placement: this.props.placement || 'top'
+      placement: this.props.placement || 'top',
+      trigger: this.props.hideOnClick ? 'hover' : 'hover focus'
     })
+    if (this.props.hideOnClick) {
+      $(this._childElement).find('button').on('click', () => {
+        $(this._childElement).tooltip('hide')
+      })
+    }
   }
 
   render () {
@@ -23,7 +29,8 @@ class Tooltip extends React.Component {
 Tooltip.propTypes = {
   children: element.isRequired,
   text: string.isRequired,
-  placement: string
+  placement: string,
+  hideOnClick: bool
 }
 
 export default Tooltip
