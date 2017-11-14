@@ -15,7 +15,7 @@ import HeatMapLegend from './patternfly/HeatMapLegend'
 import AggregateStatusCardHeightMatching from './AggregateStatusCardHeightMatching'
 import classNames from 'classnames'
 
-function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated, refreshData }) {
+function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated, onRefreshData = () => {} }) {
   const storageUtilizationFooterLabel = (used, total, unit) => {
     const { unit: newUnit, value: newUsed } = convertValue(storageUnitTable, unit, used)
     return (
@@ -36,7 +36,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
       {/* refresh buttons and last updated information label */}
       <div className='row row-tile-pf'>
         <div className='col-xs-12 global-dashboard-update-column'>
-          <RefreshDataControl onRefresh={refreshData} />
+          <RefreshDataControl onRefresh={onRefreshData} />
 
           <div style={{ marginLeft: 10 }}>
             <LastUpdatedLabel date={lastUpdated} />
@@ -338,7 +338,7 @@ const dataShape = {
 GlobalDashboard.propTypes = {
   data: shape(dataShape),
   lastUpdated: instanceOf(Date),
-  refreshData: func.isRequired
+  onRefreshData: func
 }
 
 export default GlobalDashboard

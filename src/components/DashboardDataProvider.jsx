@@ -32,7 +32,7 @@ class DashboardDataProvider extends React.Component {
         return React.cloneElement(child, {
           data: this.state.data,
           lastUpdated: this.state.lastUpdated,
-          refreshData: () => {
+          onRefreshData: () => {
             this._fetchData()
           }
         })

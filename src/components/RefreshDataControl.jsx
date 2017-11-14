@@ -14,12 +14,7 @@ function RefreshDataControl ({ onRefresh }) {
           <i className='fa fa-refresh'></i>
         </button>
 
-        <button className='btn btn-default dropdown-toggle' type='button' id='refreshIntervalDropdown' data-toggle='dropdown'>
-          <span className='caret'></span>
-        </button>
-        <ul className='dropdown-menu' role='menu'>
-          <li role='presentation' className='active'><a role='menuitem' tabIndex='-1' href='#'>Manual</a></li>
-        </ul>
+        {/* refresh configuration drop down menu would go here */}
       </div>
     </Tooltip>
   )
