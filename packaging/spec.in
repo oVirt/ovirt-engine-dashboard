@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 0.7@RPM_SNAPSHOT@%{?dist}
+Release: 0.8@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -51,7 +51,11 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
-* Fri Nov 30 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-0.7
+* Tue Nov 14 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-0.8
+- bump package version to 1.2.0-0.8
+- fix refresh button tooltip and remove refresh button menu
+
+* Fri Nov 3 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-0.7
 - bump package version to 1.2.0-0.7
 - adapt to plugin api change (remove revealPlace)
 
