@@ -67,7 +67,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
-    "react-height-matching-group": "^1.0.8",
     "react-intl": "^2.1.2",
     "sinon": "^1.17.4",
     "style-loader": "^0.13.1",

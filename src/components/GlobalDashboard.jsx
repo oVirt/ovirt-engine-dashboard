@@ -12,7 +12,7 @@ import AggregateStatusCard from './AggregateStatusCard'
 import UtilizationTrendCard from './UtilizationTrendCard'
 import HeatMap from './patternfly/HeatMap'
 import HeatMapLegend from './patternfly/HeatMapLegend'
-import AggregateStatusCardHeightMatching from './AggregateStatusCardHeightMatching'
+import HeightMatching from './helper/HeightMatching'
 import classNames from 'classnames'
 
 function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData }, lastUpdated, onRefreshData = () => {} }) {
@@ -45,7 +45,11 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
       </div>
 
       {/* inventory cards - match height of all of the card's titles and body */}
-      <AggregateStatusCardHeightMatching className={classNames('row', 'row-tile-pf', {'seven-cols': showGlusterCard})}>
+      <HeightMatching
+        className={classNames('row', 'row-tile-pf', {'seven-cols': showGlusterCard})}
+        selector={[
+          '.card-pf-aggregate-status .card-pf-title',
+          '.card-pf-aggregate-status .card-pf-body' ]}>
 
         <div className={statusCardClass}>
           <AggregateStatusCard
@@ -174,7 +178,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             }} />
         </div>
 
-      </AggregateStatusCardHeightMatching>
+      </HeightMatching>
 
       {/* utilization cards */}
       <div className='row row-tile-pf'>
