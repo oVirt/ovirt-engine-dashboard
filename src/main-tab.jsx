@@ -14,23 +14,23 @@ import DashboardIntlProvider from './components/DashboardIntlProvider'
 import DashboardDataProvider from './components/DashboardDataProvider'
 import GlobalDashboard from './components/GlobalDashboard'
 
-const loadingPlaceholder = (
-  <div className='text-center'>
-    <h2>{msg.dataLoading()}</h2>
-    <div className='spinner spinner-lg' />
-  </div>
-)
-
-const errorPlaceholder = (
-  <div className='text-center'>
-    <h2>{msg.dataError()}</h2>
-    <span style={{ fontSize: 15 }}>
-      {msg.dataErrorDetail()}
-    </span>
-  </div>
-)
-
 appInit.run().then(() => {
+  const loadingPlaceholder = (
+    <div className='text-center'>
+      <h2>{msg.dataLoading()}</h2>
+      <div className='spinner spinner-lg' />
+    </div>
+  )
+
+  const errorPlaceholder = (
+    <div className='text-center'>
+      <h2>{msg.dataError()}</h2>
+      <span style={{ fontSize: 15 }}>
+        {msg.dataErrorDetail()}
+      </span>
+    </div>
+  )
+
   ReactDOM.render(
     <DashboardIntlProvider locale={currentLocale()}>
       <DashboardDataProvider loading={loadingPlaceholder} error={errorPlaceholder}>
