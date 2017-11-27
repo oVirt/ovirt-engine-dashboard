@@ -4,6 +4,8 @@ const webpack = require('webpack')
 const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const env = process.env.NODE_ENV || 'development'
 const isProd = env === 'production'
@@ -20,6 +22,8 @@ const babelOptions = {
 
 // start with common webpack configuration applicable to all environments
 const config = module.exports = {
+  bail: true,
+
   module: {
     loaders: [
       {
@@ -33,20 +37,35 @@ const config = module.exports = {
         loader: 'json'
       }, {
         test: /\.css$/,
+        include: /(node_modules)|(static\/css)/,
+        loader: isProd ? ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap') : 'style!css'
+      }, {
+        test: /\.css$/,
+        exclude: /(node_modules)|(static\/css)/,
         loader: 'style!css'
-      }, {
+      },
+
+      // inline base64 URLs for <= 8k images, direct URLs for the rest
+      {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
-        // inline base64 URLs for <= 8k images, direct URLs for the rest
-        loader: 'url?limit=8192'
-      }, {
+        loader: 'url',
+        query: {
+          limit: 8192,
+          name: 'media/[name].[hash:8].[ext]'
+        }
+      },
+
+      // pack fonts - /woff2?/ gets embedded, the rest are copied
+      {
         test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/,
         loader: 'url?mimetype=application/font-woff'
       }, {
         test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/,
-        loader: 'file?name=[name].[ext]'
+        loader: 'file?name=media/[name].[hash:8].[ext]'
       }
     ]
   },
+
   resolve: {
     alias: {
       // prevent multiple reacts loaded from various dependencies
@@ -54,6 +73,11 @@ const config = module.exports = {
     },
     extensions: ['', '.js', '.jsx']
   },
+  resolveLoader: {
+    // lets loaders work on css referenced in npm modules
+    root: path.resolve(__dirname, 'node_modules')
+  },
+
   plugins: [
     new webpack.ProvidePlugin({
       // Bootstrap's JavaScript implicitly requires jQuery global
@@ -84,11 +108,20 @@ if (isDev || isProd) {
   config.plugins.push(
     new CleanWebpackPlugin(['dist', 'extra']),
     new CopyWebpackPlugin([
-      { from: 'static/dashboard.json', to: '../' },
-      { from: 'static/html' },
-      { from: 'static/css' },
-      { from: 'static/fonts' }
-    ])
+      { from: 'static/dashboard.json', to: '../' }
+    ]),
+    new HtmlWebpackPlugin({
+      filename: 'main-tab.html',
+      template: 'static/html/main-tab.template.html',
+      inject: true,
+      chunks: ['main-tab']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'plugin.html',
+      template: 'static/html/plugin.template.html',
+      inject: true,
+      chunks: ['plugin']
+    })
   )
 }
 
@@ -96,6 +129,11 @@ if (isDev || isProd) {
 if (isProd) {
   // emit source map for each generated chunk
   config.devtool = 'source-map'
+
+  // hash the output filenames
+  config.output.filename = 'js/[name].[chunkhash:8].js'
+  config.output.chunkFilename = 'js/[name].[chunkhash:8].chunk.js'
+
   config.plugins.push(
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
@@ -104,7 +142,8 @@ if (isProd) {
         // suppress warnings when dropping unreachable code, unused declarations etc.
         warnings: false
       }
-    })
+    }),
+    new ExtractTextPlugin('css/[name].[contenthash:8].css')
   )
 }
 

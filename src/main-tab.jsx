@@ -1,3 +1,13 @@
+// Let webpack handle integrating required css (plus assets referenced in the css)
+import 'patternfly/dist/css/patternfly.min.css'
+import 'patternfly/dist/css/patternfly-additions.min.css'
+
+// TODO(sd): repackage the dashboard css nicely on top of patternfly's css and the
+//           vestigal references to angular should be removed
+import '../static/css/angular-patternfly.css' // npm module includes angular - don't want that
+import '../static/css/angular-app.css'
+import '../static/css/dashboard.css'
+
 require('jquery/dist/jquery')
 require('bootstrap/dist/js/bootstrap')
 
