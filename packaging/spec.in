@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 0.8@RPM_SNAPSHOT@%{?dist}
+Release: 1@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -51,6 +51,11 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Wed Nov 29 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-1
+- bump package version to 1.2.0-1
+- fix status card height matching
+- consume patternfly from npm and remove embedded rcue
+
 * Tue Nov 14 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-0.8
 - bump package version to 1.2.0-0.8
 - fix refresh button tooltip and remove refresh button menu
