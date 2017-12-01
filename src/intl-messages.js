@@ -242,8 +242,16 @@ export const messageDescriptors = defineMessages({
 
   utilizationCardOverCommit: {
     id: 'mainTab.utilizationCardOverCommit',
-    defaultMessage: 'Over commit: {overcommit, number}% (allocated {allocated, number}%)',
+    defaultMessage: 'Virtual resources - Committed: {overcommit, number}%, Allocated: {allocated, number}%',
     description: 'shown below utilization card\'s summary'
+  },
+
+  utilizationCardOverCommitTooltip: {
+    id: 'mainTab.utilizationCardOverCommitTooltip',
+    defaultMessage:
+      'The committed and allocated virtual resources are percentages indicating the running virtual resource' +
+      ' compared to actual resources.',
+    description: 'tooltip for the virtual resource over commit below utilization card\'s summary'
   },
 
   utilizationCardDialogHostListTitle: {

@@ -12,6 +12,7 @@ import ModalDialog from './bootstrap/ModalDialog'
 import RenderInto from './helper/RenderInto'
 import ObjectUtilizationList from './ObjectUtilizationList'
 import ObjectUtilizationListTitle from './ObjectUtilizationListTitle'
+import Tooltip from './bootstrap/Tooltip'
 
 // PatternFly reference:
 //  https://www.patternfly.org/patterns/utilization-trend-card/
@@ -75,12 +76,14 @@ class UtilizationTrendCard extends React.Component {
             </div>
           </div>
 
-          <div style={{ clear: 'left', paddingTop: 5 }}>
-            {msg.utilizationCardOverCommit({
-              overcommit: round(overcommit),
-              allocated: round(allocated)
-            })}
-          </div>
+          <Tooltip text={msg.utilizationCardOverCommitTooltip()}>
+            <div className='overcommit-text' style={{ clear: 'left', paddingTop: 5 }}>
+              {msg.utilizationCardOverCommit({
+                overcommit: round(overcommit),
+                allocated: round(allocated)
+              })}
+            </div>
+          </Tooltip>
         </div>
 
         {/* donut chart */}

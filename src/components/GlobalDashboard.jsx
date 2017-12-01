@@ -188,7 +188,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               <h2 className='card-pf-title'>{msg.globalUtilizationHeading()}</h2>
             </div>
             <div className='card-pf-body'>
-              <div className='row'>
+              <HeightMatching className='row' selector='.utilization-chart-pf .overcommit-text'>
 
                 <div className='col-xs-12 col-sm-4 col-md-4'>
                   <UtilizationTrendCard
@@ -224,7 +224,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                     utilizationFooterLabel={storageUtilizationFooterLabel} />
                 </div>
 
-              </div>
+              </HeightMatching>
             </div>
           </div>
         </div>
