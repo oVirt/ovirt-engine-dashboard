@@ -89,7 +89,7 @@ class UtilizationTrendCard extends React.Component {
         {/* donut chart */}
         <DonutChart
           used={newUsed}
-          total={newTotal}
+          total={newTotal === 0 && newUsed === 0 ? 1 : newTotal}
           unit={newUnit}
           thresholds={thresholds}
           centerLabel={donutCenterLabel}
