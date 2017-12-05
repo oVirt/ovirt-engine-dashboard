@@ -48,10 +48,6 @@ class DonutChart extends React.Component {
           ['used', used],
           ['available', total - used]
         ],
-        names: {
-          used: msg.unitUsed({ unit }),
-          available: msg.unitAvailable({ unit })
-        },
         groups: [
           ['used', 'available']
         ],
@@ -63,7 +59,8 @@ class DonutChart extends React.Component {
       },
       tooltip: {
         contents (d) {
-          return `<span class='donut-tooltip-pf' style='white-space: nowrap;'>${formatPercent1D(d[0].ratio)} ${d[0].name}</span>`
+          const label = d[0].id === 'used' ? msg.used() : msg.available()
+          return `<span class='donut-tooltip-pf' style='white-space: nowrap;'>${formatPercent1D(d[0].ratio)} ${label}</span>`
         }
       }
     })
