@@ -2,12 +2,10 @@ import { supportedLocales, supportedTimeZones, defaultTimeZone } from '../consta
 import getPluginApi from '../plugin-api'
 import { initLocale, initTimeZone } from '../utils/intl'
 
-// TODO(vs) fetch translations for given locale as part of application init
-
 // polyfill Intl API (ECMA-402) if not natively supported
-const polyfillIntlFn = (resolve) => {
+const polyfillIntlFn = (resolve, reject) => {
   if (!global.Intl) {
-    // use code splitting to fetch all required modules
+    // use dynamic import code splitting to fetch all required modules
     require.ensure([], (require) => {
       require('intl')
       require('intl/locale-data/jsonp/en')
@@ -22,6 +20,7 @@ const polyfillIntlFn = (resolve) => {
       require('intl/locale-data/jsonp/cs')
       resolve()
     }, 'intl-polyfill')
+      .catch((error) => { reject(`failed to load intl-polyfill: ${error}`) })
   } else {
     resolve()
   }
@@ -44,16 +43,18 @@ const initApplicationLocaleFn = (resolve, reject) => {
 }
 
 export default {
-
   run () {
-    return Promise
-      .all([
+    return new Promise((resolve, reject) => {
+      Promise.all([
         new Promise(initApplicationLocaleFn),
         new Promise(polyfillIntlFn)
       ])
-      .catch((error) => {
-        console.error(`Application init failed: ${error}`)
-      })
+        .then(() => { resolve() })
+        .catch(
+          (error) => {
+            console.error(`Application init failed: ${error}`)
+            reject(error)
+          })
+    })
   }
-
 }

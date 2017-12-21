@@ -9,7 +9,7 @@ testContext.keys().forEach(testContext)
 
 // TODO(vs) this fancy import is needed until we upgrade to Sinon 2
 // https://github.com/webpack/webpack/issues/304#issuecomment-170883329
-import sinon from 'imports?define=>false,require=>false!sinon/pkg/sinon.js'
+import sinon from 'imports-loader?define=>false,require=>false!sinon/pkg/sinon.js'
 
 beforeEach(function setupFakeEnv (done) {
   // all tests should use `this.sandbox` to create fakes

@@ -44,7 +44,7 @@ appInit.run().then(() => {
   ReactDOM.render(
     <DashboardIntlProvider locale={currentLocale()}>
       <DashboardDataProvider loading={loadingPlaceholder} error={errorPlaceholder}>
-        <GlobalDashboard />
+        <GlobalDashboard data={{}} lastUpdated={new Date(0)} />
       </DashboardDataProvider>
     </DashboardIntlProvider>,
     document.getElementById('app')
