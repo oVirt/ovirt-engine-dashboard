@@ -51,6 +51,11 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Wed Jan 10 2018 Greg Sheremeta <gshereme@redhat.com> - 1.2.1-1
+- bump package version to 1.2.1-1
+- update translations from zanata
+- small bug fixes
+
 * Wed Nov 29 2017 Greg Sheremeta <gshereme@redhat.com> - 1.2.0-1
 - bump package version to 1.2.0-1
 - fix status card height matching
