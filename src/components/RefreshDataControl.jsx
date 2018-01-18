@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { func } = PropTypes
+import React from 'react'
+import { func } from 'prop-types'
 import { msg } from '../intl-messages'
 import Tooltip from './bootstrap/Tooltip'
 

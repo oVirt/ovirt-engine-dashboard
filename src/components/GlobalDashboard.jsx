@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { shape, instanceOf, func } = PropTypes
+import React from 'react'
+import { shape, instanceOf, func } from 'prop-types'
 import { searchPrefixes, searchFields, heatMapThresholds, heatMapLegendLabels, storageUnitTable, webadminPlaces } from '../constants'
 import getPluginApi from '../plugin-api'
 import { msg } from '../intl-messages'

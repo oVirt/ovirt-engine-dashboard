@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, number, object, shape, arrayOf, func } = PropTypes
+import React from 'react'
+import { string, number, object, shape, arrayOf, func } from 'prop-types'
 import $ from 'jquery'
 import d3 from 'd3'
 

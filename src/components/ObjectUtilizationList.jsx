@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, number, shape, oneOf, arrayOf, func } = PropTypes
+import React from 'react'
+import { string, number, shape, oneOf, arrayOf, func } from 'prop-types'
 import classNames from 'classnames'
 import UtilizationBarChart from './patternfly/UtilizationBarChart'
 import { utilizationListGridNameThreshold } from '../constants'

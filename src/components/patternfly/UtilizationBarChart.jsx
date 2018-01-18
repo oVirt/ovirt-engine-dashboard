@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, number, bool, shape, oneOf, oneOfType, func } = PropTypes
+import React from 'react'
+import { string, number, bool, shape, oneOf, oneOfType, func } from 'prop-types'
 import classNames from 'classnames'
 import { msg } from '../../intl-messages'
 import { formatNumber0D, formatNumber1D } from '../../utils/intl'

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, number, shape, arrayOf, func } = PropTypes
+import React from 'react'
+import { string, number, shape, arrayOf, func } from 'prop-types'
 import { msg } from '../intl-messages'
 import { formatNumber0D } from '../utils/intl'
 import Tooltip from './bootstrap/Tooltip'

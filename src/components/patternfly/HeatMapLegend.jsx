@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, arrayOf } = PropTypes
+import React from 'react'
+import { string, arrayOf } from 'prop-types'
 import HeatMap from './HeatMap'
 
 // Angular reference:

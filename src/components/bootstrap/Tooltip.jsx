@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { bool, string, element } = PropTypes
+import React from 'react'
+import { bool, string, element } from 'prop-types'
 import $ from 'jquery'
 import { cloneElementWithCustomRef } from '../../utils/react'
 

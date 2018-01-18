@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { node, instanceOf } = PropTypes
+import React from 'react'
+import { node, instanceOf } from 'prop-types'
 import ReactDOM from 'react-dom'
 
 // Use <RenderInto> to control where (into which DOM node) its children

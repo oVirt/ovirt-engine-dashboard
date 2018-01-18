@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { element } = PropTypes
+import React from 'react'
+import { element } from 'prop-types'
 import $ from 'jquery'
 import getPluginApi from '../plugin-api'
 

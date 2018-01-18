@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { ResizeSensor } from 'css-element-queries'
 import debounce from 'lodash/debounce'
 

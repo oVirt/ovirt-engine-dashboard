@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, node } = PropTypes
+import React from 'react'
+import { string, node } from 'prop-types'
 import { addLocaleData, IntlProvider } from 'react-intl'
 import { defaultLocale } from '../constants'
 import translatedMessages from '../../intl/translations.json'

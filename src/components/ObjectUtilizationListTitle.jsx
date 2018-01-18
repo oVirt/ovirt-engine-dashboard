@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string } = PropTypes
+import React from 'react'
+import { string } from 'prop-types'
 
 function ObjectUtilizationListTitle ({ text }) {
   return (

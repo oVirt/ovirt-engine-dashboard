@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, node } = PropTypes
+import React from 'react'
+import { string, node } from 'prop-types'
 import $ from 'jquery'
 import { msg } from '../../intl-messages'
 

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-const { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } = PropTypes
+import React from 'react'
+import { string, number, bool, object, shape, arrayOf, oneOf, instanceOf } from 'prop-types'
 import c3 from 'c3'
 import { storageUnitTable } from '../../constants'
 import { msg } from '../../intl-messages'
