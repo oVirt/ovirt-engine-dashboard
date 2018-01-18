@@ -19,6 +19,7 @@ const polyfillIntlFn = (resolve) => {
       require('intl/locale-data/jsonp/ko')
       require('intl/locale-data/jsonp/pt')
       require('intl/locale-data/jsonp/zh')
+      require('intl/locale-data/jsonp/cs')
       resolve()
     }, 'intl-polyfill')
   } else {
