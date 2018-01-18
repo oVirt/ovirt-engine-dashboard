@@ -6,6 +6,7 @@ export const defaultLocale = 'en-US'
 
 export const supportedLocales = [
   defaultLocale,
+  'cs-CZ',
   'de-DE',
   'es-ES',
   'fr-FR',
