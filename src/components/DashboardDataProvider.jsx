@@ -69,14 +69,15 @@ class DashboardDataProvider extends React.Component {
     })
   }
 
+  /*
+   * Take the JSON returned from the data fetch and clean it up as needed for GlobalDashboard.
+   */
   _transformData ({ data }) {
-    // no need to deep clone the data, just modify the object itself
-    const newData = data
-
     const inventoryStatusOrder = ['alert', 'error', 'warning', 'down', 'up']
 
+    // transform data.inventory
     ;['dc', 'cluster', 'host', 'storage', 'vm', 'event'].forEach((category) => {
-      const inventoryData = newData.inventory[category]
+      const inventoryData = data.inventory[category]
 
       // sort object statuses
       inventoryData.statuses.sort((a, b) => {
@@ -93,22 +94,43 @@ class DashboardDataProvider extends React.Component {
       }
     })
 
+    // transform data.globalUtilization
     ;['cpu', 'memory', 'storage'].forEach((category) => {
-      const globalUtilizationData = newData.globalUtilization[category]
-      const heatMapData = newData.heatMapData[category]
+      const globalUtilizationData = data.globalUtilization[category]
 
       // make sure that used never exceeds total
       if (globalUtilizationData.used > globalUtilizationData.total) {
         globalUtilizationData.used = globalUtilizationData.total
       }
 
+      // sparkline chart works with Date objects on X axis
       globalUtilizationData.history.forEach((obj) => {
-        // sparkline chart works with Date objects on X axis
         obj.date = new Date(obj.date)
       })
 
+      // sort object utilization lists as needed
+      function sortByUsedPercentDesc (list) {
+        list.sort((a, b) => (b.used / b.total) - (a.used / a.total))
+      }
+
+      const utilization = globalUtilizationData.utilization
+      if (utilization.hosts) {
+        sortByUsedPercentDesc(utilization.hosts)
+      }
+      if (utilization.storage) {
+        sortByUsedPercentDesc(utilization.storage)
+      }
+      if (utilization.vms && !utilization.storage) {
+        sortByUsedPercentDesc(utilization.vms)
+      }
+    })
+
+    // transform data.heatMapData
+    ;['cpu', 'memory', 'storage'].forEach((category) => {
+      const heatMapData = data.heatMapData[category]
+
+      // heat map component expects values in range <0, 1>
       heatMapData.forEach((obj) => {
-        // heat map component expects values in range <0, 1>
         obj.value = obj.value / 100
       })
 
@@ -118,7 +140,7 @@ class DashboardDataProvider extends React.Component {
       })
     })
 
-    return newData
+    return data
   }
 
 }

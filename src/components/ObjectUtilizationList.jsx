@@ -11,11 +11,7 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
     )
   }
 
-  const sortedData = data.slice().sort((a, b) => {
-    return (b.used / b.total) - (a.used / a.total)
-  })
-
-  const someItemHasNamePastThreshold = sortedData.some((item) => {
+  const someItemHasNamePastThreshold = data.some((item) => {
     return item.name.length > utilizationListGridNameThreshold
   })
 
@@ -25,7 +21,7 @@ function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utiliza
   return (
     <div className='overutilized-container'>
       <div className='overutilized-section'>
-        {sortedData.map((item) => (
+        {data.map((item) => (
           <div key={item.name} className='row'>
             <div className={`text-right overutilized-item-name-container ${nameThresholdClass}`}>
               <a className='overutilized-item-name' href='#' onClick={(event) => {
