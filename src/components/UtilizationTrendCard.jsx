@@ -38,7 +38,6 @@ import Tooltip from './bootstrap/Tooltip'
  */
 
 class UtilizationTrendCard extends React.Component {
-
   render () {
     const {
       data: { used, total, overcommit, allocated, history, utilization },
@@ -177,7 +176,6 @@ class UtilizationTrendCard extends React.Component {
       </div>
     )
   }
-
 }
 
 const dataShape = UtilizationTrendCard.dataShape = {

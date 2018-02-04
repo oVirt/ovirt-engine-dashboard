@@ -4,7 +4,6 @@ import $ from 'jquery'
 import { msg } from '../../intl-messages'
 
 class ModalDialog extends React.Component {
-
   render () {
     return (
       <div className={`modal fade ${this.props.modalContainerClass}`} role='dialog' ref={(e) => { this._modalContainer = e }}>
@@ -31,7 +30,6 @@ class ModalDialog extends React.Component {
   show () {
     $(this._modalContainer).modal()
   }
-
 }
 
 ModalDialog.propTypes = {

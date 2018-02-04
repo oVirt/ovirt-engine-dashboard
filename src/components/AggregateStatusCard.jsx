@@ -10,10 +10,10 @@ import Tooltip from './bootstrap/Tooltip'
 // TODO(vs) extract the generic bits into reusable component
 
 function AggregateStatusCard ({
-    data: { totalCount, statuses },
-    title, mainIconClass, statusTypeToText, statusTypeToIconClass,
-    noStatusText, noStatusIconClass, onTotalCountClick, onStatusCountClick
-  }) {
+  data: { totalCount, statuses },
+  title, mainIconClass, statusTypeToText, statusTypeToIconClass,
+  noStatusText, noStatusIconClass, onTotalCountClick, onStatusCountClick
+}) {
   function getStatusItemTooltip (statusItem) {
     return `${statusTypeToText(statusItem.type)}: ${formatNumber0D(statusItem.count)}`
   }

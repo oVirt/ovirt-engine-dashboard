@@ -11,7 +11,7 @@ function RefreshDataControl ({ onRefresh }) {
           event.preventDefault()
           onRefresh()
         }}>
-          <i className='fa fa-refresh'></i>
+          <i className='fa fa-refresh' />
         </button>
 
         {/* refresh configuration drop down menu would go here */}

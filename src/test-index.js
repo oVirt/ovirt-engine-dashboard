@@ -3,13 +3,14 @@ import { defaultLocale, defaultTimeZone } from './constants'
 import { resetApi } from './plugin-api'
 import { clearMessageCache } from './utils/intl'
 
+// TODO(vs) this fancy import is needed until we upgrade to Sinon 2
+// https://github.com/webpack/webpack/issues/304#issuecomment-170883329
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import sinon from 'imports-loader?define=>false,require=>false!sinon/pkg/sinon.js'
+
 // require all modules ending in `-test` from the current directory and all subdirectories
 const testContext = require.context('.', true, /-test$/)
 testContext.keys().forEach(testContext)
-
-// TODO(vs) this fancy import is needed until we upgrade to Sinon 2
-// https://github.com/webpack/webpack/issues/304#issuecomment-170883329
-import sinon from 'imports-loader?define=>false,require=>false!sinon/pkg/sinon.js'
 
 beforeEach(function setupFakeEnv (done) {
   // all tests should use `this.sandbox` to create fakes

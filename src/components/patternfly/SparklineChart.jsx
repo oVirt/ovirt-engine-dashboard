@@ -17,7 +17,6 @@ import { convertValue } from '../../utils/unit-conversion'
 // TODO(vs) sync with latest Angular impl.
 
 class SparklineChart extends React.Component {
-
   componentDidMount () {
     this._generateChart(this.props)
   }
@@ -84,7 +83,7 @@ class SparklineChart extends React.Component {
               left: Math.min(x, chartBox.width - width)
             }
           } catch (e) {
-            __DEV__ && console.warn('Error while computing tooltip position', e)
+            if (__DEV__) console.warn('Error while computing tooltip position', e)
           }
         },
         contents: (d) => {
@@ -142,9 +141,9 @@ class SparklineChart extends React.Component {
         return `<span class='c3-tooltip-sparkline'>${formatNumber1D(d[0].value)} ${d[0].name}</span>`
     }
   }
-
 }
 
+/* eslint-disable react/no-unused-prop-types */
 SparklineChart.propTypes = {
   data: arrayOf(shape({
     value: number,

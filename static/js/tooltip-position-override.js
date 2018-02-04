@@ -4,7 +4,7 @@ import jQuery from 'jquery/dist/jquery'
  * Override the bootstrap 3.3.7 Tooltip.getPosition() function to fix
  * position issues with SVG elements when the page/viewport is scrolled.
  */
-;(function ($) {
+(function ($) {
   const extension = {
     getPosition ($element) {
       $element = $element || this.$element
@@ -31,8 +31,10 @@ import jQuery from 'jquery/dist/jquery'
        */
       var elOffset = isBody
         ? { top: 0, left: 0 }
-        : { top: elRect.top + (window.pageYOffset || document.documentElement.scrollTop),
-            left: elRect.left + (window.pageXOffset || document.documentElement.scrollLeft) }
+        : {
+          top: elRect.top + (window.pageYOffset || document.documentElement.scrollTop),
+          left: elRect.left + (window.pageXOffset || document.documentElement.scrollLeft)
+        }
 
       return $.extend({}, elRect, scroll, outerDims, elOffset)
     }

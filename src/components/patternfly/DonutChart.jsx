@@ -18,7 +18,6 @@ import { formatNumber1D, formatPercent0D, formatPercent1D } from '../../utils/in
 // TODO(vs) sync with latest Angular impl.
 
 class DonutChart extends React.Component {
-
   componentDidMount () {
     this._generateChart(this.props)
   }
@@ -117,9 +116,11 @@ class DonutChart extends React.Component {
     chartTitle.insert('tspan').text(bigText).classed('donut-title-big-pf', true).attr('dy', 0).attr('x', 0)
     chartTitle.insert('tspan').text(smallText).classed('donut-title-small-pf', true).attr('dy', 20).attr('x', 0)
   }
-
 }
 
+// Disable propType checking because the component passes `this.props` to a helper function
+// See: https://github.com/yannickcr/eslint-plugin-react/issues/1135
+/* eslint-disable react/no-unused-prop-types */
 DonutChart.propTypes = {
   used: number.isRequired,
   total: number.isRequired,

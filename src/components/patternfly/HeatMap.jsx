@@ -10,7 +10,6 @@ import d3 from 'd3'
 // TODO(vs) sync with latest Angular impl.
 
 class HeatMap extends React.Component {
-
   componentDidMount () {
     this._generateHeatMap(this.props)
   }
@@ -107,9 +106,9 @@ class HeatMap extends React.Component {
 
     return Math.max(sx, sy)
   }
-
 }
 
+/* eslint-disable react/no-unused-prop-types */
 HeatMap.propTypes = {
   data: arrayOf(shape({
     value: number, // from range <0, 1>

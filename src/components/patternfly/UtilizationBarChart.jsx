@@ -28,9 +28,9 @@ import Tooltip from '../bootstrap/Tooltip'
  */
 
 function UtilizationBarChart ({
-    used, total, unit, thresholds, layout, title, footerLabel,
-    titleLabelWidth, footerLabelWidth
-  }) {
+  used, total, unit, thresholds, layout, title, footerLabel,
+  titleLabelWidth, footerLabelWidth
+}) {
   const percentUsed = used / total * 100
   const percentAvailable = 100 - percentUsed
 
@@ -38,11 +38,13 @@ function UtilizationBarChart ({
   const barUsedWidth = Math.min(100, percentUsed)
   const barAvailableWidth = 100 - barUsedWidth
 
-  const progressThresholdClass = thresholds.enabled && classNames({
-    'progress-bar-success': (percentUsed < thresholds.warning),
-    'progress-bar-warning': (percentUsed >= thresholds.warning && percentUsed <= thresholds.error),
-    'progress-bar-danger': (percentUsed > thresholds.error)
-  }) || ''
+  const progressThresholdClass = thresholds.enabled
+    ? classNames({
+      'progress-bar-success': (percentUsed < thresholds.warning),
+      'progress-bar-warning': (percentUsed >= thresholds.warning && percentUsed <= thresholds.error),
+      'progress-bar-danger': (percentUsed > thresholds.error)
+    })
+    : ''
 
   return (
     <div className='pf-utilization-bar-chart'>

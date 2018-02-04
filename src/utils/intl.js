@@ -42,7 +42,7 @@ export function translateMessage (id, defaultMessage) {
   const translation = translatedMessages[locale] && translatedMessages[locale][id]
 
   if (!translation) {
-    __DEV__ && console.warn(`Missing [${locale}] translation for message key [${id}]`)
+    if (__DEV__) console.warn(`Missing [${locale}] translation for message key [${id}]`)
     return defaultMessage
   }
 

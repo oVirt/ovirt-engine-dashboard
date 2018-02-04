@@ -6,7 +6,6 @@ import getPluginApi from '../plugin-api'
 // TODO(vs) extract data fetch logic into services/data-fetch
 
 class DashboardDataProvider extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = { data: NO_DATA }
@@ -70,7 +69,7 @@ class DashboardDataProvider extends React.Component {
   }
 
   /*
-   * Take the JSON returned from the data fetch and clean it up as needed for GlobalDashboard.
+   * Take the object returned from the data fetch and clean it up as needed for GlobalDashboard.
    */
   _transformData ({ data }) {
     const inventoryStatusOrder = ['alert', 'error', 'warning', 'down', 'up']
@@ -142,7 +141,6 @@ class DashboardDataProvider extends React.Component {
 
     return data
   }
-
 }
 
 const NO_DATA = null

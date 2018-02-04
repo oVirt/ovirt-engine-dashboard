@@ -27,4 +27,3 @@ const pretty = stringify(translatedMessages, {
 })
 
 fs.writeFileSync(filename, pretty, 'utf8')
-

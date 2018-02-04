@@ -26,7 +26,6 @@ import ReactDOM from 'react-dom'
 //   jamesknelson.com/rendering-react-components-to-the-document-body/
 
 class RenderInto extends React.Component {
-
   componentDidMount () {
     this._container = document.createElement('div')
     this.props.targetElement.appendChild(this._container)
@@ -45,7 +44,6 @@ class RenderInto extends React.Component {
   render () {
     return null
   }
-
 }
 
 RenderInto.propTypes = {

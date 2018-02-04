@@ -85,11 +85,11 @@ describe('verify the content of each locale in translations.json', function () {
 
       it('messages match ICU arguments', function () {
         Object.keys(localeNormalForm)
-              .filter((name) => { englishNormalForm[name] })
-              .forEach((name) => {
-                expect(englishNormalForm, `message [${name}]`).to.have.property(name)
-                expect(localeNormalForm[name].args, `message [${name}]`).to.deep.equal(englishNormalForm[name].args)
-              })
+          .filter((name) => englishNormalForm[name])
+          .forEach((name) => {
+            expect(englishNormalForm, `message [${name}]`).to.have.property(name)
+            expect(localeNormalForm[name].args, `message [${name}]`).to.deep.equal(englishNormalForm[name].args)
+          })
       })
     })
   })

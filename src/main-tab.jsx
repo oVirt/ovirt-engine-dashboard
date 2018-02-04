@@ -1,3 +1,12 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { msg } from './intl-messages'
+import appInit from './services/app-init'
+import { currentLocale } from './utils/intl'
+import DashboardIntlProvider from './components/DashboardIntlProvider'
+import DashboardDataProvider from './components/DashboardDataProvider'
+import GlobalDashboard from './components/GlobalDashboard'
+
 // Let webpack handle integrating required css (plus assets referenced in the css)
 import 'patternfly/dist/css/patternfly.min.css'
 import 'patternfly/dist/css/patternfly-additions.min.css'
@@ -14,15 +23,6 @@ require('bootstrap/dist/js/bootstrap')
 // NOTE: Bootstrap ^3.3.7 has a bug in tooltip placement. This override,
 //       which must be referenced after bootstrap itself, fixes the problem.
 require('../static/js/tooltip-position-override')
-
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { msg } from './intl-messages'
-import appInit from './services/app-init'
-import { currentLocale } from './utils/intl'
-import DashboardIntlProvider from './components/DashboardIntlProvider'
-import DashboardDataProvider from './components/DashboardDataProvider'
-import GlobalDashboard from './components/GlobalDashboard'
 
 appInit.run().then(() => {
   const loadingPlaceholder = (

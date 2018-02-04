@@ -4,7 +4,6 @@ import $ from 'jquery'
 import { cloneElementWithCustomRef } from '../../utils/react'
 
 class Tooltip extends React.Component {
-
   componentDidMount () {
     $(this._childElement).tooltip({
       title: this.props.text,
@@ -23,7 +22,6 @@ class Tooltip extends React.Component {
     const child = React.Children.only(this.props.children)
     return cloneElementWithCustomRef(child, (e) => { this._childElement = e })
   }
-
 }
 
 Tooltip.propTypes = {
