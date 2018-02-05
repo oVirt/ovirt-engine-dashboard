@@ -2,8 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { msg } from './intl-messages'
 import appInit from './services/app-init'
-import { currentLocale } from './utils/intl'
-import DashboardIntlProvider from './components/DashboardIntlProvider'
 import DashboardDataProvider from './components/DashboardDataProvider'
 import GlobalDashboard from './components/GlobalDashboard'
 
@@ -42,11 +40,9 @@ appInit.run().then(() => {
   )
 
   ReactDOM.render(
-    <DashboardIntlProvider locale={currentLocale()}>
-      <DashboardDataProvider loading={loadingPlaceholder} error={errorPlaceholder}>
-        <GlobalDashboard data={{}} lastUpdated={new Date(0)} />
-      </DashboardDataProvider>
-    </DashboardIntlProvider>,
+    <DashboardDataProvider loading={loadingPlaceholder} error={errorPlaceholder}>
+      <GlobalDashboard data={{}} lastUpdated={new Date(0)} />
+    </DashboardDataProvider>,
     document.getElementById('app')
   )
 })

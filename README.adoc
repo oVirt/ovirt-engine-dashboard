@@ -49,10 +49,11 @@ Open WebAdmin in your browser, you should land on *Dashboard* main tab automatic
 
 === Introduction
 
-The oVirt Dashboard project has the ability to render in different languages.  Internally, the
-`msg` object in `intl-messages.js` holds all of the localizable keys and exposes them as
-functions.  The `msg` object also wraps all of the localized translations loaded from
-`intl/translations.json` and uses a localized version of each key as required.
+The oVirt Dashboard project has the ability to render in different languages.  Internally,
+all of the localizable keys are stored in `src/intl/messages.js`.  The `msg` object in
+`intl-messages.js` wraps all of the localizable keys to expose them as functions.  The
+`msg` object also wraps all of the localized translations loaded from
+`src/intl/translations.json` and uses a localized version of each key as required.
 
 The current locale used by the `intl.js` formatting functions is provided to the application
 via the `app-init.js` service and the oVirt UI plugin API.
@@ -63,14 +64,14 @@ We use the https://translate.zanata.org/[Zanata] tool to manage translations.
 
 Generally, the project is made localizable and is translated in the following workflow:
 
-* Developers import from `intl-messages.js`, create their code and use the `msg` object to both access and format text messages
-* As needed, keys are added to `intl-messages.js` and accessed as a function of the `msg` object
+* Developers add messages as needed to `src/intl/messages.js`
+* Developers then import from `intl-messages.js` and use the `msg` object to both access and format the messages
 * When the strings are stable, the messages are converted to a GNU gettext .pot file
 * The .pot file is pushed to Zanata
 * Translators do their work for each supported language within the
   https://translate.zanata.org/project/view/ovirt-engine-dashboard[dashboard's Zanata project]
 * When translations are complete, the localized strings are pulled from Zanata as a set of GNU gettext .po files
-* The .po files are converted to a JSON file, specifically `intl/translations.json`
+* The .po files are converted to a JSON file, specifically `src/intl/translations.json`
 * The JSON file is referenced in `intl.js`, providing localized messages to the `msg` object in `intl-messages.js`
 * Rebuilding the project will make the updated translations available for use
 

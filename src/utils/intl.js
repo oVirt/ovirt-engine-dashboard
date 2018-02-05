@@ -1,6 +1,6 @@
 import IntlMessageFormat from 'intl-messageformat'
 import { defaultLocale } from '../constants'
-import translatedMessages from '../../intl/translations.json'
+import translatedMessages from '../intl/translations.json'
 
 // TODO(vs) this is beyond simple utility functions, extract the code into services/intl
 
@@ -49,6 +49,23 @@ export function translateMessage (id, defaultMessage) {
   return translation
 }
 
+const customIntlMessageFormatStyles = {
+  number: {
+    '0': {
+      style: 'decimal',
+      minimumIntegerDigits: 1,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    },
+    '0.0': {
+      style: 'decimal',
+      minimumIntegerDigits: 1,
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    }
+  }
+}
+
 export function formatMessage (id, defaultMessage, values = {}) {
   let fmt = messageFormats.get(id)
 
@@ -56,22 +73,7 @@ export function formatMessage (id, defaultMessage, values = {}) {
     // translation needed only for non-default locale
     const message = (locale !== defaultLocale) ? translateMessage(id, defaultMessage) : defaultMessage
 
-    fmt = new IntlMessageFormat(message, locale, {
-      number: {
-        '0': {
-          style: 'decimal',
-          minimumIntegerDigits: 1,
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0
-        },
-        '0.0': {
-          style: 'decimal',
-          minimumIntegerDigits: 1,
-          minimumFractionDigits: 1,
-          maximumFractionDigits: 1
-        }
-      }
-    })
+    fmt = new IntlMessageFormat(message, locale, customIntlMessageFormatStyles)
     messageFormats.set(id, fmt)
   }
 

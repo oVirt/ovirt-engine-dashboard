@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import parser from 'intl-messageformat-parser'
-import { messageDescriptors } from './intl-messages'
-import translatedMessages from '../intl/translations.json'
+import messageDescriptors from './intl/messages'
+import translatedMessages from './intl/translations.json'
 
 /*
  * Take a set of messages and generate a normalized object that can be deep compared
@@ -58,7 +58,7 @@ function normalizeMessagesForDiff (messages) {
   return normalForm
 }
 
-describe('validate messageDescriptors from intl-messages.js', function () {
+describe('validate messageDescriptors from ./intl/messages.js', function () {
   it('every key has a non-empty id', function () {
     Object.keys(messageDescriptors).forEach((key) => {
       expect(messageDescriptors[key], `key[${key}]`).to.have.property('id').that.is.a('string').and.is.not.empty
@@ -68,6 +68,12 @@ describe('validate messageDescriptors from intl-messages.js', function () {
   it('every key has a non-empty defaultMessage', function () {
     Object.keys(messageDescriptors).forEach((key) => {
       expect(messageDescriptors[key], `key[${key}]`).to.have.property('defaultMessage').that.is.a('string').and.is.not.empty
+    })
+  })
+
+  it('every key has a non-empty description', function () {
+    Object.keys(messageDescriptors).forEach((key) => {
+      expect(messageDescriptors[key], `key[${key}]`).to.have.property('description').that.is.a('string').and.is.not.empty
     })
   })
 })

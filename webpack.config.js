@@ -14,12 +14,6 @@ const isProd = env === 'production'
 const isDev = env === 'development'
 const isTest = env === 'test'
 
-// additional build options
-const extractMessages = process.env.EXTRACT_MESSAGES === '1'
-
-// reference the babel-loader rule so it may be changed later depending on build options
-let babelLoader
-
 // define specific TTF fonts to embed in CSS via data urls
 let ttfFontsToEmbed
 
@@ -29,7 +23,7 @@ const config = module.exports = {
 
   module: {
     rules: [
-      babelLoader = {
+      {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)|(zanata)/,
         use: {
@@ -52,8 +46,8 @@ const config = module.exports = {
         test: /\.css$/,
         include: /(node_modules)|(static\/css)/,
         use: isProd
-            ? ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?sourceMap' })
-            : [ 'style-loader', 'css-loader' ]
+          ? ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?sourceMap' })
+          : [ 'style-loader', 'css-loader' ]
       },
       {
         test: /\.css$/,
@@ -212,15 +206,5 @@ if (isTest) {
     new webpack.optimize.UglifyJsPlugin({ // needed to have error stack traces with proper files/line numbers
       sourceMap: true
     })
-  )
-}
-
-// TODO(vs) extracting English texts out of JavaScript should not require webpack build
-if (extractMessages) {
-  babelLoader.use.options.plugins.push(
-    ['react-intl', {
-      messagesDir: './extra/messages',
-      enforceDescriptions: true
-    }]
   )
 }
