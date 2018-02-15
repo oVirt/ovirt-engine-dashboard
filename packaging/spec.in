@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 2@RPM_SNAPSHOT@%{?dist}
+Release: 1@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -51,6 +51,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Wed Feb 14 2018 Greg Sheremeta <gshereme@redhat.com> - 1.2.2-1
+- bump package version to 1.2.2-1
+
 * Sat Jan 27 2018 Greg Sheremeta <gshereme@redhat.com> - 1.2.1-2
 - bump package version to 1.2.1-2
 - update translations from zanata
