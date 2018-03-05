@@ -15,7 +15,8 @@ getPluginApi().register({
       priority: -1,
       // customize the prefix displayed in search bar
       searchPrefix: 'Dashboard',
-      defaultPlace: true
+      defaultPlace: true,
+      icon: 'fa-tachometer'
     })
   }
 
