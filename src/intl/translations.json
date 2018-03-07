@@ -285,7 +285,7 @@
     "mainTab.utilizationCardDialogStorageListTitle": "ストレージドメイン ({storageCount, number})",
     "mainTab.utilizationCardDialogVmListTitle": "仮想マシン ({vmCount, number})",
     "mainTab.utilizationCardMemoryDialogTitle": "使用率の高いリソース (メモリー)",
-    "mainTab.utilizationCardOverCommit": "仮想リソース - コミット済み: {overcommit, number}%、 割り当て済み: {allocated, number}%",
+    "mainTab.utilizationCardOverCommit": "仮想リソース - コミット済み: {overcommit, number}%、割り当て済み: {allocated, number}%",
     "mainTab.utilizationCardOverCommitTooltip": "コミットされている割り当て済みの仮想リソースは、実行中の仮想リソースを実際のリソースと比較したパーセンテージで示しています。",
     "mainTab.utilizationCardStorageDialogTitle": "使用率の高いリソース (ストレージ)"
   },
@@ -432,8 +432,8 @@
     "mainTab.utilizationCardDialogStorageListTitle": "存储域 ({storageCount, number})",
     "mainTab.utilizationCardDialogVmListTitle": "虚拟机 ({vmCount, number})",
     "mainTab.utilizationCardMemoryDialogTitle": "高利用的资源 (内存)",
-    "mainTab.utilizationCardOverCommit": "虚拟资源 - 承诺: {overcommit, number}%, 分配: {allocated, number}%",
-    "mainTab.utilizationCardOverCommitTooltip": "承诺的和分配的虚拟资源以百分比形式表示，它是正在运行的虚拟资源占实际资源的百分比。",
+    "mainTab.utilizationCardOverCommit": "虚拟资源 - 已占用: {overcommit, number}%, 分配: {allocated, number}%",
+    "mainTab.utilizationCardOverCommitTooltip": "已占用和分配虚拟资源以百分比形式表示，它是正在运行的虚拟资源占实际资源的百分比。",
     "mainTab.utilizationCardStorageDialogTitle": "高利用的资源 (存储)"
   }
 }
