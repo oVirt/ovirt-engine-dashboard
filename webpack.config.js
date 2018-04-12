@@ -20,6 +20,9 @@ const babelOptions = {
   plugins: []
 }
 
+// define specific TTF fonts to embed in CSS via data urls
+let ttfFontsToEmbed
+
 // start with common webpack configuration applicable to all environments
 const config = module.exports = {
   bail: true,
@@ -47,7 +50,7 @@ const config = module.exports = {
 
       // inline base64 URLs for <= 8k images, direct URLs for the rest
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/,
+        test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'url',
         query: {
           limit: 8192,
@@ -55,12 +58,19 @@ const config = module.exports = {
         }
       },
 
-      // pack fonts - /woff2?/ gets embedded, the rest are copied
+      // embed the woff2 fonts directly in the CSS
       {
-        test: /\.woff(2)?(\?v=[0-9].[0-9].[0-9])?$/,
+        test: /\.woff2(\?v=[0-9].[0-9].[0-9])?$/,
         loader: 'url?mimetype=application/font-woff'
-      }, {
-        test: /\.(ttf|eot|svg)(\?v=[0-9].[0-9].[0-9])?$/,
+      },
+      // PF icon font uses ttf, no woff2 is currently available
+      {
+        test: ttfFontsToEmbed = /PatternFlyIcons-webfont\.ttf/,
+        loader: 'url'
+      },
+      {
+        test: /\.(ttf|eot|svg|woff(?!2))(\?v=[0-9].[0-9].[0-9])?$/,
+        exclude: ttfFontsToEmbed,
         loader: 'file?name=media/[name].[hash:8].[ext]'
       }
     ]
