@@ -21,12 +21,13 @@ beforeEach(function setupFakeEnv (done) {
   ;[
     'register',
     'ready',
-    'addMainTab',
-    'setSearchString',
+    'addPrimaryMenuPlace',
+    'setPlaceUnloadHandler',
     'revealPlace',
+    'setSearchString',
     'engineBaseUrl',
     'currentLocale',
-    'currentTimeZone'
+    'currentTimeZone' // TODO(vs) this API function isn't currently available
   ].forEach((apiMethod) => {
     pluginApiStubs[apiMethod] = sandbox.stub()
   })

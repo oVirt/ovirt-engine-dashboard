@@ -9,7 +9,6 @@ import { applySearch } from '../utils/webadmin-search'
 import DonutChart from './patternfly/DonutChart'
 import SparklineChart from './patternfly/SparklineChart'
 import ModalDialog from './bootstrap/ModalDialog'
-import RenderInto from './helper/RenderInto'
 import ObjectUtilizationList from './ObjectUtilizationList'
 import ObjectUtilizationListTitle from './ObjectUtilizationListTitle'
 import Tooltip from './bootstrap/Tooltip'
@@ -104,74 +103,72 @@ class UtilizationTrendCard extends React.Component {
           tooltipType={sparklineTooltipType} />
 
         {/* utilization dialog  */}
-        <RenderInto targetElement={window.document.body}>
-          <ModalDialog
-            title={utilizationDialogTitle}
-            modalContainerClass='overutilization-dialog'
-            ref={(e) => { this._utilizationDialog = e }}>
+        <ModalDialog
+          title={utilizationDialogTitle}
+          modalContainerClass='overutilization-dialog'
+          ref={(e) => { this._utilizationDialog = e }}>
 
-            {utilization.hosts &&
-              <div>
-                <ObjectUtilizationListTitle text={msg.utilizationCardDialogHostListTitle({
-                  hostCount: utilization.hosts.length
-                })} />
-                <ObjectUtilizationList
-                  data={utilization.hosts}
-                  unit={unit}
-                  emptyListText={msg.utilizationCardDialogEmptyHostList()}
-                  thresholds={thresholds}
-                  utilizationFooterLabel={utilizationFooterLabel}
-                  onObjectNameClick={(dataItem) => {
-                    applySearch(webadminPlaces.host, searchPrefixes.host, [{
-                      name: searchFields.name,
-                      values: [dataItem.name]
-                    }])
-                  }} />
-              </div>
-            }
+          {utilization.hosts &&
+            <div>
+              <ObjectUtilizationListTitle text={msg.utilizationCardDialogHostListTitle({
+                hostCount: utilization.hosts.length
+              })} />
+              <ObjectUtilizationList
+                data={utilization.hosts}
+                unit={unit}
+                emptyListText={msg.utilizationCardDialogEmptyHostList()}
+                thresholds={thresholds}
+                utilizationFooterLabel={utilizationFooterLabel}
+                onObjectNameClick={(dataItem) => {
+                  applySearch(webadminPlaces.host, searchPrefixes.host, [{
+                    name: searchFields.name,
+                    values: [dataItem.name]
+                  }])
+                }} />
+            </div>
+          }
 
-            {utilization.storage &&
-              <div>
-                <ObjectUtilizationListTitle text={msg.utilizationCardDialogStorageListTitle({
-                  storageCount: utilization.storage.length
-                })} />
-                <ObjectUtilizationList
-                  data={utilization.storage}
-                  unit={unit}
-                  emptyListText={msg.utilizationCardDialogEmptyStorageList()}
-                  thresholds={thresholds}
-                  utilizationFooterLabel={utilizationFooterLabel}
-                  onObjectNameClick={(dataItem) => {
-                    applySearch(webadminPlaces.storage, searchPrefixes.storage, [{
-                      name: searchFields.name,
-                      values: [dataItem.name]
-                    }])
-                  }} />
-              </div>
-            }
+          {utilization.storage &&
+            <div>
+              <ObjectUtilizationListTitle text={msg.utilizationCardDialogStorageListTitle({
+                storageCount: utilization.storage.length
+              })} />
+              <ObjectUtilizationList
+                data={utilization.storage}
+                unit={unit}
+                emptyListText={msg.utilizationCardDialogEmptyStorageList()}
+                thresholds={thresholds}
+                utilizationFooterLabel={utilizationFooterLabel}
+                onObjectNameClick={(dataItem) => {
+                  applySearch(webadminPlaces.storage, searchPrefixes.storage, [{
+                    name: searchFields.name,
+                    values: [dataItem.name]
+                  }])
+                }} />
+            </div>
+          }
 
-            {utilization.vms &&
-              <div>
-                <ObjectUtilizationListTitle text={msg.utilizationCardDialogVmListTitle({
-                  vmCount: utilization.vms.length
-                })} />
-                <ObjectUtilizationList
-                  data={utilization.vms}
-                  unit={unit}
-                  emptyListText={msg.utilizationCardDialogEmptyVmList()}
-                  thresholds={thresholds}
-                  utilizationFooterLabel={utilizationFooterLabel}
-                  onObjectNameClick={(dataItem) => {
-                    applySearch(webadminPlaces.vm, searchPrefixes.vm, [{
-                      name: searchFields.name,
-                      values: [dataItem.name]
-                    }])
-                  }} />
-              </div>
-            }
+          {utilization.vms &&
+            <div>
+              <ObjectUtilizationListTitle text={msg.utilizationCardDialogVmListTitle({
+                vmCount: utilization.vms.length
+              })} />
+              <ObjectUtilizationList
+                data={utilization.vms}
+                unit={unit}
+                emptyListText={msg.utilizationCardDialogEmptyVmList()}
+                thresholds={thresholds}
+                utilizationFooterLabel={utilizationFooterLabel}
+                onObjectNameClick={(dataItem) => {
+                  applySearch(webadminPlaces.vm, searchPrefixes.vm, [{
+                    name: searchFields.name,
+                    values: [dataItem.name]
+                  }])
+                }} />
+            </div>
+          }
 
-          </ModalDialog>
-        </RenderInto>
+        </ModalDialog>
 
       </div>
     )

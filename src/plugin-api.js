@@ -1,9 +1,10 @@
 import { pluginName } from './constants'
+import { getWebAdminWindow } from './utils/webadmin-dom'
 
 let api
 
 const getPluginApi = () => {
-  api = api || window.top.pluginApi(pluginName)
+  api = api || getWebAdminWindow().pluginApi(pluginName)
   return api
 }
 

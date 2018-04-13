@@ -2,6 +2,8 @@ export const pluginName = 'dashboard'
 
 export const pluginBasePath = `plugin/${pluginName}`
 
+export const dashboardPlaceToken = 'dashboard-main'
+
 export const defaultLocale = 'en-US'
 
 export const supportedLocales = [

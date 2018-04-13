@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { dashboardPlaceToken } from './constants'
+import getPluginApi from './plugin-api'
 import { msg } from './intl-messages'
 import appInit from './services/app-init'
 import DashboardDataProvider from './components/DashboardDataProvider'
@@ -22,6 +24,8 @@ require('bootstrap/dist/js/bootstrap')
 //       which must be referenced after bootstrap itself, fixes the problem.
 require('../static/js/tooltip-position-override')
 
+const appRoot = document.getElementById('app')
+
 appInit.run().then(() => {
   const loadingPlaceholder = (
     <div className='text-center'>
@@ -43,6 +47,10 @@ appInit.run().then(() => {
     <DashboardDataProvider loading={loadingPlaceholder} error={errorPlaceholder}>
       <GlobalDashboard data={{}} lastUpdated={new Date(0)} />
     </DashboardDataProvider>,
-    document.getElementById('app')
+    appRoot
   )
+})
+
+getPluginApi().setPlaceUnloadHandler(dashboardPlaceToken, function () {
+  ReactDOM.unmountComponentAtNode(appRoot)
 })
