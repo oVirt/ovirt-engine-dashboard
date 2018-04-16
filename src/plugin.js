@@ -10,7 +10,7 @@ getPluginApi().register({
 
   UiInit () {
     // add Dashboard main tab
-    getPluginApi().addMainTab(msg.mainTabTitle(), mainTabToken, `${pluginBasePath}/main-tab.html`, {
+    getPluginApi().addPrimaryMenuPlace(msg.mainTabTitle(), mainTabToken, `${pluginBasePath}/main-tab.html`, {
       // position this tab before any standard ones
       priority: -1,
       // customize the prefix displayed in search bar
