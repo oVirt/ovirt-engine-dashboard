@@ -20,7 +20,7 @@ export function buildSearch (prefix, fields = []) {
   return str
 }
 
-export function applySearch (prefix, fields = []) {
-  const str = buildSearch(prefix, fields)
-  getPluginApi().setSearchString(str)
+export function applySearch (place, prefix, fields = []) {
+  getPluginApi().revealPlace(place)
+  getPluginApi().setSearchString(buildSearch(prefix, fields))
 }

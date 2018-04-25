@@ -57,12 +57,15 @@ describe('buildSearch', function () {
 
 describe('applySearch', function () {
   it('calls pluginApi with search built via buildSearch', function () {
+    const place = 'FooPlace'
     const prefix = 'FooPrefix'
     const fields = [{ name: 'bar', values: ['aa', 'bb'] }]
     const expectedSearch = buildSearch(prefix, fields)
 
-    applySearch(prefix, fields)
+    applySearch(place, prefix, fields)
 
+    expect(this.pluginApiStubs.revealPlace.calledWith(place)).to.equal(true)
+    expect(this.pluginApiStubs.revealPlace.calledOnce).to.equal(true)
     expect(this.pluginApiStubs.setSearchString.calledWith(expectedSearch)).to.equal(true)
     expect(this.pluginApiStubs.setSearchString.calledOnce).to.equal(true)
   })
