@@ -1,6 +1,6 @@
 import React from 'react'
 import { string, number, bool, shape, arrayOf } from 'prop-types'
-import { searchPrefixes, searchFields, storageUnitTable } from '../constants'
+import { searchPrefixes, searchFields, storageUnitTable, webadminPlaces } from '../constants'
 import { msg } from '../intl-messages'
 import { formatNumber0D, formatNumber1D } from '../utils/intl'
 import { round } from '../utils/round'
@@ -122,7 +122,7 @@ class UtilizationTrendCard extends React.Component {
                   thresholds={thresholds}
                   utilizationFooterLabel={utilizationFooterLabel}
                   onObjectNameClick={(dataItem) => {
-                    applySearch(searchPrefixes.host, [{
+                    applySearch(webadminPlaces.host, searchPrefixes.host, [{
                       name: searchFields.name,
                       values: [dataItem.name]
                     }])
@@ -142,7 +142,7 @@ class UtilizationTrendCard extends React.Component {
                   thresholds={thresholds}
                   utilizationFooterLabel={utilizationFooterLabel}
                   onObjectNameClick={(dataItem) => {
-                    applySearch(searchPrefixes.storage, [{
+                    applySearch(webadminPlaces.storage, searchPrefixes.storage, [{
                       name: searchFields.name,
                       values: [dataItem.name]
                     }])
@@ -162,7 +162,7 @@ class UtilizationTrendCard extends React.Component {
                   thresholds={thresholds}
                   utilizationFooterLabel={utilizationFooterLabel}
                   onObjectNameClick={(dataItem) => {
-                    applySearch(searchPrefixes.vm, [{
+                    applySearch(webadminPlaces.vm, searchPrefixes.vm, [{
                       name: searchFields.name,
                       values: [dataItem.name]
                     }])

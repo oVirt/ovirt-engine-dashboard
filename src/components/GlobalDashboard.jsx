@@ -1,7 +1,6 @@
 import React from 'react'
 import { shape, instanceOf, func } from 'prop-types'
 import { searchPrefixes, searchFields, heatMapThresholds, heatMapLegendLabels, storageUnitTable, webadminPlaces } from '../constants'
-import getPluginApi from '../plugin-api'
 import { msg } from '../intl-messages'
 import { formatNumber1D } from '../utils/intl'
 import { convertValue } from '../utils/unit-conversion'
@@ -57,12 +56,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardDataCenterTitle()}
             mainIconClass='fa fa-building-o'
             onTotalCountClick={() => {
-              getPluginApi().revealPlace(webadminPlaces.dc)
-              applySearch(searchPrefixes.dc)
+              applySearch(webadminPlaces.dc, searchPrefixes.dc)
             }}
             onStatusCountClick={(statusItem) => {
-              getPluginApi().revealPlace(webadminPlaces.dc)
-              applySearch(searchPrefixes.dc, [{
+              applySearch(webadminPlaces.dc, searchPrefixes.dc, [{
                 name: searchFields.status,
                 values: statusItem.statusValues
               }])
@@ -77,8 +74,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             noStatusText={msg.notAvailableShort()}
             noStatusIconClass=''
             onTotalCountClick={() => {
-              getPluginApi().revealPlace(webadminPlaces.cluster)
-              applySearch(searchPrefixes.cluster)
+              applySearch(webadminPlaces.cluster, searchPrefixes.cluster)
             }} />
         </div>
 
@@ -88,12 +84,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardHostTitle()}
             mainIconClass='pficon pficon-screen'
             onTotalCountClick={() => {
-              getPluginApi().revealPlace(webadminPlaces.host)
-              applySearch(searchPrefixes.host)
+              applySearch(webadminPlaces.host, searchPrefixes.host)
             }}
             onStatusCountClick={(statusItem) => {
-              getPluginApi().revealPlace(webadminPlaces.host)
-              applySearch(searchPrefixes.host, [{
+              applySearch(webadminPlaces.host, searchPrefixes.host, [{
                 name: searchFields.status,
                 values: statusItem.statusValues
               }])
@@ -106,12 +100,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardStorageTitle()}
             mainIconClass='pficon pficon-storage-domain'
             onTotalCountClick={() => {
-              getPluginApi().revealPlace(webadminPlaces.storage)
-              applySearch(searchPrefixes.storage)
+              applySearch(webadminPlaces.storage, searchPrefixes.storage)
             }}
             onStatusCountClick={(statusItem) => {
-              getPluginApi().revealPlace(webadminPlaces.storage)
-              applySearch(searchPrefixes.storage, [{
+              applySearch(webadminPlaces.storage, searchPrefixes.storage, [{
                 name: searchFields.status,
                 values: statusItem.statusValues
               }])
@@ -125,12 +117,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
               title={msg.statusCardGlusterVolumeTitle()}
               mainIconClass='pficon pficon-volume'
               onTotalCountClick={() => {
-                getPluginApi().revealPlace(webadminPlaces.volume)
-                applySearch(searchPrefixes.volume)
+                applySearch(webadminPlaces.volume, searchPrefixes.volume)
               }}
               onStatusCountClick={(statusItem) => {
-                getPluginApi().revealPlace(webadminPlaces.volume)
-                applySearch(searchPrefixes.volume, [{
+                applySearch(webadminPlaces.volume, searchPrefixes.volume, [{
                   name: searchFields.status,
                   values: statusItem.statusValues
                 }])
@@ -144,12 +134,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardVmTitle()}
             mainIconClass='pficon pficon-virtual-machine'
             onTotalCountClick={() => {
-              getPluginApi().revealPlace(webadminPlaces.vm)
-              applySearch(searchPrefixes.vm)
+              applySearch(webadminPlaces.vm, searchPrefixes.vm)
             }}
             onStatusCountClick={(statusItem) => {
-              getPluginApi().revealPlace(webadminPlaces.vm)
-              applySearch(searchPrefixes.vm, [{
+              applySearch(webadminPlaces.vm, searchPrefixes.vm, [{
                 name: searchFields.status,
                 values: statusItem.statusValues
               }])
@@ -162,12 +150,10 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
             title={msg.statusCardEventTitle()}
             mainIconClass='fa fa-bell'
             onTotalCountClick={() => {
-              getPluginApi().revealPlace(webadminPlaces.event)
-              applySearch(searchPrefixes.event)
+              applySearch(webadminPlaces.event, searchPrefixes.event)
             }}
             onStatusCountClick={(statusItem) => {
-              getPluginApi().revealPlace(webadminPlaces.event)
-              applySearch(searchPrefixes.event, [{
+              applySearch(webadminPlaces.event, searchPrefixes.event, [{
                 name: searchFields.severity,
                 values: statusItem.statusValues
               }, {
@@ -248,7 +234,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.cpu}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(searchPrefixes.host, [{
+                          applySearch(webadminPlaces.host, searchPrefixes.host, [{
                             name: searchFields.cluster,
                             values: [dataItem.name]
                           }])
@@ -261,7 +247,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.memory}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(searchPrefixes.host, [{
+                          applySearch(webadminPlaces.host, searchPrefixes.host, [{
                             name: searchFields.cluster,
                             values: [dataItem.name]
                           }])
@@ -294,7 +280,7 @@ function GlobalDashboard ({ data: { inventory, globalUtilization, heatMapData },
                         data={heatMapData.storage}
                         thresholds={heatMapThresholds}
                         onBlockClick={(dataItem) => {
-                          applySearch(searchPrefixes.storage, [{
+                          applySearch(webadminPlaces.storage, searchPrefixes.storage, [{
                             name: searchFields.name,
                             values: [dataItem.name]
                           }])
