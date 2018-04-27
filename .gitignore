@@ -1,23 +1,19 @@
 # Dependencies managed by npm
 node_modules/
 
-# Optional npm cache directory
-.npm/
-
-# Logs
-npm-debug.log*
-
-# Distribution files
+# Distributable files
 dist/
 
 # Additional build artifacts
 extra/
+
+# Yarn log files
+yarn-error.log
 
 # IDE files
 .idea/
 .vscode/
 ovirt-engine-dashboard.iml
 
-# Zanata Cache files
+# Zanata temporary files
 .zanata-cache/
-

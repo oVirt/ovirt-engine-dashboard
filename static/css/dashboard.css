@@ -10,7 +10,6 @@ body, .containers-dashboard {
     position: relative;
     top: 2px;
 }
-
 .global-dashboard-update-column {
   display: flex;
   flex-flow: row;
@@ -19,26 +18,20 @@ body, .containers-dashboard {
   margin: 10px -10px;
 }
 
-/* these are small tweaks to try to make the dashboard squeeze into a 1920x1080
+/* These are small tweaks to try to make the dashboard squeeze into a 1920x1080
    window without vertical scrolling. It fits great on Chrome, needs work on FF.
 */
-.utilization-chart-pf h3 {
-    margin-top: 7px;
-}
-.card-pf-title {
-    margin: 12px 0;
+.card-pf {
+    margin-bottom: 5px;
 }
 .card-pf-heading {
     margin: 0 -20px 10px;
 }
+.card-pf-title {
+    margin: 12px 0;
+}
 .card-pf-body {
     margin: 10px 0;
-}
-.heatmap-chart-title {
-    margin-top: 5px;
-}
-.card-pf {
-    margin-bottom: 5px;
 }
 .card-pf-aggregate-status-notifications {
     display: flex;
@@ -48,6 +41,12 @@ body, .containers-dashboard {
 }
 .card-pf-aggregate-status-notification {
     white-space: nowrap;
+}
+.heatmap-chart-title {
+    margin-top: 5px;
+}
+.utilization-chart-pf h3 {
+    margin-top: 7px;
 }
 
 /* Following media queries are required to split a row into seven equal columns

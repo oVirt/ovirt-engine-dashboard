@@ -11,18 +11,21 @@ import GlobalDashboard from './components/GlobalDashboard'
 import 'patternfly/dist/css/patternfly.min.css'
 import 'patternfly/dist/css/patternfly-additions.min.css'
 
-// TODO(sd): repackage the dashboard css nicely on top of patternfly's css and the
-//           vestigal references to angular should be removed
-import '../static/css/angular-patternfly.css' // npm module includes angular - don't want that
-import '../static/css/angular-app.css'
+// TODO(sd): repackage the dashboard css nicely on top of patternfly's css,
+//           start using patternfly-react components (based on react-bootstrap)
+//           which are self-contained (eventually, remove patternfly dependency)
+import '../static/css/patternfly-overrides.css'
+import '../static/css/patternfly-app.css'
 import '../static/css/dashboard.css'
 
-require('jquery/dist/jquery')
-require('bootstrap/dist/js/bootstrap')
+// TODO(vs): start using patternfly-react components in order to remove dependency
+//           on jQuery and Bootstrap specific jQuery plugins (note that jQuery is
+//           loaded automatically for each module through webpack ProvidePlugin)
+import 'bootstrap'
 
-// NOTE: Bootstrap ^3.3.7 has a bug in tooltip placement. This override,
-//       which must be referenced after bootstrap itself, fixes the problem.
-require('../static/js/tooltip-position-override')
+// NOTE: Bootstrap 3.3.7 Tooltip.getPosition() function has a bug. This override,
+//       which must be referenced after Bootstrap itself, fixes the problem.
+import '../static/js/bootstrap-tooltip-override'
 
 const appRoot = document.getElementById('app')
 

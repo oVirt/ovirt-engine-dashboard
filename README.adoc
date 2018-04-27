@@ -13,12 +13,10 @@ This means no manual steps are required in order to install this plugin in produ
 
 === Prerequisites
 
-Install https://nodejs.org/[Node.js] (LTS) based on the version specified in
-`automation/build.packages` (used when building the project in oVirt CI system).
+Install https://nodejs.org/[Node.js] (LTS). https://github.com/creationix/nvm[nvm] can be
+used to manage multiple Node.js versions. Run `node -v` to check the current Node.js version.
 
-https://github.com/creationix/nvm[nvm] can be used to manage multiple Node.js versions.
-
-Run `node -v` to check the current Node.js version.
+Install https://yarnpkg.com/[Yarn] package manager.
 
 Build and configure oVirt Engine according to its
 https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master[developer instructions].
@@ -27,17 +25,18 @@ https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb
 
 * `yarn install` to install dependencies
 * `yarn test` to run tests (single run)
-* `yarn run test:watch` for continuous testing (watch & rerun tests on change)
-* `yarn run dev` for development build and watch & recompile files on change
-* `yarn run build` for production build
+* `yarn test:watch` for continuous testing (watch & rerun tests on change)
+* `yarn dev` for development build
+* `yarn dev:watch` for continuous development (watch & rebuild on change)
+* `yarn build` for production build
 
 === Engine setup
 
 Symlink plugin resources to `ui-plugins` directory as following:
 
-  cd ${PREFIX}/share/ovirt-engine/ui-plugins/
-  ln -s ${PLUGIN_HOME}/dist/dashboard.json dashboard.json
-  ln -s ${PLUGIN_HOME}/dist/dashboard-resources dashboard-resources
+ % cd ${PREFIX}/share/ovirt-engine/ui-plugins/
+ % ln -s ${PLUGIN_HOME}/dist/dashboard.json dashboard.json
+ % ln -s ${PLUGIN_HOME}/dist/dashboard-resources dashboard-resources
 
 === Accessing plugin
 
@@ -88,12 +87,12 @@ Pushing the current English sources will update the project on Zanata.  Any stri
 added, changed or deleted will be shown as such in the Zanata UI.  Here is the set of commands to
 push the changes:
 
- % yarn run intl:extract
- % yarn run intl:push-all
+ % yarn intl:extract
+ % yarn intl:push-all
 
 Alternatively, use the explicit `zanata-cli` command to control which locale you want to push:
 
- % yarn run intl:extract
+ % yarn intl:extract
  % cd intl
  % zanata-cli push --push-type source --locales de,es,fr,it,ja,ko,pt-BR,zh-CN
 
@@ -105,25 +104,25 @@ running the `intl:extract` script.  Standard zanata CLI pulls the data down as P
 files get converted into a single JSON file containing translations for all locales.  This JSON
 file needs to be normalized for git diff sanity.
 
- % yarn run intl:extract
- % yarn run intl:pull-all
- % yarn run intl:apply
- % yarn run intl:normalize
+ % yarn intl:extract
+ % yarn intl:pull-all
+ % yarn intl:apply
+ % yarn intl:normalize
 
 Alternatively, use the explicit `zanata-cli` command to control which locales you want to pull:
 
- % yarn run intl:extract
+ % yarn intl:extract
  % cd intl
  % zanata-cli pull --pull-type trans --locales de,es,fr,it,ja,ko,pt-BR,zh-CN
  % cd ..
- % yarn run intl:apply
- % yarn run intl:normalize
+ % yarn intl:apply
+ % yarn intl:normalize
 
 == Instructions for maintainers
 
 === Managing dependencies
 
-Dependencies not related to production build (not needed for `yarn run build`)
+Dependencies not related to production build (not needed for `yarn build`)
 should go into `devDependencies`. Try to keep as few `dependencies` as possible.
 
 Whenever `dependencies` are changed:
