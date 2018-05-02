@@ -3,6 +3,10 @@ import { bool, string, element } from 'prop-types'
 import $ from 'jquery'
 import { cloneElementWithCustomRef } from '../../utils/react'
 
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/Tooltip
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/OverlayTrigger
+
 class Tooltip extends React.Component {
   componentDidMount () {
     $(this._childElement).tooltip({

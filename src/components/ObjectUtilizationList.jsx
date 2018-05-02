@@ -4,6 +4,9 @@ import classNames from 'classnames'
 import UtilizationBarChart from './patternfly/UtilizationBarChart'
 import { utilizationListGridNameThreshold } from '../constants'
 
+// TODO(vs) utilize
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/ListView
+
 function ObjectUtilizationList ({ data, unit, emptyListText, thresholds, utilizationFooterLabel, onObjectNameClick }) {
   if (data.length === 0) {
     return (

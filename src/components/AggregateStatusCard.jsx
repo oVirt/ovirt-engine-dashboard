@@ -5,9 +5,10 @@ import { formatNumber0D } from '../utils/intl'
 import Tooltip from './bootstrap/Tooltip'
 
 // PatternFly reference:
-//  https://www.patternfly.org/patterns/aggregate-status-card/
+//  http://www.patternfly.org/pattern-library/cards/aggregate-status-card/
 
-// TODO(vs) extract the generic bits into reusable component
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/Cards/AggregateStatusCard
 
 function AggregateStatusCard ({
   data: { totalCount, statuses },

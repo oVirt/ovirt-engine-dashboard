@@ -14,27 +14,10 @@ import ObjectUtilizationListTitle from './ObjectUtilizationListTitle'
 import Tooltip from './bootstrap/Tooltip'
 
 // PatternFly reference:
-//  https://www.patternfly.org/patterns/utilization-trend-card/
+//  http://www.patternfly.org/pattern-library/cards/utilization-trend-card/
 
-// TODO(vs) extract the generic bits into reusable component
-
-/*
-  TODO(vs) update markup to match the latest PatternFly reference:
-  <div class="card-pf card-pf-utilization">
-    <h2 class="card-pf-title">Network</h2>
-    <div class="card-pf-body">
-      <p class="card-pf-utilization-details">
-        <span class="card-pf-utilization-card-details-count">200</span>
-        <span class="card-pf-utilization-card-details-description">
-          <span class="card-pf-utilization-card-details-line-1">Available</span>
-          <span class="card-pf-utilization-card-details-line-2">of 1300 Gbps</span>
-        </span>
-      </p>
-      <div id="chart-pf-donut"></div>
-      <div class="chart-pf-sparkline" id="chart-pf-sparkline"></div>
-    </div>
-  </div>
- */
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/Cards/UtilizationTrendCard
 
 class UtilizationTrendCard extends React.Component {
   render () {

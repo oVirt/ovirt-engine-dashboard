@@ -8,13 +8,10 @@ import { formatNumber1D, formatPercent1D, formatDateTime } from '../../utils/int
 import { convertValue } from '../../utils/unit-conversion'
 
 // PatternFly reference:
-//  https://www.patternfly.org/patterns/sparkline/
+//  http://www.patternfly.org/pattern-library/data-visualization/sparkline/
 
-// Angular reference:
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/sparkline/sparkline-chart.directive.js
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/sparkline/sparkline-chart.html
-
-// TODO(vs) sync with latest Angular impl.
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/blob/master/packages/core/src/components/Chart/SparklineChart.js
 
 class SparklineChart extends React.Component {
   componentDidMount () {

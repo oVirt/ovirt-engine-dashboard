@@ -7,24 +7,23 @@ import appInit from './services/app-init'
 import DashboardDataProvider from './components/DashboardDataProvider'
 import GlobalDashboard from './components/GlobalDashboard'
 
-// Let webpack handle integrating required css (plus assets referenced in the css)
 import 'patternfly/dist/css/patternfly.min.css'
 import 'patternfly/dist/css/patternfly-additions.min.css'
 
-// TODO(sd): repackage the dashboard css nicely on top of patternfly's css,
-//           start using patternfly-react components (based on react-bootstrap)
-//           which are self-contained (eventually, remove patternfly dependency)
-import '../static/css/patternfly-overrides.css'
-import '../static/css/patternfly-app.css'
-import '../static/css/dashboard.css'
+// TODO(vs): Move component-specific CSS next to the relevant React component and
+// have that React component import the CSS. Once we update our code to use only
+// patternfly-react components, remove dependency on PatternFly as well as related
+// dependencies like jQuery and C3/D3.
+import '../static/css/main-tab.css'
 
-// TODO(vs): start using patternfly-react components in order to remove dependency
-//           on jQuery and Bootstrap specific jQuery plugins (note that jQuery is
-//           loaded automatically for each module through webpack ProvidePlugin)
+// TODO(vs): For now, we use Bootstrap JavaScript library providing interactive
+// components via jQuery plugins. Eventually, we should use only patternfly-react
+// components and remove Bootstrap & jQuery dependencies. (Note: jQuery is loaded
+// automatically through webpack ProvidePlugin, no explicit import needed here.)
 import 'bootstrap'
 
-// NOTE: Bootstrap 3.3.7 Tooltip.getPosition() function has a bug. This override,
-//       which must be referenced after Bootstrap itself, fixes the problem.
+// Note: Bootstrap 3.3.7 Tooltip.getPosition() function has a bug, this override
+// fixes the problem.
 import '../static/js/bootstrap-tooltip-override'
 
 const appRoot = document.getElementById('app')

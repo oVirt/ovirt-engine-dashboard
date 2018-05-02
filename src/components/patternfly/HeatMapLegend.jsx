@@ -2,12 +2,10 @@ import React from 'react'
 import { string, arrayOf } from 'prop-types'
 import HeatMap from './HeatMap'
 
-// Angular reference:
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap-legend.directive.js
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap-legend.html
+// PatternFly reference:
+//  http://www.patternfly.org/pattern-library/data-visualization/heat-map/
 
-// TODO(vs) this should be an integral part of HeatMap component
-// TODO(vs) sync with latest Angular impl.
+// TODO(vs) this should be an integral part of HeatMap component (needs refactor)
 
 function HeatMapLegend ({ colors, labels }) {
   const reversedColors = colors.slice().reverse()

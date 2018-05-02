@@ -3,11 +3,10 @@ import { string, number, object, shape, arrayOf, func } from 'prop-types'
 import $ from 'jquery'
 import d3 from 'd3'
 
-// Angular reference:
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap.directive.js
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/heatmap/heatmap.html
+// PatternFly reference:
+//  http://www.patternfly.org/pattern-library/data-visualization/heat-map/
 
-// TODO(vs) sync with latest Angular impl.
+// TODO(vs) rewrite in pure React & consider contributing to patternfly-react
 
 class HeatMap extends React.Component {
   componentDidMount () {
@@ -21,7 +20,7 @@ class HeatMap extends React.Component {
   render () {
     return (
       <div className='heatmap-container' style={this.props.containerStyle} ref={(e) => { this._heatMapContainer = e }}>
-        <svg className='pf-heatmap-svg' />
+        <svg className='heatmap-svg' />
       </div>
     )
   }
@@ -44,7 +43,7 @@ class HeatMap extends React.Component {
       block.style('fill-opacity', active ? 1 : 0.4)
     }
 
-    const svg = d3.select(this._heatMapContainer).select('svg.pf-heatmap-svg')
+    const svg = d3.select(this._heatMapContainer).select('svg.heatmap-svg')
     svg.selectAll('*').remove()
 
     // generate heat map blocks

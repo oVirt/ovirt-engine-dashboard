@@ -7,15 +7,10 @@ import { getDefaultDonutConfig } from '../../patternfly-defaults'
 import { formatNumber1D, formatPercent0D, formatPercent1D } from '../../utils/intl'
 
 // PatternFly reference:
-//  https://www.patternfly.org/patterns/donut-chart/
+//  http://www.patternfly.org/pattern-library/data-visualization/donut-chart/
 
-// Angular reference:
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart-directive.js
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/donut/donut-pct-chart.html
-
-// TODO(vs) center label is jumpy when hovering its arcs, double-check Angular reference impl.
-
-// TODO(vs) sync with latest Angular impl.
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/blob/master/packages/core/src/components/Chart/DonutChart.js
 
 class DonutChart extends React.Component {
   componentDidMount () {

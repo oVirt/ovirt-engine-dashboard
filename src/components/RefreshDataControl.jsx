@@ -3,6 +3,10 @@ import { func } from 'prop-types'
 import { msg } from '../intl-messages'
 import Tooltip from './bootstrap/Tooltip'
 
+// TODO(vs) utilize
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/Tooltip
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/OverlayTrigger
+
 function RefreshDataControl ({ onRefresh }) {
   return (
     <Tooltip text={msg.refreshButtonTooltip()} placement='bottom' hideOnClick>
@@ -13,7 +17,6 @@ function RefreshDataControl ({ onRefresh }) {
         }}>
           <i className='fa fa-refresh' />
         </button>
-
         {/* refresh configuration drop down menu would go here */}
       </div>
     </Tooltip>

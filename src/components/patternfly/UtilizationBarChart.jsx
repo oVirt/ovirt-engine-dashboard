@@ -7,25 +7,10 @@ import { round } from '../../utils/round'
 import Tooltip from '../bootstrap/Tooltip'
 
 // PatternFly reference:
-//  https://www.patternfly.org/patterns/utilization-bar-chart/
+//  http://www.patternfly.org/pattern-library/data-visualization/utilization-bar-chart/
 
-// Angular reference:
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/utilization-bar/utilization-bar-chart.directive.js
-//  https://github.com/patternfly/angular-patternfly/blob/master/src/charts/utilization-bar/utilization-bar-chart.html
-
-// TODO(vs) sync with latest Angular impl.
-
-/*
-  TODO(vs) update markup to match the latest PatternFly reference:
-  <div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;" data-toggle="tooltip" title="25% Used">
-      <span class="sr-only">25% Used</span>
-    </div>
-    <div class="progress-bar progress-bar-remaining" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;" data-toggle="tooltip" title="75% Available">
-      <span class="sr-only">75% Available</span>
-    </div>
-  </div>
- */
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/UtilizationBar
 
 function UtilizationBarChart ({
   used, total, unit, thresholds, layout, title, footerLabel,

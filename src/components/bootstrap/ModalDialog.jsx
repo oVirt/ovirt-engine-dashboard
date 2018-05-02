@@ -4,6 +4,9 @@ import $ from 'jquery'
 import { msg } from '../../intl-messages'
 import WebAdminBodyPortal from '../helper/WebAdminBodyPortal'
 
+// TODO(vs) replace with
+//  https://github.com/patternfly/patternfly-react/tree/master/packages/core/src/components/Modal
+
 class ModalDialog extends React.Component {
   render () {
     return (
