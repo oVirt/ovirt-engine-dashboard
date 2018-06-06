@@ -13,10 +13,12 @@ This means no manual steps are required in order to install this plugin in produ
 
 === Prerequisites
 
-Install https://nodejs.org/[Node.js] (LTS). https://github.com/creationix/nvm[nvm] can be
-used to manage multiple Node.js versions. Run `node -v` to check the current Node.js version.
+Install https://nodejs.org/[Node.js] (LTS). https://github.com/creationix/nvm[nvm] can be used
+to manage multiple Node.js installations. Run `node -v` to check the current Node.js version.
+When using nvm, run `nvm use` in project's root directory to switch to the recommended Node.js
+version.
 
-Install https://yarnpkg.com/[Yarn] package manager.
+Install https://yarnpkg.com/[Yarn] package manager. Avoid installing Yarn via npm if possible.
 
 Build and configure oVirt Engine according to its
 https://gerrit.ovirt.org/gitweb?p=ovirt-engine.git;a=blob_plain;f=README.adoc;hb=master[developer instructions].
