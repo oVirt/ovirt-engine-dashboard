@@ -3,4 +3,4 @@ git
 jq
 rpm-build
 rpmdevtools
-dnf
+yum

@@ -1,5 +1,14 @@
 #!/bin/sh -ex
 
+DISTVER="$(rpm --eval "%dist"|cut -c2-3)"
+PACKAGER=""
+if [[ "${DISTVER}" == "el" ]]; then
+    PACKAGER=yum
+else
+    PACKAGER=dnf
+fi
+
+
 # Clean and then create the artifacts directory:
 rm -rf exported-artifacts
 mkdir -p exported-artifacts
@@ -32,8 +41,8 @@ build_requires="$(sed -e '/^[ \t]*$/d' -e '/^#/d' -e 's/^/BuildRequires: /' < \
 
 # Force CI to get the latest version of these packages:
 dependencies="$(sed -e '/^[ \t]*$/d' -e '/^#/d' automation/build.packages.force)"
-yum-deprecated clean metadata || yum clean metadata
-yum-deprecated -y install ${dependencies} || yum -y install ${dependencies}
+${PACKAGER} clean metadata
+${PACKAGER} -y install ${dependencies}
 
 # Build the RPM:
 mv "${tar_file}" packaging/

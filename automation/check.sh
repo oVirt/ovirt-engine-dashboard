@@ -1,9 +1,18 @@
 #!/bin/sh -ex
 
+DISTVER="$(rpm --eval "%dist"|cut -c2-3)"
+PACKAGER=""
+if [[ "${DISTVER}" == "el" ]]; then
+    PACKAGER=yum
+else
+    PACKAGER=dnf
+fi
+
+
 # Force CI to get the latest version of these packages:
 dependencies="$(sed -e '/^[ \t]*$/d' -e '/^#/d' automation/build.packages.force)"
-yum-deprecated clean metadata || yum clean metadata
-yum-deprecated -y install ${dependencies} || yum -y install ${dependencies}
+${PACKAGER} clean metadata
+${PACKAGER} -y install ${dependencies}
 
 # Set up Node.js environment with dependencies linked to ./node_modules:
 source /usr/share/ovirt-engine-nodejs-modules/setup-env.sh
