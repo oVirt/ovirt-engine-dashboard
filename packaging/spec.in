@@ -1,7 +1,7 @@
 Name: ovirt-engine-dashboard
 Summary: oVirt Engine Dashboard
 Version: @RPM_VERSION@
-Release: 2@RPM_SNAPSHOT@%{?dist}
+Release: 1@RPM_SNAPSHOT@%{?dist}
 License: ASL 2.0
 URL: http://www.ovirt.org/
 Source: @TAR_FILE@
@@ -51,6 +51,9 @@ ln -s "%{_datadir}/%{name}/dashboard-resources" "%{buildroot}%{_datadir}/ovirt-e
 %license LICENSE
 
 %changelog
+* Thu Jul 5 2018 Greg Sheremeta <gshereme@redhat.com> - 1.2.4-1
+- fix missing left nav icon
+
 * Wed Apr 25 2018 Greg Sheremeta <gshereme@redhat.com> - 1.2.3-2
 - fix entity links on utilization and heatmap popups
 
