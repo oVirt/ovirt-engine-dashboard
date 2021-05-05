@@ -1,5 +1,11 @@
 = oVirt Dashboard
 
+== Important note
+
+This project is obsoleted by [ovirt-engine-ui-extensions](https://github.com/oVirt/ovirt-engine-ui-extensions),
+please use latest version from there. This repository is now readonly and no longer used for active development.
+
+
 == Introduction
 
 This project contains http://www.ovirt.org/[oVirt]
